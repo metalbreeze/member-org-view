@@ -1,0 +1,41 @@
+* {
+    box-sizing: border-box;
+}
+
+#org-container {
+    width: 100%;
+    margin: 0 auto;
+    display: flex;
+    flex-wrap: wrap;
+}
+
+.member-group {
+    mix-width: 50%;
+}
+
+.member-tree {
+    margin: 0;
+    padding: 1em;
+}
+
+.member-name {
+    width: 5em;
+    text-align: center;
+    margin: auto;
+    border: 1px solid;
+}
+
+.children {
+    width: 100%;
+}
+
+.member-card {
+    width: 100%;
+    margin-top: 0.5em;
+    display: inline-block;
+}
+
+.member-card .member-card {
+    width: 50%;
+}
+
