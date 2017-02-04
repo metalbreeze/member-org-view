@@ -79,6 +79,7 @@
 		<th width="120">组手机</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
+		<th width="60">查看群成员</th>
 	</tr>
 	<c:forEach items="${listGroups}" var="group">
 		<tr>
@@ -87,6 +88,8 @@
 			<td>${group.createDate}</td>
 			<td><a href="<c:url value='/group/edit/${group.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/group/remove/${group.id}' />" >删除</a></td>
+			<td>
+				<a href="<c:url value='/listgroup?group.id=${group.id}'/>">查看群成员</a></td>
 		</tr>
 	</c:forEach>
 	</table>

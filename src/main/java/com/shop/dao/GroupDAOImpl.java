@@ -42,9 +42,6 @@ public class GroupDAOImpl implements GroupDAO {
 	public List<Group> listGroups() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Group> GroupsList = session.createQuery("from Group").list();
-		for(Group p : GroupsList){
-			logger.info("Group List::"+p);
-		}
 		return GroupsList;
 	}
 
@@ -70,29 +67,26 @@ public class GroupDAOImpl implements GroupDAO {
 	public List<Group> listAvaiableGroups() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Group> GroupsList = session.createQuery("from Group where node_id is null").list();
-		for(Group p : GroupsList){
-			logger.info("Group List::"+p);
-		}
 		return GroupsList;
 	}
 
-	@SuppressWarnings("unchecked")
-	@Override
-	public Group listGroupWithUsers(int id ) {
-		Session session = this.sessionFactory.getCurrentSession();
-		Group g = (Group) session.load(Group.class, new Integer(id));
-		for (int i = 1 ; i<=6; i++){
-			logger.info("Group Listxxxx:");	
-			List l = session.createSQLQuery("SELECT user_id FROM group1_user where group_id="+id+" and level="+i).list();
-			logger.info(l.toString());
-			if(l.size()!=0){
-				List lu= session.createQuery("from User where id in (:ids)").setParameterList("ids", l).list();
-				g.getLevelUsers().put(i, lu);
-			}
-		}
-		logger.info("Group List::xxxxxxxxxxxxxxx"+g);
-		return g;
-	}
+//	@SuppressWarnings("unchecked")
+//	@Override
+//	public Group listGroupWithUsers(int id ) {
+//		Session session = this.sessionFactory.getCurrentSession();
+//		Group g = (Group) session.load(Group.class, new Integer(id));
+//		for (int i = 1 ; i<=6; i++){
+//			logger.info("Group Listxxxx:");	
+//			List l = session.createSQLQuery("SELECT user_id FROM group1_user where group_id="+id+" and level="+i).list();
+//			logger.info(l.toString());
+//			if(l.size()!=0){
+//				List lu= session.createQuery("from User where id in (:ids)").setParameterList("ids", l).list();
+//				g.getLevelUsers().put(i, lu);
+//			}
+//		}
+//		logger.info("Group List::xxxxxxxxxxxxxxx"+g);
+//		return g;
+//	}
 	
 	
 }

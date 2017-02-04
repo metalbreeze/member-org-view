@@ -59,8 +59,26 @@ public class NodeController {
 	}
 
 	@JsonView(View.Simple.class)
-	@RequestMapping(value = "/trees", method = RequestMethod.GET)
+	@RequestMapping(value = "/ajax/members", method = RequestMethod.GET)
 	@ResponseBody
+	public ArrayList<GroupJson> ajaxListTrees(Model model) {
+		NodeJson nj = new NodeJson();
+		List<Group> listGroups = groupService.listGroups();
+		ArrayList<GroupJson> list = new ArrayList<GroupJson>();
+		for (Iterator iterator = listGroups.iterator(); iterator.hasNext();) {
+			Group group = (Group) iterator.next();
+			GroupJson gj = new GroupJson();
+			gj.setGroup(group.getName());
+			Node node  =null;
+			if(node!=null){
+				gj.setTree(NodeJson.transform(node));
+			}
+			list.add(gj);	
+		}
+		return list;
+	}
+	@JsonView(View.Simple.class)
+	@RequestMapping(value = "/members", method = RequestMethod.GET)
 	public ArrayList<GroupJson> listTrees(Model model) {
 		NodeJson nj = new NodeJson();
 		List<Group> listGroups = groupService.listGroups();
@@ -77,7 +95,8 @@ public class NodeController {
 		}
 		return list;
 	}
-
+	//TODO 人员层级关系
+	
 	@RequestMapping(value = "/gettest", method = RequestMethod.GET)
 	@ResponseBody
 	public Node gettest(Model model) {

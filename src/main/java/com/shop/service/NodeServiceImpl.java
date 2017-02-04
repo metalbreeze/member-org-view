@@ -46,7 +46,6 @@ public class NodeServiceImpl implements NodeService {
 	@Override
 	public void getTrees(String string) {
 		// TODO Auto-generated method stub
-		
 	}
 
 }

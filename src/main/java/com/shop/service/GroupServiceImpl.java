@@ -47,9 +47,9 @@ public class GroupServiceImpl implements GroupService {
 		this.groupDAO.removeGroup(id);
 	}
 
-	@Override
-	@Transactional
-	public Group listGroupWithUsers(int id) {
-		return groupDAO.listGroupWithUsers(id);
-	}
+//	@Override
+//	@Transactional
+//	public Group listGroupWithUsers(int id) {
+//		return groupDAO.listGroupWithUsers(id);
+//	}
 }

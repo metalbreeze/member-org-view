@@ -13,5 +13,5 @@ public interface GroupService {
 	public List<Group> listGroups();
 	public Group getGroupById(int id);
 	public void removeGroup(int id);
-	public Group listGroupWithUsers(int id);
+//	public Group listGroupWithUsers(int id);
 }

@@ -30,14 +30,27 @@ public class User {
 	
 	private String address;
 	
-	private int available=1;
-		
-	public int getAvailable() {
-		return available;
+//	private int available=1;
+	
+	private String level;
+
+	public String getLevel() {
+		return level;
 	}
 
-	public void setAvailable(int a) {
-		this.available = a;
+	public void setLevel(String level) {
+		this.level = level;
+	}
+
+	@ManyToOne
+	private Group group;
+		
+	public Group getGroup() {
+		return group;
+	}
+
+	public void setGroup(Group group) {
+		this.group = group;
 	}
 
 	public String getMobile() {

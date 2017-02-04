@@ -15,81 +15,64 @@
 </head>
 <body>
 <h1>
-	添加组
+	层级关系
 </h1>
+<c:if test="${!empty message}">
+		<h2>	${message}</h2>
+		组1：
+		<a href="<c:url value="/listgroup?group.id="/>${group1.id}">${group1.name}</a>
+		<br/>
+		组2：
+		<a href="<c:url value="/listgroup?group.id="/>${group2.id}">${group2.name}</a>
+</c:if>
+<c:url var="addAction" value="/group/addUser" ></c:url>
+<form:form action="${addAction}" modelAttribute="user">
 
-<c:url var="addAction" value="/group/add" ></c:url>
 
-<form:form action="${addAction}" commandName="group">
-<table>
-	<c:if test="${!empty group.id}">
-	<tr>
-		<td>
-			<form:label path="id">
-				<spring:message text="ID"/>
-			</form:label>
+<table  style="border:3px #FFAC55 dashed;padding:5px;" rules="all" cellpadding='5';>
+	<tr><td>
+		<form:select path="group.id" items="${groupList}" itemLabel="name" itemValue="id" value="${id}"/>
+		</td><td>
+		<form:select path="level" items="${aviableLabels}" />
+		</td><td>
+		<form:select path="id" items="${users}" itemLabel="name" itemValue="id" />
 		</td>
-		<td>
-			<form:input path="id" readonly="true" size="8"  disabled="true" />
-			<form:hidden path="id" />
-		</td> 
-	</tr>
-	</c:if>
-	<tr>
-		<td>
-			<form:label path="name">
-				<spring:message text="姓名"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="name" />
-		</td> 
-	</tr>
-	<tr>
-		<td>
-			<form:label path="createDate">
-				<spring:message text="创建时间"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input readonly="true" path="createDate" />
-		</td>
-	</tr>
-	<tr>
-		<td colspan="2">
-			<c:if test="${!empty group.name}">
+			<td colspan="2">
+			<c:if test="${!empty user.level}">
 				<input type="submit"
 					value="<spring:message text="修改"/>" />
 			</c:if>
-			<c:if test="${empty group.name}">
+			<c:if test="${empty user.level}">
 				<input type="submit"
 					value="<spring:message text="添加"/>" />
 			</c:if>
-		</td>
-	</tr>
-</table>	
-</form:form>
-<br>
-<h3>组列表</h3>
-<c:if test="${!empty listGroups}">
-	<table class="tg">
-	<tr>
-		<th width="80">组 ID</th>
-		<th width="120">组姓名</th>
-		<th width="120">组手机</th>
-		<th width="60">修改</th>
-		<th width="60">删除</th>
-	</tr>
-	<c:forEach items="${listGroups}" var="group">
-		<tr>
-			<td>${group.id}</td>
-			<td>${group.name}</td>
-			<td>${group.createDate}</td>
-			<td><a href="<c:url value='/group/edit/${group.id}' />" >修改</a></td>
-			<td><a href="<c:url value='/group/remove/${group.id}' />" >删除</a></td>
+			</td>
 		</tr>
-	</c:forEach>
-	</table>
-</c:if>
+	<c:if test="${!empty group.name}">
+	<tr>
+		<td>
+				组名
+		</td> 
+		<td>
+				${group.name}
+		</td> 
+	</tr>
+	
+	
+		<c:forEach items="${labels}" var="label">
+		<tr>
+			<td>${label}层</td>
+			<c:forEach items="${levelUsers[label]}" var="list">
+					<td>
+					 ${list.name}
+					</td>
+    		</c:forEach>
+   		</tr>
+		</c:forEach>
+	</c:if>
+</table>
+
+</form:form>
+	
 </body>
 </html>

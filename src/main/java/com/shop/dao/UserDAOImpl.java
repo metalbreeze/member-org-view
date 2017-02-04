@@ -40,9 +40,6 @@ public class UserDAOImpl implements UserDAO {
 	public List<User> listUsers() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User").list();
-		for(User p : UsersList){
-			logger.info("User List::"+p);
-		}
 		return UsersList;
 	}
 
@@ -68,10 +65,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> listAvailableUsers() {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<User> UsersList = session.createQuery("from User where available=1").list();
-		for(User p : UsersList){
-			logger.info("User List::"+p);
-		}
+		List<User> UsersList = session.createQuery("from User where group_id is null or group_id=0").list();
 		return UsersList;
 	}
 

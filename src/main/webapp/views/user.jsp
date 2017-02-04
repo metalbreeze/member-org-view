@@ -22,7 +22,7 @@
 
 <form:form action="${addAction}" commandName="user">
 <table>
-	<c:if test="${!empty user.id}">
+	<c:if test="${!empty user.name}">
 	<tr>
 		<td>
 			<form:label path="id">
@@ -31,7 +31,6 @@
 		</td>
 		<td>
 			<form:input path="id" readonly="true" size="8"  disabled="true" />
-			<form:hidden path="id" />
 		</td> 
 	</tr>
 	</c:if>
@@ -55,8 +54,6 @@
 			<form:input path="mobile" />
 		</td>
 	</tr>
-	<form:input path="available" readonly="true" size="8"  disabled="true" />
-	<form:hidden path="available" />
 	<tr>
 		<td colspan="2">
 			<c:if test="${!empty user.name}">
