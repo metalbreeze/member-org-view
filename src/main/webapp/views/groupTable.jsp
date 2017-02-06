@@ -8,7 +8,7 @@
 	<title>组</title>
 	<style type="text/css">
 		.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-		.tg td{font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
+		.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
 		.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
 		.tg .tg-4eph{background-color:#f9f9f9}
 	</style>
@@ -27,52 +27,56 @@
 </c:if>
 <c:url var="addAction" value="/group/addUser" ></c:url>
 <form:form action="${addAction}" modelAttribute="user">
-
-
-<table  style="border:3px #FFAC55 dashed;padding:5px;" rules="all" cellpadding='5';>
-	<tr><td>
-		<form:select path="group.id" items="${groupList}" itemLabel="name" itemValue="id" value="${id}"/>
-		</td><td>
-		<form:select path="level" items="${aviableLabels}" />
-		</td><td>
-		<form:select path="id" items="${users}" itemLabel="name" itemValue="id" />
-		</td>
-			<td colspan="2">
-			<c:if test="${!empty user.level}">
-				<input type="submit"
-					value="<spring:message text="修改"/>" />
-			</c:if>
-			<c:if test="${empty user.level}">
-				<input type="submit"
-					value="<spring:message text="添加"/>" />
-			</c:if>
-			</td>
-		</tr>
-	<c:if test="${!empty group.name}">
-	<tr>
-		<td>
-				组名
-		</td> 
-		<td>
-				${group.name}
-		</td> 
-	</tr>
-	
-	
-		<c:forEach items="${labels}" var="label">
-		<tr>
-			<td>${label}层</td>
-			<c:forEach items="${levelUsers[label]}" var="list">
-					<td>
-					 ${list.name}
-					</td>
-    		</c:forEach>
-   		</tr>
-		</c:forEach>
-	</c:if>
-</table>
-
+		<table class="tg">
+			<tr>
+				<th>组</th>
+				<th>层级</th>
+				<th>用户</th>
+				<th>操作</th>
+			</tr>
+			<tr>
+				<td>
+					${group.name}
+					<form:hidden path="group.id" value="${group.id}"/>
+				</td>
+				<td>
+					<form:select path="level" items="${aviableLabels}" />
+				</td>
+				<td>
+					<form:select path="id" items="${users}" itemLabel="name" itemValue="id" />
+				</td>
+				<td colspan="2">
+					<c:if test="${!empty user.level}">
+						<input type="submit" value="<spring:message text="修改"/>" />
+					</c:if>
+					<c:if test="${empty user.level}">
+						<input type="submit" value="<spring:message text="添加"/>" />
+					</c:if>
+				</td>
+			</tr>
+		</table>
 </form:form>
-	
+
+
+<table class="tg">
+	<tr>
+		<th>
+				层级
+		</th> 
+		<th>
+				群成员
+		</th> 
+	</tr>
+	<c:forEach items="${labels}" var="label">
+	<tr>
+		<td>${label}层</td>
+		<c:forEach items="${levelUsers[label]}" var="list">
+				<td>
+				 ${list.name}
+				</td>
+   		</c:forEach>
+  	</tr>
+	</c:forEach>
+</table>
 </body>
 </html>

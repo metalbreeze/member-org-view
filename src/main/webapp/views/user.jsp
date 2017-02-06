@@ -15,7 +15,12 @@
 </head>
 <body>
 <h1>
+	<c:if test="${!empty user.name}">
+	修改用户
+	</c:if>
+	<c:if test="${empty user.name}">
 	添加用户
+	</c:if>
 </h1>
 
 <c:url var="addAction" value="/user/add" ></c:url>
@@ -52,6 +57,16 @@
 		</td>
 		<td>
 			<form:input path="mobile" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="parent.id">
+				<spring:message text="推荐人"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="parent.id" items="${listUsers}" itemLabel="name" itemValue="id" value=""/>
 		</td>
 	</tr>
 	<tr>

@@ -15,9 +15,13 @@
 </head>
 <body>
 <h1>
+	<c:if test="${!empty group.name}">
+	修改组
+	</c:if>
+	<c:if test="${empty group.name}">
 	添加组
+	</c:if>
 </h1>
-
 <c:url var="addAction" value="/group/add" ></c:url>
 
 <form:form action="${addAction}" commandName="group">

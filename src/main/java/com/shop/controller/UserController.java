@@ -1,5 +1,8 @@
 package com.shop.controller;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
@@ -8,8 +11,13 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.ResponseBody;
 
+import com.fasterxml.jackson.annotation.JsonView;
+import com.shop.model.Group;
 import com.shop.model.User;
+import com.shop.model.View;
 import com.shop.service.UserService;
 
 @Controller
@@ -60,4 +68,14 @@ public class UserController {
         return "user";
     }
 
+	@JsonView(View.Collection.class)
+	@RequestMapping(value = "/ajax/usertree", method = RequestMethod.GET)
+	@ResponseBody
+	public User ajaxUserTree(@RequestParam("id") int id) {
+		if (id != 0) {
+			return null;
+		} else {
+			return userService.getUserById(id);
+		}
+	}
 }

@@ -1,12 +1,19 @@
 package com.shop.model;
 
+import java.util.ArrayList;
+import java.util.List;
+
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
+
+import com.fasterxml.jackson.annotation.JsonView;
 
 /**
  * Entity bean with JPA annotations
@@ -44,7 +51,30 @@ public class User {
 
 	@ManyToOne
 	private Group group;
-		
+
+	@ManyToOne
+	private User parent ;
+
+	public User getParent() {
+		return parent;
+	}
+
+	public void setParent(User parent) {
+		this.parent = parent;
+	}
+
+	public List<User> getChildren() {
+		return children;
+	}
+
+	public void setChildren(List<User> children) {
+		this.children = children;
+	}
+
+	@JsonView(View.Collection.class)
+	@OneToMany(mappedBy = "parent")
+	private List<User> children = new ArrayList<User>();
+	
 	public Group getGroup() {
 		return group;
 	}
