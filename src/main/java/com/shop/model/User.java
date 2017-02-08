@@ -36,7 +36,8 @@ public class User {
 	private String mobile;
 	
 	private String address;
-	
+
+	private String password;
 //	private int available=1;
 	
 	private String level;
@@ -51,6 +52,20 @@ public class User {
 
 	@ManyToOne
 	private Group group;
+	
+	@OneToMany(mappedBy = "user")
+	private List<Profile> profiles;
+
+	
+	
+	
+	public List<Profile> getProfiles() {
+		return profiles;
+	}
+
+	public void setProfiles(List<Profile> profiles) {
+		this.profiles = profiles;
+	}
 
 	@ManyToOne
 	private User parent ;
@@ -115,6 +130,14 @@ public class User {
 		this.name = name;
 	}
 	
+	public String getPassword() {
+		return password;
+	}
+
+	public void setPassword(String password) {
+		this.password = password;
+	}
+
 	@Override
 	public String toString(){
 		return "id="+id+", name="+name;

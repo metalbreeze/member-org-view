@@ -7,6 +7,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.model.User;
 
@@ -67,6 +68,15 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User where group_id is null or group_id=0").list();
 		return UsersList;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public User getUserByName(String s) {
+		Session session = this.sessionFactory.getCurrentSession();
+		 User u = (User)session.createQuery("from User where name=:name").setString("name", s).uniqueResult();
+		 logger.debug("getUserByName"+s);
+		return u;
 	}
 
 }

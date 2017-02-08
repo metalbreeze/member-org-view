@@ -1,8 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
-<%@ page language="Java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
 	<title>用户Page</title>
@@ -14,6 +13,7 @@
 	</style>
 </head>
 <body>
+<jsp:include page="_menu.jsp" />
 <h1>
 	<c:if test="${!empty user.name}">
 	修改用户
