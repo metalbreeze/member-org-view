@@ -13,6 +13,7 @@
 	</style>
 </head>
 <body>
+<jsp:include page="_menu.jsp" />
 <h1>
 	<c:if test="${!empty group.name}">
 	修改组

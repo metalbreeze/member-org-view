@@ -9,6 +9,7 @@ import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
+import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.model.Group;
 
@@ -39,6 +40,11 @@ public class GroupDAOImpl implements GroupDAO {
 
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
+	
+	
+	
+	
 	public List<Group> listGroups() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<Group> GroupsList = session.createQuery("from Group").list();

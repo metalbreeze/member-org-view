@@ -42,8 +42,6 @@
 	<beans:bean id="groupService" class="com.shop.service.GroupServiceImpl">
 		<beans:property name="groupDAO" ref="groupDAO"></beans:property>
 	</beans:bean>
-
-
 	<beans:bean id="nodeDAO" class="com.shop.dao.NodeDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
@@ -51,13 +49,7 @@
 		<beans:property name="nodeDAO" ref="nodeDAO"></beans:property>
 	</beans:bean>
 
-
 	<context:component-scan base-package="com.journaldev.spring" />
 	<context:component-scan base-package="com.shop" />
-
-
-	
-
-
 
 </beans:beans>

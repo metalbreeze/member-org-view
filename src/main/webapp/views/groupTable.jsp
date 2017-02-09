@@ -14,6 +14,7 @@
 	</style>
 </head>
 <body>
+<jsp:include page="_menu.jsp" />
 <h1>
 	层级关系
 </h1>

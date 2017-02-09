@@ -8,14 +8,14 @@
    <jsp:include page="_menu.jsp" />
     
     
-   <h1>Login</h1>
+   <h1>登录</h1>
      
      <!-- /login?error=true -->
      <c:if test="${! empty param.error}">
          <div style="color:red;margin:10px 0px;">
           
-                Login Failed!!!<br />
-                Reason :  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
+                登录失败!!!<br />
+                原因 :  ${sessionScope["SPRING_SECURITY_LAST_EXCEPTION"].message}
                  
          </div>
     </c:if>
@@ -33,9 +33,11 @@
             <td><input type='password' name='password' /></td>
          </tr>
          <tr>
-            <td><input name="submit" type="submit" value="submit" /></td>
+            <td><input name="submit" type="submit" value="登录" /></td>
          </tr>
       </table>
   </form>
+  管理员 admin20 密码12345
+  普通用户 user1 密码12345
 </body>
 </html>

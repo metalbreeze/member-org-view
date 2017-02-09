@@ -64,12 +64,12 @@ public class UserDAOImpl implements UserDAO {
 	
 	@SuppressWarnings("unchecked")
 	@Override
+	@Transactional
 	public List<User> listAvailableUsers() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User where group_id is null or group_id=0").list();
 		return UsersList;
 	}
-	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
 	public User getUserByName(String s) {

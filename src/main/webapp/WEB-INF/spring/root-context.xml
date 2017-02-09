@@ -44,10 +44,18 @@
 	<beans:bean id="transactionManager" class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+
 	<beans:bean id="userDAO" class="com.shop.dao.UserDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-	<beans:bean id="userService" class="com.shop.service.UserServiceImpl">
+	<beans:bean id="userDetailsServiceImpl" class="com.shop.service.UserDetailsServiceImpl">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
 	</beans:bean>
+		<beans:bean id="userService" class="com.shop.service.UserServiceImpl">
+		<beans:property name="userDAO" ref="userDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="encoder"
+          class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">
+        <beans:constructor-arg name="strength" value="11"/>
+    </beans:bean>
 </beans:beans>

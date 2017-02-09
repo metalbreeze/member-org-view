@@ -26,6 +26,7 @@
 <c:url var="addAction" value="/user/add" ></c:url>
 
 <form:form action="${addAction}" commandName="user">
+
 <table>
 	<c:if test="${!empty user.name}">
 	<tr>
@@ -35,7 +36,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="id" readonly="true" size="8"  disabled="true" />
+			<form:input path="id" readonly="true" size="8" />
 		</td> 
 	</tr>
 	</c:if>

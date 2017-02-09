@@ -10,7 +10,7 @@
 <body>
 <jsp:include page="_menu.jsp" />
 
-<c:url var="addAction" value="/user/add" ></c:url>
+<c:url var="addAction" value="/myself/edit" ></c:url>
 
 <form:form action="${addAction}" commandName="user">
 <table>
@@ -22,7 +22,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="id" readonly="true" size="8"  disabled="true" />
+			<form:input path="id" readonly="true" size="8"/>
 		</td> 
 	</tr>
 	</c:if>
