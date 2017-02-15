@@ -33,7 +33,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="name" readonly="true"/>
+			<form:input path="name" />
 		</td> 
 	</tr>
 	<tr>
@@ -44,6 +44,46 @@
 		</td>
 		<td>
 			<form:input path="mobile" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="wechat">
+				<spring:message text="微信号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="wechat" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="alipay">
+				<spring:message text="支付宝号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="alipay" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="accountNumber">
+				<spring:message text="银行帐号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="accountNumber" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="address">
+				<spring:message text="地址"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="address" />
 		</td>
 	</tr>
 	<tr>
@@ -59,10 +99,12 @@
 	</tr>
 	<tr>
 		<td colspan="2">
+		 <!-- 
 			<c:if test="${!empty user.name}">
 				<input type="submit"
 					value="<spring:message text="修改"/>" />
 			</c:if>
+		-->
 		</td>
 	</tr>
 </table>	

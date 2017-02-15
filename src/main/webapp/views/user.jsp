@@ -62,6 +62,56 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="wechat">
+				<spring:message text="微信号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="wechat" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="alipay">
+				<spring:message text="支付宝号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="alipay" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="accountNumber">
+				<spring:message text="银行帐号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="accountNumber" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="address">
+				<spring:message text="地址"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="address" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="status">
+				<spring:message text="身份"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="status" items="${userStatus}" />
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<form:label path="parent.id">
 				<spring:message text="推荐人"/>
 			</form:label>
@@ -92,6 +142,13 @@
 		<th width="80">用户 ID</th>
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
+		<th width="120">微信号</th>
+		<th width="120">支付宝号</th>
+		<th width="120">银行帐号</th>
+		<th width="120">地址</th>
+		<th width="120">身份</th>
+		<th width="120">注册时间</th>
+		<th width="120">推荐人</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 	</tr>
@@ -100,6 +157,22 @@
 			<td>${user.id}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
+			<td>${user.wechat}</td>
+			<td>${user.alipay}</td>
+			<td>${user.accountNumber}</td>
+			<td>${user.address}</td>
+			<td>
+				<c:choose>
+					<c:when test="${user.status == 'new' }">
+						新会员
+					</c:when>
+					<c:when test="${user.status == 'old' }">
+						会员
+					</c:when>
+				</c:choose>
+			</td>
+			<td>${user.registerDate}</td>
+			<td>${user.parent.name}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>
 		</tr>

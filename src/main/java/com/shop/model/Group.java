@@ -29,7 +29,7 @@ import com.fasterxml.jackson.annotation.JsonView;
  *
  */
 @Entity
-@Table(name = "GROUP1")
+@Table(name = "group1")
 @JsonIgnoreProperties({ "hibernateLazyInitializer", "handler" })
 public class Group {
 	private static final Logger logger = LoggerFactory.getLogger(Group.class);

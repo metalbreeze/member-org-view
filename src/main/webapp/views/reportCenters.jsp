@@ -9,18 +9,18 @@
 <body>
 <jsp:include page="_menu.jsp" />
 <h1>
-	<c:if test="${!empty group.name}">
+	<c:if test="${!empty reportCenter.name}">
 	修改组
 	</c:if>
-	<c:if test="${empty group.name}">
+	<c:if test="${empty reportCenter.name}">
 	添加组
 	</c:if>
 </h1>
-<c:url var="addAction" value="/group/add" ></c:url>
+<c:url var="addAction" value="/reportCenter/add" ></c:url>
 
-<form:form action="${addAction}" commandName="group">
+<form:form action="${addAction}" commandName="reportCenter">
 <table>
-	<c:if test="${!empty group.id}">
+	<c:if test="${!empty reportCenter.id}">
 	<tr>
 		<td>
 			<form:label path="id">
@@ -45,21 +45,21 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="createDate">
-				<spring:message text="创建时间"/>
+			<form:label path="owner.id">
+				<spring:message text="推荐人"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input readonly="true" path="createDate" />
+			<form:select path="owner.id" items="${listUsers}" itemLabel="name" itemValue="id" value=""/>
 		</td>
 	</tr>
 	<tr>
 		<td colspan="2">
-			<c:if test="${!empty group.name}">
+			<c:if test="${!empty reportCenter.name}">
 				<input type="submit"
 					value="<spring:message text="修改"/>" />
 			</c:if>
-			<c:if test="${empty group.name}">
+			<c:if test="${empty reportCenter.name}">
 				<input type="submit"
 					value="<spring:message text="添加"/>" />
 			</c:if>
@@ -79,15 +79,15 @@
 		<th width="60">删除</th>
 		<th width="60">查看群成员</th>
 	</tr>
-	<c:forEach items="${listGroups}" var="group">
+	<c:forEach items="${listGroups}" var="reportCenter">
 		<tr>
-			<td>${group.id}</td>
-			<td>${group.name}</td>
-			<td>${group.createDate}</td>
-			<td><a href="<c:url value='/group/edit/${group.id}' />" >修改</a></td>
-			<td><a href="<c:url value='/group/remove/${group.id}' />" >删除</a></td>
+			<td>${reportCenter.id}</td>
+			<td>${reportCenter.name}</td>
+			<td>${reportCenter.createDate}</td>
+			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
+			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
 			<td>
-				<a href="<c:url value='/listgroup?group.id=${group.id}'/>">查看群成员</a></td>
+				<a href="<c:url value='/listreportCenter?reportCenter.id=${reportCenter.id}'/>">查看群成员</a></td>
 		</tr>
 	</c:forEach>
 	</table>

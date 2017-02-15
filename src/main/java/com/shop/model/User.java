@@ -1,9 +1,11 @@
 package com.shop.model;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
-import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -11,6 +13,7 @@ import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 
 import com.fasterxml.jackson.annotation.JsonView;
@@ -22,7 +25,7 @@ import com.fasterxml.jackson.annotation.JsonView;
  *
  */
 @Entity
-@Table(name="USER")
+@Table(name="user")
 public class User {
 
 	@Id
@@ -41,7 +44,17 @@ public class User {
 //	private int available=1;
 	
 	private String level;
+	@Column(name="register_date")
+	private Timestamp registerDate = new Timestamp(System.currentTimeMillis());
+	
+	private String wechat;
+	@Column(name="account_number")
+	private String accountNumber;
+	
+	private String alipay;
 
+	private String status;
+	
 	public String getLevel() {
 		return level;
 	}
@@ -52,12 +65,16 @@ public class User {
 
 	@ManyToOne
 	private Group group;
+
+	@OneToOne(mappedBy = "owner")
+	private ReportCenter owner;
+	
+	@ManyToOne
+	private ReportCenter reportCenter;
 	
 	@OneToMany(mappedBy = "user")
 	private List<Profile> profiles;
 
-	
-	
 	
 	public List<Profile> getProfiles() {
 		return profiles;
@@ -141,5 +158,61 @@ public class User {
 	@Override
 	public String toString(){
 		return "id="+id+", name="+name;
+	}
+
+	public String getWechat() {
+		return wechat;
+	}
+
+	public void setWechat(String wechat) {
+		this.wechat = wechat;
+	}
+
+	public String getAccountNumber() {
+		return accountNumber;
+	}
+
+	public void setAccountNumber(String accountNumber) {
+		this.accountNumber = accountNumber;
+	}
+
+	public String getAlipay() {
+		return alipay;
+	}
+
+	public void setAlipay(String alipay) {
+		this.alipay = alipay;
+	}
+
+	public String getStatus() {
+		return status;
+	}
+
+	public void setStatus(String status) {
+		this.status = status;
+	}
+
+	public Timestamp getRegisterDate() {
+		return registerDate;
+	}
+
+	public void setRegisterDate(Timestamp registerDate) {
+		this.registerDate = registerDate;
+	}
+	public static Map<String,String> statusMap=new HashMap<String,String>();
+	static {
+		statusMap.put("new", "新会员");
+		statusMap.put("old", "会员");
+	}
+	public ReportCenter getReportCenter() {
+		return reportCenter;
+	}
+
+	public void setReportCenter(ReportCenter reportCenter) {
+		this.reportCenter = reportCenter;
+	}
+
+	public static Map<String, String> getStatusMap() {
+		return statusMap;
 	}
 }

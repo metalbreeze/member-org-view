@@ -48,6 +48,7 @@ public class UserController extends BaseObject {
 	public String listUsers(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("listUsers", this.userService.listUsers());
+		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}
 
@@ -69,6 +70,11 @@ public class UserController extends BaseObject {
 			User user = userDAO.getUserById(p.getId());
 			user.setAddress(p.getAddress());
 			user.setMobile(p.getMobile());
+			user.setAccountNumber(p.getAccountNumber());
+			user.setWechat(p.getWechat());
+			user.setAlipay(p.getAlipay());
+			user.setParent(p.getParent());
+			user.setStatus(p.getStatus());
 			this.userService.updateUser(user);
 		}
 		return "redirect:/users";
@@ -85,6 +91,7 @@ public class UserController extends BaseObject {
 	public String editUser(@PathVariable("id") int id, Model model) {
 		model.addAttribute("user", this.userService.getUserById(id));
 		model.addAttribute("listUsers", this.userService.listUsers());
+		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}
 

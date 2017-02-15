@@ -29,6 +29,7 @@
 				<beans:value>com.shop.model.Group</beans:value>
 				<beans:value>com.shop.model.Node</beans:value>
 				<beans:value>com.shop.model.Profile</beans:value>
+				<beans:value>com.shop.model.ReportCenter</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
@@ -53,6 +54,9 @@
 	</beans:bean>
 		<beans:bean id="userService" class="com.shop.service.UserServiceImpl">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
+	</beans:bean>
+	<beans:bean id="reportCenterDAO" class="com.shop.dao.ReportCenterDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
 	<beans:bean id="encoder"
           class="org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder">

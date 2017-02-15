@@ -11,7 +11,8 @@
 	.alertMsg {font-size:20px;color:red}
 </style>
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
-
+<span style="font-size:30px">茶多配商务管理系统</span>
+<br/>
 	<a href="${pageContext.request.contextPath}/views/brief.jsp">简介</a> 
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
     	|&nbsp;<a href="${pageContext.request.contextPath}/login">登录</a>
