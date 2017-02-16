@@ -11,6 +11,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.base.BaseObject;
 import com.shop.model.ReportCenter;
+import com.shop.model.User;
 
 @Repository
 public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
@@ -62,9 +63,10 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 	}
 
 	@Override
-	public List<ReportCenter> getReportCenterByOwnerId(int id) {
-		// TODO Auto-generated method stub
-		return null;
+	public ReportCenter getReportCenterByOwnerId(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		ReportCenter p = (ReportCenter) session.createQuery("from ReportCenter where user_id = :id").setInteger("id", id).uniqueResult();
+		return p;
 	}
 	
 }

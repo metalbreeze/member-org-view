@@ -99,6 +99,16 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="reportCenter.id">
+				<spring:message text="报单中心"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="parent.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<form:label path="password">
 				<spring:message text="密码"/>
 			</form:label>

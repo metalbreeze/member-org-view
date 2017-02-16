@@ -14,4 +14,5 @@ public interface UserDAO {
 	public List<User> listAvailableUsers();
 	public User getUserByName(String s);
 	List<User> listAvailableReporterCenterUsers();
+	List<User> getUserByReportCenter(int i);
 }

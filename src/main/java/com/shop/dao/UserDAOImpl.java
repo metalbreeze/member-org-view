@@ -86,5 +86,13 @@ public class UserDAOImpl implements UserDAO {
 		 logger.debug("getUserByName"+s);
 		return u;
 	}
-
+	@Override
+	@Transactional
+	@SuppressWarnings("unchecked")
+	public List<User> getUserByReportCenter(int i) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> l = (List<User>)session.createQuery("from User where reportCenter_id=:id").setInteger("id", i).list();
+		 logger.debug("getUserByReportCenter"+i);
+		return l;
+	}
 }

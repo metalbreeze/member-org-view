@@ -4,14 +4,22 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>组</title>
+	<title>简介</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-<h1>简介</h1>
-简介简介简介简介简介aasdfasdfadsfadsf
-<h3 style="color:red;">${message}</h3>
 
-简介简介简介简介简介aasdfasdfadsfadsf
-</body>
+
+<h1>
+简介
+</h1>
+<c:url var="addAction" value="/group/add" ></c:url>
+
+<form:form action="${addAction}" commandName="group">
+<table>
+</table>	
+</form:form>
+<br>
+<h3>简介</h3>
+	</body>
 </html>

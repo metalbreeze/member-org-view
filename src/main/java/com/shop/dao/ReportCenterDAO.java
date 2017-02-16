@@ -12,5 +12,5 @@ public interface ReportCenterDAO {
 	public List<ReportCenter> listReportCenters();
 	public ReportCenter getReportCenterById(int id);
 	public void removeReportCenter(int id);
-	public List<ReportCenter> getReportCenterByOwnerId(int id);
+	public ReportCenter getReportCenterByOwnerId(int id);
 }

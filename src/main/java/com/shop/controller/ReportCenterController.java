@@ -1,6 +1,7 @@
 package com.shop.controller;
 
 import java.security.Principal;
+import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
@@ -110,12 +111,32 @@ public class ReportCenterController extends BaseObject{
 	
 	@RequestMapping(value = "/myReport", method = RequestMethod.GET)
 	@Transactional
-	//TODO
-	public String listMyReports(Model model,Principal principal) {
+	public String listMyReports(Model model,Principal principal,RedirectAttributes ra) {
         String userName = principal.getName();
         User u = userDAO.getUserByName(userName);
-		model.addAttribute("listReportCenters", this.reportCenterDAO.listReportCenters());
+        ReportCenter r = reportCenterDAO.getReportCenterByOwnerId(u.getId());
+        if(r!=null){
+        	List<User> ul = userDAO.getUserByReportCenter(r.getId());
+        	model.addAttribute("listUsers", ul);
+        }
 		return "myReport";
+	}
+	@RequestMapping("/myReport/active/{id}")
+	@Transactional
+	public String activeUser(@PathVariable("id") int id,Principal principal,RedirectAttributes ra) {
+        String userName = principal.getName();
+        User owner = userDAO.getUserByName(userName);
+        User target = userDAO.getUserById(id);
+        ReportCenter r = reportCenterDAO.getReportCenterByOwnerId(owner.getId());
+        if(target.getReportCenter().getId()!=r.getId() ){
+        	ra.addFlashAttribute(flashMsg, "不是你的用户不能激活");
+        }else{
+        	ra.addFlashAttribute(flashMsg, "你的用户激活");
+        	target.setStatus(old_status);
+        	userDAO.updateUser(target);
+        }
+        
+		return "redirect:/myReport";
 	}
 }
 

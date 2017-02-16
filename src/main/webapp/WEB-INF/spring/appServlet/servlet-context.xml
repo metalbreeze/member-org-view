@@ -45,6 +45,9 @@
 	<beans:bean id="nodeDAO" class="com.shop.dao.NodeDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
+	<beans:bean id="reportCenterDAO" class="com.shop.dao.ReportCenterDAOImpl">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 	<beans:bean id="nodeService" class="com.shop.service.NodeServiceImpl">
 		<beans:property name="nodeDAO" ref="nodeDAO"></beans:property>
 	</beans:bean>
