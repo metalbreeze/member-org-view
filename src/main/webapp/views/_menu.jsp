@@ -21,7 +21,11 @@
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myself">用户信息</a> 
 	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_REPORT')">
+		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
+	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
+		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">报单中心管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/groups">群管理</a>
 	</sec:authorize>

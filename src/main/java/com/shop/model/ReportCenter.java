@@ -1,5 +1,6 @@
 package com.shop.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -37,7 +38,7 @@ public class ReportCenter {
 	
 	private String name;
 	
-	private int money=0;
+	private BigDecimal money=new BigDecimal(0);
 	
 	@OneToOne
 	@JoinColumn(name="user_id")
@@ -62,11 +63,11 @@ public class ReportCenter {
 		this.name = name;
 	}
 
-	public int getMoney() {
+	public BigDecimal getMoney() {
 		return money;
 	}
 
-	public void setMoney(int money) {
+	public void setMoney(BigDecimal money) {
 		this.money = money;
 	}
 

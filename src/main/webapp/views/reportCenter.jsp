@@ -4,16 +4,16 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>组</title>
+	<title>报单中心</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
 <h1>
 	<c:if test="${!empty reportCenter.name}">
-	修改组
+	修改报单中心
 	</c:if>
 	<c:if test="${empty reportCenter.name}">
-	添加组
+	添加报单中心
 	</c:if>
 </h1>
 <c:url var="addAction" value="/reportCenter/add" ></c:url>
@@ -36,11 +36,21 @@
 	<tr>
 		<td>
 			<form:label path="name">
-				<spring:message text="姓名"/>
+				<spring:message text="报单中心名字"/>
 			</form:label>
 		</td>
 		<td>
 			<form:input path="name" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="money">
+				<spring:message text="报单中心余额"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="money" />
 		</td> 
 	</tr>
 	<tr>
@@ -68,26 +78,25 @@
 </table>	
 </form:form>
 <br>
-<h3>组列表</h3>
-<c:if test="${!empty listGroups}">
+<h3>报单中心列表</h3>
+<c:if test="${!empty listReportCenters}">
 	<table class="tg">
 	<tr>
-		<th width="80">组 ID</th>
-		<th width="120">组姓名</th>
-		<th width="120">组手机</th>
+		<th width="80">报单中心 ID</th>
+		<th width="120">报单中心名字</th>
+		<th width="120">余额</th>
+		<th width="120">负责人</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
-		<th width="60">查看群成员</th>
 	</tr>
-	<c:forEach items="${listGroups}" var="reportCenter">
+	<c:forEach items="${listReportCenters}" var="reportCenter">
 		<tr>
 			<td>${reportCenter.id}</td>
 			<td>${reportCenter.name}</td>
-			<td>${reportCenter.createDate}</td>
+			<td>${reportCenter.money}</td>
+			<td>${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
-			<td>
-				<a href="<c:url value='/listreportCenter?reportCenter.id=${reportCenter.id}'/>">查看群成员</a></td>
 		</tr>
 	</c:forEach>
 	</table>

@@ -17,8 +17,10 @@
         <intercept-url pattern="/logout" access="permitAll()" />
  
  		<intercept-url pattern="/myself**" access="hasAnyRole('ROLE_USER')" />
+ 		<intercept-url pattern="/myReport**" access="hasAnyRole('ROLE_REPORT')" />
         <intercept-url pattern="/user**" access="hasAnyRole('ROLE_ADMIN')" />
         <intercept-url pattern="/group**" access="hasRole('ROLE_ADMIN')" />
+        <intercept-url pattern="/reportCenter**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/other/**" access="isAuthenticated()" />
  
         <access-denied-handler error-page="/403" />
