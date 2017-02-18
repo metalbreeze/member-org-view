@@ -104,7 +104,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:select path="parent.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
+			<form:select path="reportCenter.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
 		</td>
 	</tr>
 	<tr>

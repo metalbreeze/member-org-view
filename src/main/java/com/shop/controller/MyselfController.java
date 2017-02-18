@@ -50,10 +50,11 @@ public class MyselfController extends BaseObject {
 				return "redirect:/register";
 			}else{
 				logger.debug("password  "+p.getPassword());
+				logger.debug("report center"+p.getReportCenter().getId());
 				String encode = encoder.encode(p.getPassword());
 				p.setPassword(encode);
 				this.userService.addUser(p);
-				ra.addFlashAttribute("flashMsg2", "添加成功,重新登录");
+				ra.addFlashAttribute("flashMsg", "添加成功,重新登录");
 				return "redirect:/login";
 			}
 			

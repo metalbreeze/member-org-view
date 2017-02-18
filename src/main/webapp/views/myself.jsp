@@ -98,6 +98,16 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<form:label path="reportCenter">
+				<spring:message text="报单中心"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="reportCenter.name" />
+		</td>
+	</tr>
+	<tr>
 		<td colspan="2">
 		 <!-- 
 			<c:if test="${!empty user.name}">

@@ -38,6 +38,7 @@
       </table>
   </form>
   管理员 admin20 密码12345
+ 报单用户  report1 密码12345
   普通用户 user1 密码12345
 </body>
 </html>
