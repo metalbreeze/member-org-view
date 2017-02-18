@@ -1,6 +1,8 @@
 package com.shop.controller;
 
+import java.math.BigDecimal;
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -16,8 +18,10 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.shop.base.BaseObject;
+import com.shop.dao.GroupDAO;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
+import com.shop.model.Group;
 import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.model.View;
@@ -30,6 +34,9 @@ public class ReportCenterController extends BaseObject{
 	@Autowired(required = true)
 	@Qualifier(value = "userDAO")
 	private UserDAO userDAO;
+	@Autowired(required = true)
+	@Qualifier(value = "groupDAO")
+	private GroupDAO groupDAO;	
 	@RequestMapping(value = "/reportCenters", method = RequestMethod.GET)
 	@Transactional
 	public String listReportCenters(Model model) {
@@ -121,22 +128,79 @@ public class ReportCenterController extends BaseObject{
         }
 		return "myReport";
 	}
+	static final BigDecimal A_REPORT_COST = new BigDecimal(999);
 	@RequestMapping("/myReport/active/{id}")
 	@Transactional
 	public String activeUser(@PathVariable("id") int id,Principal principal,RedirectAttributes ra) {
+		logger.info("activeUser " + id);
         String userName = principal.getName();
         User owner = userDAO.getUserByName(userName);
         User target = userDAO.getUserById(id);
         ReportCenter r = reportCenterDAO.getReportCenterByOwnerId(owner.getId());
         if(target.getReportCenter().getId()!=r.getId() ){
         	ra.addFlashAttribute(flashMsg, "不是你的用户不能激活");
+        	logger.error("activeUser 非法激活 " + id);
         }else{
-        	ra.addFlashAttribute(flashMsg, "你的用户激活");
-        	target.setStatus(old_status);
-        	userDAO.updateUser(target);
+			BigDecimal b = r.getMoney().add(A_REPORT_COST.negate());
+			if (b.signum()==-1){
+				ra.addFlashAttribute(flashMsg, "钱不够");
+			}else{
+				Group group = groupDAO.getAvailableGroup();
+				List<User> users = group.getUsers();
+				logger.info(group.getName()+" group.getUsers().size() " +users.size());
+				if (users.size()==62){
+					group.setEndDate(new Timestamp(System.currentTimeMillis()));
+					Group group1 = new Group();
+					Group group2 = new Group();
+					group1.setName(group.getId()+"-A");
+					group2.setName(group.getId()+"-B");
+					Group.transform(group);
+					for (int i = 1; i < Group.labels.length; i++) {
+						List<User> ulist = group.getLevelUsers().get(Group.labels[i]);
+						for (int j = 0; j < ulist.size();j++) {
+							User user = (User) ulist.get(j);
+							logger.debug("upgrade level:" + user.getId() + " level:"
+									+ user.getLevel() + " to:" + Group.labels[i - 1]);
+							user.setLevel(Group.labels[i - 1]);
+							if (j >= Group.maxLabels[i] / 2) {
+								user.setGroup(group2);
+							} else {
+								user.setGroup(group1);
+							}
+						}
+					}
+					final User userLevealA = group.getLevelUsers().get(Group.labels[0]).get(0);
+					group.getUsers().clear();
+					groupDAO.addGroup(group1);
+					groupDAO.addGroup(group2);
+					groupDAO.updateGroup(group);
+					target.setLevel("E");
+					target.setGroup(group2);
+					target.setStatus(old_status);
+					userDAO.updateUser(target);
+					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活"
+							+"\r\n 分群成功:id"+group1.getId()+"和"+group2.getId());
+					logger.debug(target.getName()+" 用户已经激活"
+							+"\r\n 分群成功:id"+group1.getId()+"和"+group2.getId());
+					userLevealA.setLevel("F");
+					userLevealA.setGroup(group1);
+					userDAO.updateUser(userLevealA);
+				}else{
+					target.setLevel("F");
+					target.setGroup(group);
+					target.setStatus(old_status);
+					userDAO.updateUser(target);
+					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活");
+				}
+				logger.info(owner.toString()+"active a user "+target.toString()+" with money");
+				r.setMoney(b);
+				reportCenterDAO.updateReportCenter(r);
+			}
         }
         
 		return "redirect:/myReport";
 	}
+
 }
+
 

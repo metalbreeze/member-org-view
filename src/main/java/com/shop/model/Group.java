@@ -1,6 +1,7 @@
 package com.shop.model;
 
 import java.sql.Date;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Iterator;
@@ -42,7 +43,8 @@ public class Group {
 	@JsonView(View.Simple.class)
 	private String name;
 
-	private Date createDate = new Date(System.currentTimeMillis());
+	private Timestamp createDate = new Timestamp(System.currentTimeMillis());
+	private Timestamp endDate ;
 
 	@JsonView(View.Collection.class)
 	@OneToMany(mappedBy = "group" ,cascade = CascadeType.ALL )
@@ -79,11 +81,11 @@ public class Group {
 		this.levelUsers = levelUsers;
 	}
 
-	public Date getCreateDate() {
+	public Timestamp getCreateDate() {
 		return createDate;
 	}
 
-	public void setCreateDate(Date date) {
+	public void setCreateDate(Timestamp date) {
 		this.createDate = date;
 	}
 
@@ -140,4 +142,12 @@ public class Group {
 	}
 	public static String[] labels = new String[]{"A","B","C","D","E","F"};
 	public static int[] maxLabels =  new int[]  {  1,  2,  4,  8, 16, 32};
+
+	public Timestamp getEndDate() {
+		return endDate;
+	}
+
+	public void setEndDate(Timestamp endDate) {
+		this.endDate = endDate;
+	}
 }

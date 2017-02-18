@@ -156,7 +156,6 @@ public class GroupController {
 		logger.debug("currentsize" + currentsize);
 		if (62 == currentsize) {
 			logger.info("group.getUsers().size() 分群" + group.getUsers().size());
-
 			group.setName(group.getName() + "-A");
 			Group group2 = new Group();
 			group2.setName(group.getName() + "-B");

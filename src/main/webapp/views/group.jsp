@@ -74,7 +74,7 @@
 	<tr>
 		<th width="80">组 ID</th>
 		<th width="120">组姓名</th>
-		<th width="120">组手机</th>
+		<th width="120">创建时间</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 		<th width="60">查看群成员</th>

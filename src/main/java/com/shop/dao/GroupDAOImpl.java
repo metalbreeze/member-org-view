@@ -93,6 +93,16 @@ public class GroupDAOImpl implements GroupDAO {
 //		logger.info("Group List::xxxxxxxxxxxxxxx"+g);
 //		return g;
 //	}
-	
+	@Override
+	public Group getAvailableGroup() {
+		Session session = this.sessionFactory.getCurrentSession();		
+		Group p = (Group) session.createQuery("from Group where endDate is null order by id").setFirstResult(0).setMaxResults(1).uniqueResult();
+		if (p==null){
+			p=new Group();
+			session.persist(p);
+			logger.error("Should not created by AvailableGroupsuccessfully, Group details="+p);
+		}
+		return p;
+	}	
 	
 }

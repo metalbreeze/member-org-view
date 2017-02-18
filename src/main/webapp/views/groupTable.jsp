@@ -1,7 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
-<%@ page session="false" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -26,6 +26,7 @@
 		组2：
 		<a href="<c:url value="/listgroup?group.id="/>${group2.id}">${group2.name}</a>
 </c:if>
+<sec:authorize access="hasRole('ROLE_ADMIN')">
 <c:url var="addAction" value="/group/addUser" ></c:url>
 <form:form action="${addAction}" modelAttribute="user">
 		<table class="tg">
@@ -57,7 +58,7 @@
 			</tr>
 		</table>
 </form:form>
-
+</sec:authorize>
 
 <table class="tg">
 	<tr>
