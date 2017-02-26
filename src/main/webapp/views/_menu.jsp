@@ -11,7 +11,7 @@
 	.alertMsg {font-size:20px;color:red}
 </style>
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
-<span style="font-size:30px">茶多配商务管理系统</span>
+<span style="font-size:30px">商务管理系统</span>
 <br/>
 	<a href="${pageContext.request.contextPath}/views/brief.jsp">简介</a> 
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -28,6 +28,7 @@
 		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">报单中心管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/groups">群管理</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/listoperations">账户流水</a>
 	</sec:authorize>
 	<c:if test="${pageContext.request.userPrincipal.name != null}">
     	|&nbsp;<a href="${pageContext.request.contextPath}/logout">退出</a>

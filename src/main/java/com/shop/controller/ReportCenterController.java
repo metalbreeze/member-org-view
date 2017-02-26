@@ -19,9 +19,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.fasterxml.jackson.annotation.JsonView;
 import com.shop.base.BaseObject;
 import com.shop.dao.GroupDAO;
+import com.shop.dao.OperationDAOImpl;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Group;
+import com.shop.model.Operation;
 import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.model.View;
@@ -37,6 +39,10 @@ public class ReportCenterController extends BaseObject{
 	@Autowired(required = true)
 	@Qualifier(value = "groupDAO")
 	private GroupDAO groupDAO;	
+	@Autowired(required = true)
+	@Qualifier(value = "operationDAOImpl")
+	private OperationDAOImpl operationDAO;	
+	
 	@RequestMapping(value = "/reportCenters", method = RequestMethod.GET)
 	@Transactional
 	public String listReportCenters(Model model) {
@@ -114,7 +120,17 @@ public class ReportCenterController extends BaseObject{
 		this.reportCenterDAO = reportCenterDAO;
 	}
 
-	
+	@RequestMapping(value = "/reportCenter/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String listReports(@PathVariable("id") int id,Model model) {
+        ReportCenter r = reportCenterDAO.getReportCenterById(id);
+        if(r!=null){
+        	List<User> ul = userDAO.getUserByReportCenter(r.getId());
+        	model.addAttribute("listUsers", ul);
+        }
+        model.addAttribute("reportCenter", r);
+		return "myReport";
+	}
 	
 	@RequestMapping(value = "/myReport", method = RequestMethod.GET)
 	@Transactional
@@ -126,6 +142,7 @@ public class ReportCenterController extends BaseObject{
         	List<User> ul = userDAO.getUserByReportCenter(r.getId());
         	model.addAttribute("listUsers", ul);
         }
+        model.addAttribute("reportCenter", r);
 		return "myReport";
 	}
 	static final BigDecimal A_REPORT_COST = new BigDecimal(999);
@@ -149,6 +166,9 @@ public class ReportCenterController extends BaseObject{
 				List<User> users = group.getUsers();
 				logger.info(group.getName()+" group.getUsers().size() " +users.size());
 				if (users.size()==62){
+					target.setLevel("F");
+					target.setStatus(old_status);
+					users.add(target);
 					group.setEndDate(new Timestamp(System.currentTimeMillis()));
 					Group group1 = new Group();
 					Group group2 = new Group();
@@ -162,10 +182,20 @@ public class ReportCenterController extends BaseObject{
 							logger.debug("upgrade level:" + user.getId() + " level:"
 									+ user.getLevel() + " to:" + Group.labels[i - 1]);
 							user.setLevel(Group.labels[i - 1]);
+							//会员分红奖
+							user.addMoney(Group.levelMoney[i-1]);
+							Operation op = new Operation();
+							op.setMoney(new BigDecimal(Group.levelMoney[i-1]));
+							op.setOperation(Group.labels[i]+"-"+Group.labels[i - 1]);
+							op.setReportCenter(r);
+							op.setUser(user);
+							operationDAO.addOperation(op);
 							if (j >= Group.maxLabels[i] / 2) {
 								user.setGroup(group2);
+								user.setPosition(j - Group.maxLabels[i] / 2+1);
 							} else {
 								user.setGroup(group1);
+								user.setPosition(j+1);
 							}
 						}
 					}
@@ -174,26 +204,55 @@ public class ReportCenterController extends BaseObject{
 					groupDAO.addGroup(group1);
 					groupDAO.addGroup(group2);
 					groupDAO.updateGroup(group);
-					target.setLevel("E");
-					target.setGroup(group2);
-					target.setStatus(old_status);
-					userDAO.updateUser(target);
+//					target.setLevel("E");
+//					target.setGroup(group2);
+//					target.setStatus(old_status);
+//					userDAO.updateUser(target);
 					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活"
 							+"\r\n 分群成功:id"+group1.getId()+"和"+group2.getId());
 					logger.debug(target.getName()+" 用户已经激活"
 							+"\r\n 分群成功:id"+group1.getId()+"和"+group2.getId());
 					userLevealA.setLevel("F");
+					userLevealA.setPosition(1);
 					userLevealA.setGroup(group1);
 					userDAO.updateUser(userLevealA);
+					//分享回馈奖
+					userLevealA.getParent().addMoney(3000);
+					Operation op = new Operation();
+					op.setMoney(3000);
+					op.setOperation("回馈奖");
+					op.setReportCenter(r);
+					op.setUser(userLevealA);
+					operationDAO.addOperation(op);					
+					//有空测试下.
+					userDAO.updateUser(userLevealA.getParent());
+//					出局服务费
+					Operation op1 = new Operation();
+					op1.setMoney(90);
+					op1.setOperation("出局");
+					op1.setReportCenter(r);
+					op1.setUser(userLevealA);
+					operationDAO.addOperation(op1);
 				}else{
 					target.setLevel("F");
 					target.setGroup(group);
 					target.setStatus(old_status);
+					int i = userDAO.getCurrentPosiztionByGroup(group,"F");
+					target.setPosition(i+1);
 					userDAO.updateUser(target);
 					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活");
 				}
+				target.getParent().addMoney(100);
+				//有空测试下.直推奖
+				userDAO.updateUser(target.getParent());
 				logger.info(owner.toString()+"active a user "+target.toString()+" with money");
-				r.setMoney(b);
+				//每报一单 10
+				Operation op = new Operation();
+				op.setMoney(10);
+				op.setOperation("报单");
+				op.setReportCenter(r);
+				op.setUser(target);
+				operationDAO.addOperation(op);	
 				reportCenterDAO.updateReportCenter(r);
 			}
         }

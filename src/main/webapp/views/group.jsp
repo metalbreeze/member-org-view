@@ -75,6 +75,7 @@
 		<th width="80">组 ID</th>
 		<th width="120">组姓名</th>
 		<th width="120">创建时间</th>
+		<th width="120">结束时间</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 		<th width="60">查看群成员</th>
@@ -84,10 +85,10 @@
 			<td>${group.id}</td>
 			<td>${group.name}</td>
 			<td>${group.createDate}</td>
+			<td>${group.endDate}</td>
 			<td><a href="<c:url value='/group/edit/${group.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/group/remove/${group.id}' />" >删除</a></td>
-			<td>
-				<a href="<c:url value='/listgroup?group.id=${group.id}'/>">查看群成员</a></td>
+			<td><a href="<c:url value='/listgroup?group.id=${group.id}'/>">查看群成员</a></td>
 		</tr>
 	</c:forEach>
 	</table>

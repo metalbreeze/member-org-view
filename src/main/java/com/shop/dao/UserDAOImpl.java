@@ -9,6 +9,7 @@ import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
 
+import com.shop.model.Group;
 import com.shop.model.User;
 
 @Repository
@@ -94,5 +95,14 @@ public class UserDAOImpl implements UserDAO {
 		List<User> l = (List<User>)session.createQuery("from User where reportCenter_id=:id").setInteger("id", i).list();
 		 logger.debug("getUserByReportCenter"+i);
 		return l;
+	}
+
+	@Override
+	public int getCurrentPosiztionByGroup(Group group, String Level) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Long l = (Long) session.createQuery("select count(*) from User where group_id=:id and level=:level")
+					.setInteger("id", group.getId())
+					.setString("level", Level).uniqueResult();
+		return l.intValue();
 	}
 }

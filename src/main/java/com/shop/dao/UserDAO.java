@@ -2,6 +2,7 @@ package com.shop.dao;
 
 import java.util.List;
 
+import com.shop.model.Group;
 import com.shop.model.User;
 
 public interface UserDAO {
@@ -15,4 +16,5 @@ public interface UserDAO {
 	public User getUserByName(String s);
 	List<User> listAvailableReporterCenterUsers();
 	List<User> getUserByReportCenter(int i);
+	public int getCurrentPosiztionByGroup(Group group,String Level);
 }

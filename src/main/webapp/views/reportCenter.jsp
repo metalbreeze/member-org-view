@@ -88,6 +88,7 @@
 		<th width="120">负责人</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
+		<th width="60">详细</th>
 	</tr>
 	<c:forEach items="${listReportCenters}" var="reportCenter">
 		<tr>
@@ -97,6 +98,7 @@
 			<td>${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
+			<td><a href="<c:url value='/reportCenter/${reportCenter.id}' />" >详细</a></td>
 		</tr>
 	</c:forEach>
 	</table>

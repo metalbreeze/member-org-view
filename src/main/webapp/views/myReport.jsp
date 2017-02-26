@@ -8,6 +8,46 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
+
+<h1>
+	${reportCenter.name }
+</h1>
+
+<form:form action="" commandName="reportCenter">
+<table>
+	<tr>
+		<td>
+			<form:label path="id">
+				<spring:message text="ID"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="id" readonly="true" size="8" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="name">
+				<spring:message text="报单中心名字"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="name" readonly="true" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="money">
+				<spring:message text="余额"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="money" readonly="true" />
+		</td>
+	</tr>
+</table>	
+</form:form>
+
 <h3>用户列表</h3>
 <c:if test="${!empty listUsers}">
 	<table class="tg">

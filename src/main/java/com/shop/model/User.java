@@ -1,5 +1,6 @@
 package com.shop.model;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -44,6 +45,7 @@ public class User {
 //	private int available=1;
 	
 	private String level;
+	private Integer position;
 	@Column(name="register_date")
 	private Timestamp registerDate = new Timestamp(System.currentTimeMillis());
 	
@@ -54,6 +56,9 @@ public class User {
 	private String alipay;
 
 	private String status;
+	
+	private BigDecimal money=new BigDecimal(0);
+	private BigDecimal withdraw=new BigDecimal(0);
 	
 	public String getLevel() {
 		return level;
@@ -74,6 +79,9 @@ public class User {
 	
 	@OneToMany(mappedBy = "user")
 	private List<Profile> profiles;
+
+	@OneToMany(mappedBy = "user")
+	private List<Operation> operations;
 
 	
 	public List<Profile> getProfiles() {
@@ -214,5 +222,53 @@ public class User {
 
 	public static Map<String, String> getStatusMap() {
 		return statusMap;
+	}
+
+	public int getPosition() {
+		return position;
+	}
+
+	public void setPosition(int postion) {
+		this.position = postion;
+	}
+
+	public ReportCenter getOwner() {
+		return owner;
+	}
+
+	public void setOwner(ReportCenter owner) {
+		this.owner = owner;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
+	}
+
+	public BigDecimal getMoney() {
+		return money;
+	}
+
+	public void setMoney(BigDecimal money) {
+		this.money = money;
+	}
+
+	public void addMoney(int i) {
+		if(money==null){
+			money=new BigDecimal(i);
+		}else{
+			this.money.add(new BigDecimal(i));
+		}
+	}
+
+	public BigDecimal getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(BigDecimal withdraw) {
+		this.withdraw = withdraw;
 	}
 }

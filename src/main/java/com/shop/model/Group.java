@@ -142,7 +142,8 @@ public class Group {
 	}
 	public static String[] labels = new String[]{"A","B","C","D","E","F"};
 	public static int[] maxLabels =  new int[]  {  1,  2,  4,  8, 16, 32};
-
+	public static int[] levelMoney =  new int[] {  4000, 400,  300,  200, 100, 0};
+	
 	public Timestamp getEndDate() {
 		return endDate;
 	}

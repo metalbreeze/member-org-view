@@ -30,6 +30,7 @@
 				<beans:value>com.shop.model.Node</beans:value>
 				<beans:value>com.shop.model.Profile</beans:value>
 				<beans:value>com.shop.model.ReportCenter</beans:value>
+				<beans:value>com.shop.model.Operation</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">

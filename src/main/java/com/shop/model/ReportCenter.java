@@ -47,6 +47,9 @@ public class ReportCenter {
 	@OneToMany(mappedBy = "reportCenter" )
 	private List<User> members;
 
+	@OneToMany(mappedBy = "reportCenter" )
+	private List<Operation> operations;
+
 	public int getId() {
 		return id;
 	}
@@ -85,5 +88,13 @@ public class ReportCenter {
 
 	public void setMembers(List<User> members) {
 		this.members = members;
+	}
+
+	public List<Operation> getOperations() {
+		return operations;
+	}
+
+	public void setOperations(List<Operation> operations) {
+		this.operations = operations;
 	}
 }
