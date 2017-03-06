@@ -1,5 +1,9 @@
 package com.shop.dao;
 
+import java.math.BigDecimal;
+import java.util.ArrayList;
+import java.util.Hashtable;
+import java.util.Iterator;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -79,6 +83,14 @@ public class UserDAOImpl implements UserDAO {
 		List<User> UsersList = session.createQuery("from User where reportCenter_id is null or reportCenter_id=0").list();
 		return UsersList;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	@Transactional
+	public List<User> listOldUsers() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> UsersList = session.createQuery("from User where status='old'").list();
+		return UsersList;
+	}
 	@Override
 	@Transactional
 	public User getUserByName(String s) {
@@ -105,4 +117,82 @@ public class UserDAOImpl implements UserDAO {
 					.setString("level", Level).uniqueResult();
 		return l.intValue();
 	}
+	
+	@Override
+	public List<User> getNoParenetUsers() {
+		Session session = this.sessionFactory.getCurrentSession();
+		@SuppressWarnings("unchecked")
+//		List<User> l =  session.createQuery("SELECT t1 FROM User t1 LEFT JOIN t1.parent t2 WHERE t2.id is NULL")
+//					       .list();
+		List<User> l =  session.createQuery("SELECT t1 FROM User t1 where t1.id=20")
+			       .list();
+		//个人
+		Hashtable<Integer, BigDecimal> person = new Hashtable<Integer, BigDecimal>();
+		//团队
+		Hashtable<Integer, BigDecimal> group = new Hashtable<Integer, BigDecimal>();
+		for (Iterator iterator = l.iterator(); iterator.hasNext();) {
+			User user = (User) iterator.next();
+			if(user.getChildren().size()==0){
+				
+			}else{
+				
+			}
+			User parent = user.getParent();
+			BigDecimal personScore=person.get(parent.getId());
+			if(personScore==null){
+				personScore=parent.getMoney();
+				person.put(parent.getId(), personScore);
+			}else{
+				person.put(parent.getId(),user.getMoney().add(personScore));
+			}
+		}
+		return l;
+	}
+	@Override
+	public BigDecimal getChildrenGroupScore(User u ){
+		Session session = this.sessionFactory.getCurrentSession();
+		BigDecimal b = u.getPersonalScore()==null?new BigDecimal(0):u.getPersonalScore();
+		BigDecimal c = b;
+		List<User> l = u.getChildren();
+		logger.debug("id"+u.getId()+"begin b"+b+"c"+c);
+		for (Iterator iterator = l.iterator(); iterator.hasNext();) {
+			User user = (User) iterator.next();
+			BigDecimal ds = getChildrenGroupScore(user);
+			logger.debug("id"+user.getId()+"b."+b+"c."+c+"ds."+ds);
+			b=b.add(ds);
+			c=c.add(user.getPersonalScore()==null?new BigDecimal(0):user.getPersonalScore());
+		}
+		u.setGroupScore(b);
+		u.setDirectScore(c);
+		logger.debug("id"+u.getId()+"setGroup"+b+"Person"+c);
+		session.update(u);
+		return b;
+	}
+	@Override
+	public int getOldUser(){
+		Session session = this.sessionFactory.getCurrentSession();
+		Long i = (Long) session.createQuery("SELECT count(*) FROM User t1 where t1.status='old'").uniqueResult();
+		return i.intValue();
+	}
+	@Override
+	public BigDecimal getWithdraw(){
+		Session session = this.sessionFactory.getCurrentSession();
+		BigDecimal i = (BigDecimal) session.createQuery("SELECT sum(withdraw) FROM User t1 where t1.status='old'").uniqueResult();
+		return i;
+	}	
+	//	Hashtable<User, BigDecimal> handleUp(Hashtable<User, BigDecimal> ht){
+//		Hashtable<User, BigDecimal> person = new Hashtable<User, BigDecimal> ();
+//		for (Iterator iterator = ht.keySet().iterator(); iterator.hasNext();) {
+//			User u = (User) iterator.next();
+//			if(u.getParent()==null){
+//				u.
+//			}else{
+//				person.put(u.getParent(), value)
+//			}
+//			
+//		}
+//		
+//		return person;
+//	}
+//	
 }

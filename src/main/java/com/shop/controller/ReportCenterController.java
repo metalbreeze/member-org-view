@@ -78,6 +78,7 @@ public class ReportCenterController extends BaseObject{
 			ReportCenter x = reportCenterDAO.getReportCenterById(p.getId());
 			x.setOwner(p.getOwner());
 			x.setMoney(p.getMoney());
+			x.setElectricMoney(p.getElectricMoney());
 			this.reportCenterDAO.updateReportCenter(x);
 		}
 
@@ -158,7 +159,10 @@ public class ReportCenterController extends BaseObject{
         	ra.addFlashAttribute(flashMsg, "不是你的用户不能激活");
         	logger.error("activeUser 非法激活 " + id);
         }else{
-			BigDecimal b = r.getMoney().add(A_REPORT_COST.negate());
+        	if(r.getElectricMoney()==null){
+        		r.setElectricMoney(new BigDecimal(0));
+        	}
+			BigDecimal b = r.getElectricMoney().add(A_REPORT_COST.negate());
 			if (b.signum()==-1){
 				ra.addFlashAttribute(flashMsg, "钱不够");
 			}else{

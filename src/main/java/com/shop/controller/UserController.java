@@ -106,6 +106,16 @@ public class UserController extends BaseObject {
 		}
 	}
 
+	@RequestMapping(value = "/listScore/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String listScore(@PathVariable("id") int id,Model model) {
+		User u = userDAO.getUserById(id);
+		model.addAttribute("listUsers", this.userDAO.getChildrenGroupScore(u));
+		userDAO.getChildrenGroupScore(u);
+		model.addAttribute("userStatus", User.statusMap);
+		return "listScore";
+	}
+	
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}

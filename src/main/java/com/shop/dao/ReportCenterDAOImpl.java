@@ -1,5 +1,6 @@
 package com.shop.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import org.hibernate.Session;
@@ -68,5 +69,10 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 		ReportCenter p = (ReportCenter) session.createQuery("from ReportCenter where user_id = :id").setInteger("id", id).uniqueResult();
 		return p;
 	}
-	
+	@Override
+	public BigDecimal getReportCenterCost() {
+		Session session = this.sessionFactory.getCurrentSession();
+		BigDecimal p = (BigDecimal) session.createQuery("select sum(money) from ReportCenter").uniqueResult();
+		return p;
+	}
 }

@@ -40,6 +40,8 @@ public class ReportCenter {
 	
 	private BigDecimal money=new BigDecimal(0);
 	
+	
+	private BigDecimal electricMoney=new BigDecimal(0);
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User owner;
@@ -96,5 +98,13 @@ public class ReportCenter {
 
 	public void setOperations(List<Operation> operations) {
 		this.operations = operations;
+	}
+
+	public BigDecimal getElectricMoney() {
+		return electricMoney;
+	}
+
+	public void setElectricMoney(BigDecimal electricMoney) {
+		this.electricMoney = electricMoney;
 	}
 }

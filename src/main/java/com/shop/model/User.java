@@ -59,6 +59,10 @@ public class User {
 	
 	private BigDecimal money=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
+
+	private BigDecimal groupScore=new BigDecimal(0);
+	private BigDecimal personalScore=new BigDecimal(0);
+	private BigDecimal directScore=new BigDecimal(0);
 	
 	public String getLevel() {
 		return level;
@@ -270,5 +274,33 @@ public class User {
 
 	public void setWithdraw(BigDecimal withdraw) {
 		this.withdraw = withdraw;
+	}
+
+	public BigDecimal getGroupScore() {
+		return groupScore;
+	}
+
+	public void setGroupScore(BigDecimal groupScore) {
+		this.groupScore = groupScore;
+	}
+
+	public BigDecimal getPersonalScore() {
+		return personalScore;
+	}
+
+	public void setPersonalScore(BigDecimal personalScore) {
+		this.personalScore = personalScore;
+	}
+
+	public void setPosition(Integer position) {
+		this.position = position;
+	}
+
+	public BigDecimal getDirectScore() {
+		return directScore;
+	}
+
+	public void setDirectScore(BigDecimal directScore) {
+		this.directScore = directScore;
 	}
 }

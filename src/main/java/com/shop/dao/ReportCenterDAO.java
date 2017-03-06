@@ -1,5 +1,6 @@
 package com.shop.dao;
 
+import java.math.BigDecimal;
 import java.util.List;
 
 import com.shop.model.ReportCenter;
@@ -13,4 +14,5 @@ public interface ReportCenterDAO {
 	public ReportCenter getReportCenterById(int id);
 	public void removeReportCenter(int id);
 	public ReportCenter getReportCenterByOwnerId(int id);
+	public BigDecimal getReportCenterCost();
 }
