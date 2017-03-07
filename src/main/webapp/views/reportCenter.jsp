@@ -45,12 +45,22 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="money">
-				<spring:message text="报单中心余额"/>
+			<form:label path="money1">
+				<spring:message text="费用1"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="money" />
+			<form:input path="money1" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="money2">
+				<spring:message text="费用2"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="money2" />
 		</td> 
 	</tr>
 		<tr>
@@ -94,7 +104,8 @@
 	<tr>
 		<th width="80">报单中心 ID</th>
 		<th width="120">报单中心名字</th>
-		<th width="120">余额</th>
+		<th width="120">费用1</th>
+		<th width="120">费用2</th>
 		<th width="120">电子币</th>
 		<th width="120">负责人</th>
 		<th width="60">修改</th>
@@ -105,7 +116,8 @@
 		<tr>
 			<td>${reportCenter.id}</td>
 			<td>${reportCenter.name}</td>
-			<td>${reportCenter.money}</td>
+			<td>${reportCenter.money1}</td>
+			<td>${reportCenter.money2}</td>
 			<td>${reportCenter.electricMoney}</td>
 			<td>${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>

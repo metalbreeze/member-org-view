@@ -53,7 +53,7 @@
 	<beans:bean id="userDetailsServiceImpl" class="com.shop.service.UserDetailsServiceImpl">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
 	</beans:bean>
-		<beans:bean id="userService" class="com.shop.service.UserServiceImpl">
+	<beans:bean id="userService" class="com.shop.service.UserServiceImpl">
 		<beans:property name="userDAO" ref="userDAO"></beans:property>
 	</beans:bean>
 	<beans:bean id="reportCenterDAO" class="com.shop.dao.ReportCenterDAOImpl">

@@ -24,9 +24,8 @@
 	<sec:authorize access="hasRole('ROLE_REPORT')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
 	</sec:authorize>
-		|&nbsp;<a href="${pageContext.request.contextPath}/listScore">领导奖</a>
-		|&nbsp;<a href="${pageContext.request.contextPath}/platformFinance">平台管理账务明细</a>
-		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance/20">会员奖金账务明细</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/platformFinance">平台账务</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance">会员奖金</a>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">报单中心管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>

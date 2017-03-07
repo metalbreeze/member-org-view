@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.base.BaseObject;
@@ -83,9 +84,9 @@ public class FinanceController extends BaseObject {
 		return "platformFinance";
 	}
 
-	@RequestMapping(value = "/userFinance/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/userFinanceByID", method = RequestMethod.GET)
 	@Transactional
-	public String userFinance(@PathVariable("id") int id,Model model) {
+	public String userFinanceByID(@RequestParam("id") int id,Model model) {
 		int i;
 		if (id == 0) {
 			i = 20;
@@ -99,6 +100,13 @@ public class FinanceController extends BaseObject {
 		return "userFinance";
 	}
 
+	@RequestMapping(value = "/userFinance", method = RequestMethod.GET)
+	@Transactional
+	public String userFinance(Model model) {
+		model.addAttribute("userList", userDAO.listOldUsers());
+		return "userFinance";
+	}
+	
 	static List<User> getAllChildren(User u) {
 		ArrayList<User> list = new ArrayList<User>();
 		list.add(u);

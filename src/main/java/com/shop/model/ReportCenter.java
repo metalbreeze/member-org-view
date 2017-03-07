@@ -38,8 +38,8 @@ public class ReportCenter {
 	
 	private String name;
 	
-	private BigDecimal money=new BigDecimal(0);
-	
+	private BigDecimal money1=new BigDecimal(0);
+	private BigDecimal money2=new BigDecimal(0);	
 	
 	private BigDecimal electricMoney=new BigDecimal(0);
 	@OneToOne
@@ -68,12 +68,12 @@ public class ReportCenter {
 		this.name = name;
 	}
 
-	public BigDecimal getMoney() {
-		return money;
+	public BigDecimal getMoney1() {
+		return money1;
 	}
 
-	public void setMoney(BigDecimal money) {
-		this.money = money;
+	public void setMoney1(BigDecimal money) {
+		this.money1 = money;
 	}
 
 	public User getOwner() {
@@ -106,5 +106,27 @@ public class ReportCenter {
 
 	public void setElectricMoney(BigDecimal electricMoney) {
 		this.electricMoney = electricMoney;
+	}
+
+	public BigDecimal getMoney2() {
+		return money2;
+	}
+
+	public void setMoney2(BigDecimal money2) {
+		this.money2 = money2;
+	}
+	public void addMoney1(int i){
+		if(money1==null){
+			money1=new BigDecimal(i);
+		}else{
+			money1=money1.add(new BigDecimal(i));
+		}
+	}
+	public void addMoney2(int i){
+		if(money2==null){
+			money2=new BigDecimal(i);
+		}else{
+			money2=money2.add(new BigDecimal(i));
+		}
 	}
 }

@@ -68,6 +68,7 @@ public class UserController extends BaseObject {
 			}
 		} else {
 			User user = userDAO.getUserById(p.getId());
+			user.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
 			user.setAddress(p.getAddress());
 			user.setMobile(p.getMobile());
 			user.setAccountNumber(p.getAccountNumber());

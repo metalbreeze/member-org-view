@@ -99,6 +99,16 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="product_id">
+				<spring:message text="产品"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="product_id" items="${listProducts}" itemLabel="name" itemValue="id" value=""/>
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<form:label path="reportCenter.id">
 				<spring:message text="报单中心"/>
 			</form:label>
@@ -114,17 +124,46 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="password" />
+			<form:password path="password" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="password_2">
+				<spring:message text="重复密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password_2" />
 		</td> 
 	</tr>
 	<tr>
 		<td colspan="2">
-				<input type="submit"
+				<input type="button" onclick=checkAndSubmit()
 					value="<spring:message text="注册"/>" />
 		</td>
 	</tr>
 </table>	
 </form:form>
-
+<script type="text/javascript" >
+function checkAndSubmit()
+{
+	if ( document.forms[0].name != "" )
+	{
+		alert("姓名不能为空");
+		document.forms[0].name.focus();
+		return;
+	}
+	if ( document.forms[0].password != document.forms[0].password_2 )
+		{
+			alert("密码不一样");
+			document.forms[0].password.focus();   
+		}
+	else
+		{
+			document.forms[0].submit();
+		}
+}
+</script>
 </body>
 </html>

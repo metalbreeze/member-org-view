@@ -16,6 +16,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -42,6 +43,8 @@ public class User {
 	private String address;
 
 	private String password;
+	@Transient
+	private String password_2;
 //	private int available=1;
 	
 	private String level;
@@ -57,9 +60,13 @@ public class User {
 
 	private String status;
 	
-	private BigDecimal money=new BigDecimal(0);
+	private Integer product_id;
+	
+	private BigDecimal bonusMoney=new BigDecimal(0);
+	private BigDecimal feedbackMoney=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
-
+	private BigDecimal saleMoney=new BigDecimal(0);
+	
 	private BigDecimal groupScore=new BigDecimal(0);
 	private BigDecimal personalScore=new BigDecimal(0);
 	private BigDecimal directScore=new BigDecimal(0);
@@ -252,22 +259,35 @@ public class User {
 		this.operations = operations;
 	}
 
-	public BigDecimal getMoney() {
-		return money;
+	public BigDecimal getBonusMoney() {
+		return bonusMoney;
 	}
 
-	public void setMoney(BigDecimal money) {
-		this.money = money;
+	public void setBonusMoney(BigDecimal money) {
+		this.bonusMoney = money;
 	}
 
-	public void addMoney(int i) {
-		if(money==null){
-			money=new BigDecimal(i);
+	public void addBonusMoney(int i) {
+		if(bonusMoney==null){
+			bonusMoney=new BigDecimal(i);
 		}else{
-			this.money.add(new BigDecimal(i));
+			bonusMoney=bonusMoney.add(new BigDecimal(i));
 		}
 	}
-
+	public void addFeedbackMoney(int i) {
+		if(feedbackMoney==null){
+			feedbackMoney=new BigDecimal(i);
+		}else{
+			feedbackMoney=feedbackMoney.add(new BigDecimal(i));
+		}
+	}
+	public void addSaleMoney(int i) {
+		if(saleMoney==null){
+			saleMoney=new BigDecimal(i);
+		}else{
+			saleMoney=saleMoney.add(new BigDecimal(i));
+		}
+	}
 	public BigDecimal getWithdraw() {
 		return withdraw;
 	}
@@ -303,4 +323,37 @@ public class User {
 	public void setDirectScore(BigDecimal directScore) {
 		this.directScore = directScore;
 	}
+
+	public BigDecimal getFeedbackMoney() {
+		return feedbackMoney;
+	}
+
+	public void setFeedbackMoney(BigDecimal feedbackMoney) {
+		this.feedbackMoney = feedbackMoney;
+	}
+
+	public BigDecimal getSaleMoney() {
+		return saleMoney;
+	}
+
+	public void setSaleMoney(BigDecimal saleMoney) {
+		this.saleMoney = saleMoney;
+	}
+
+	public String getPassword_2() {
+		return password_2;
+	}
+
+	public void setPassword_2(String password_2) {
+		this.password_2 = password_2;
+	}
+
+	public Integer getProduct_id() {
+		return product_id;
+	}
+
+	public void setProduct_id(Integer product_id) {
+		this.product_id = product_id;
+	}
+
 }

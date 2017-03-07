@@ -17,6 +17,7 @@ import com.shop.base.BaseObject;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.User;
+import com.shop.service.ProductService;
 import com.shop.service.UserService;
 @Controller
 public class MyselfController extends BaseObject {
@@ -29,6 +30,10 @@ public class MyselfController extends BaseObject {
 	@Qualifier(value="userService")
 	private UserService userService;
 
+
+	@Autowired(required=true)
+	@Qualifier(value="productService")
+	private ProductService productService;
 	
 	@Autowired(required=true)
 	@Qualifier(value="reportCenterDAO")
@@ -53,6 +58,7 @@ public class MyselfController extends BaseObject {
 				logger.debug("report center"+p.getReportCenter().getId());
 				String encode = encoder.encode(p.getPassword());
 				p.setPassword(encode);
+				p.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
 				this.userService.addUser(p);
 				ra.addFlashAttribute("flashMsg", "添加成功,重新登录");
 				return "redirect:/login";
@@ -73,6 +79,7 @@ public class MyselfController extends BaseObject {
         logger.debug("User Name: "+ userName+"parent()"+u.getParent().getName());
         model.addAttribute("user", u);
 		model.addAttribute("listUsers", this.userService.listUsers());
+		model.addAttribute("listProducts",this.productService.getProductList() );
         logger.debug("User Name: "+ userName);
         return "myself";
     }
@@ -83,6 +90,7 @@ public class MyselfController extends BaseObject {
         // After user login successfully.
 		model.addAttribute("listUsers", this.userService.listUsers());
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
+		model.addAttribute("listProducts",this.productService.getProductList() );
         return "register";
     }
 }

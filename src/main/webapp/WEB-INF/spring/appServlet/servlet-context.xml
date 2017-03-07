@@ -52,6 +52,8 @@
 	<beans:bean id="groupService" class="com.shop.service.GroupServiceImpl">
 		<beans:property name="groupDAO" ref="groupDAO"></beans:property>
 	</beans:bean>
+	<beans:bean id="productService" class="com.shop.service.ProductService">
+	</beans:bean>
 	<beans:bean id="nodeService" class="com.shop.service.NodeServiceImpl">
 		<beans:property name="nodeDAO" ref="nodeDAO"></beans:property>
 	</beans:bean>

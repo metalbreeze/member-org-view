@@ -77,7 +77,8 @@ public class ReportCenterController extends BaseObject{
 			}
 			ReportCenter x = reportCenterDAO.getReportCenterById(p.getId());
 			x.setOwner(p.getOwner());
-			x.setMoney(p.getMoney());
+			x.setMoney1(p.getMoney1());
+			x.setMoney2(p.getMoney2());
 			x.setElectricMoney(p.getElectricMoney());
 			this.reportCenterDAO.updateReportCenter(x);
 		}
@@ -187,7 +188,7 @@ public class ReportCenterController extends BaseObject{
 									+ user.getLevel() + " to:" + Group.labels[i - 1]);
 							user.setLevel(Group.labels[i - 1]);
 							//会员分红奖
-							user.addMoney(Group.levelMoney[i-1]);
+							user.addBonusMoney(Group.levelMoney[i-1]);
 							Operation op = new Operation();
 							op.setMoney(new BigDecimal(Group.levelMoney[i-1]));
 							op.setOperation(Group.labels[i]+"-"+Group.labels[i - 1]);
@@ -221,9 +222,9 @@ public class ReportCenterController extends BaseObject{
 					userLevealA.setGroup(group1);
 					userDAO.updateUser(userLevealA);
 					//分享回馈奖
-					userLevealA.getParent().addMoney(3000);
+					userLevealA.getParent().addFeedbackMoney(3000);
 					Operation op = new Operation();
-					op.setMoney(3000);
+					op.setMoney(90);
 					op.setOperation("回馈奖");
 					op.setReportCenter(r);
 					op.setUser(userLevealA);
@@ -237,6 +238,7 @@ public class ReportCenterController extends BaseObject{
 					op1.setReportCenter(r);
 					op1.setUser(userLevealA);
 					operationDAO.addOperation(op1);
+					r.addMoney1(90);
 				}else{
 					target.setLevel("F");
 					target.setGroup(group);
@@ -246,7 +248,7 @@ public class ReportCenterController extends BaseObject{
 					userDAO.updateUser(target);
 					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活");
 				}
-				target.getParent().addMoney(100);
+				target.getParent().addSaleMoney(100);
 				//有空测试下.直推奖
 				userDAO.updateUser(target.getParent());
 				logger.info(owner.toString()+"active a user "+target.toString()+" with money");
@@ -257,6 +259,7 @@ public class ReportCenterController extends BaseObject{
 				op.setReportCenter(r);
 				op.setUser(target);
 				operationDAO.addOperation(op);	
+				r.addMoney1(10);
 				reportCenterDAO.updateReportCenter(r);
 			}
         }

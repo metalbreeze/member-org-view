@@ -37,12 +37,32 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="money">
-				<spring:message text="余额"/>
+			<form:label path="money1">
+				<spring:message text="服务费1"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="money" readonly="true" />
+			<form:input path="money1" readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="money2">
+				<spring:message text="服务费2"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="money2" readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="electricMoney">
+				<spring:message text="电子币"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="electricMoney" readonly="true" />
 		</td>
 	</tr>
 </table>	

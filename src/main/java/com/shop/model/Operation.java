@@ -40,6 +40,22 @@ public class Operation {
 	private Timestamp operationDate = new Timestamp(System.currentTimeMillis());
 	private String remark;
 	
+	public Operation(){
+		
+	}
+	public Operation(User u , ReportCenter r , String o, BigDecimal m){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=m;
+	}
+	public Operation(User u , ReportCenter r , String o, int i){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=new BigDecimal(i);
+	}
+	
 	@Override
 	public String toString(){
 		return "id="+id+", operation="+operation;
@@ -84,6 +100,14 @@ public class Operation {
 	public void setReportCenter(ReportCenter reportCenter) {
 		this.reportCenter = reportCenter;
 	}
+	
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
+	}
 
 	public BigDecimal getMoney() {
 		return money;
@@ -95,11 +119,5 @@ public class Operation {
 	public void setMoney(int i) {
 		this.money = new BigDecimal(i);
 	}
-	public String getRemark() {
-		return remark;
-	}
 
-	public void setRemark(String remark) {
-		this.remark = remark;
-	}
 }

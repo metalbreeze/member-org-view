@@ -140,10 +140,10 @@ public class UserDAOImpl implements UserDAO {
 			User parent = user.getParent();
 			BigDecimal personScore=person.get(parent.getId());
 			if(personScore==null){
-				personScore=parent.getMoney();
+				personScore=parent.getBonusMoney();
 				person.put(parent.getId(), personScore);
 			}else{
-				person.put(parent.getId(),user.getMoney().add(personScore));
+				person.put(parent.getId(),user.getBonusMoney().add(personScore));
 			}
 		}
 		return l;
@@ -151,7 +151,8 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public BigDecimal getChildrenGroupScore(User u ){
 		Session session = this.sessionFactory.getCurrentSession();
-		BigDecimal b = u.getPersonalScore()==null?new BigDecimal(0):u.getPersonalScore();
+//		BigDecimal b = u.getPersonalScore()==null?new BigDecimal(0):u.getPersonalScore();
+		BigDecimal b=new BigDecimal(999);
 		BigDecimal c = b;
 		List<User> l = u.getChildren();
 		logger.debug("id"+u.getId()+"begin b"+b+"c"+c);
@@ -163,7 +164,7 @@ public class UserDAOImpl implements UserDAO {
 			c=c.add(user.getPersonalScore()==null?new BigDecimal(0):user.getPersonalScore());
 		}
 		u.setGroupScore(b);
-		u.setDirectScore(c);
+		u.setPersonalScore(c);
 		logger.debug("id"+u.getId()+"setGroup"+b+"Person"+c);
 		session.update(u);
 		return b;
