@@ -225,7 +225,9 @@ public class ReportCenterController extends BaseObject{
 					userLevealA.setGroup(group1);
 					userDAO.updateUser(userLevealA);
 					//分享回馈奖
-					userLevealA.getParent().addFeedbackMoney(3000);
+					if(userLevealA.getParent()!=null){
+						userLevealA.getParent().addFeedbackMoney(3000);
+					}
 					Operation op = new Operation();
 					op.setMoney(90);
 					op.setOperation("回馈奖");
@@ -233,7 +235,9 @@ public class ReportCenterController extends BaseObject{
 					op.setUser(userLevealA);
 					operationDAO.addOperation(op);					
 					//有空测试下.
-					userDAO.updateUser(userLevealA.getParent());
+					if(userLevealA.getParent()!=null){
+						userDAO.updateUser(userLevealA.getParent());
+					}
 //					出局服务费
 					Operation op1 = new Operation();
 					op1.setMoney(90);
@@ -243,7 +247,11 @@ public class ReportCenterController extends BaseObject{
 					operationDAO.addOperation(op1);
 					r.addMoney1(90);
 				}else{
-					target.setLevel("F");
+					groupDAO.refresh(group);
+					Group.transform(group);
+					String string = group.getAvailbleLabes().get(0);
+					logger.debug(" getAvailbleLabes  "+string);
+					target.setLevel(string);
 					target.setGroup(group);
 					target.setStatus(old_status);
 					int i = userDAO.getCurrentPosiztionByGroup(group,"F");
@@ -251,9 +259,11 @@ public class ReportCenterController extends BaseObject{
 					userDAO.updateUser(target);
 					ra.addFlashAttribute(flashMsg, target.getName()+" 用户已经激活");
 				}
-				target.getParent().addSaleMoney(100);
-				//有空测试下.直推奖
-				userDAO.updateUser(target.getParent());
+				if(target.getParent()!=null){
+					target.getParent().addSaleMoney(100);
+					//有空测试下.直推奖
+					userDAO.updateUser(target.getParent());
+				}
 				logger.info(owner.toString()+"active a user "+target.toString()+" with money");
 				//每报一单 10
 				Operation op = new Operation();

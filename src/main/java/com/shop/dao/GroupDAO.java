@@ -14,4 +14,5 @@ public interface GroupDAO {
 	public void removeGroup(int id);
 //	public Group listGroupWithUsers(int id);
 	Group getAvailableGroup();
+	public void refresh(Group group);
 }

@@ -2,6 +2,7 @@ package test;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.Date;
 import java.util.List;
@@ -26,7 +27,12 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.base.BaseObject;
+import com.shop.dao.GroupDAO;
+import com.shop.dao.OperationDAOImpl;
+import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
+import com.shop.model.Group;
+import com.shop.model.Operation;
 import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.service.UserService;
@@ -63,6 +69,20 @@ public class UserSerivceTest extends BaseObject {
 	@Autowired(required = true)
 	@Qualifier(value = "userDAO")
 	UserDAO userDAO;
+	
+	@Autowired(required = true)
+	@Qualifier(value = "reportCenterDAO")
+	private ReportCenterDAO reportCenterDAO;
+	
+	@Autowired(required = true)
+	@Qualifier(value = "groupDAO")
+	private GroupDAO groupDAO;
+	
+	@Autowired(required = true)
+	@Qualifier(value = "operationDAOImpl")
+	private OperationDAOImpl operationDAO;	
+	
+	
 	// 标明是测试方法
 	@Transactional
 	// 标明此方法需使用事务
@@ -98,32 +118,160 @@ public class UserSerivceTest extends BaseObject {
 				User u = new User();
 				u.setId(10000+parseInt(row.getCell(0)));
 				msg+="id:"+u.getId();
-				u.setRegisterDate(parseDate(row.getCell(1)));
-				String parentName= parseString(row.getCell(2));
-				if (parentName!=null&&!parentName.equals("")){
-					msg+="parent:"+parentName;
-					User p = userDAO.getUserByName(parentName);
-					u.setParent(p);
-				}
-				u.setName(row.getCell(3).getStringCellValue());
-				msg+="name"+u.getName();
-				u.setMobile(parseString(row.getCell(4)));
-				u.setWechat(parseString(row.getCell(6)));
-				ReportCenter rc = new ReportCenter();
-				rc.setId(Integer.parseInt(parseString(row.getCell(9))));
-				u.setReportCenter(rc);
-//				row.getCell(row.getCell(3).)
-//				String excelFormatPattern = DateFormatConverter.convert(Locale.JAPANESE, "dd MMMM, yyyy");
-//				CellStyle cellStyle = wb.createCellStyle();
-//				DataFormat poiFormat = wb.createDataFormat();
-//				cellStyle.setDataFormat(poiFormat.getFormat(excelFormatPattern));
-				userDAO.saveWithId(u,u.getId());
+				testActive(u.getId());
+//				u.setRegisterDate(parseDate(row.getCell(1)));
+//				String parentName= parseString(row.getCell(2));
+//				if (parentName!=null&&!parentName.equals("")){
+//					msg+="parent:"+parentName;
+//					User p = userDAO.getUserByName(parentName);
+//					u.setParent(p);
+//				}
+//				u.setName(row.getCell(3).getStringCellValue());
+//				msg+="name"+u.getName();
+//				u.setMobile(parseString(row.getCell(4)));
+//				u.setWechat(parseString(row.getCell(6)));
+//				ReportCenter rc = new ReportCenter();
+//				rc.setId(Integer.parseInt(parseString(row.getCell(9))));
+//				u.setReportCenter(rc);
+//				userDAO.saveWithId(u,u.getId());
+				
 				logger.info(msg+u.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
 	}
+
+	// 标明是测试方法
+	@Transactional
+	// 标明此方法需使用事务
+	@Rollback(false)
+	// 标明使用完此方法后事务不回滚,true时为回滚
+	void testActive(int id){
+		logger.info("activeUser " + id);
+        User target = userDAO.getUserById(id);
+        
+        ReportCenter r = target.getReportCenter();
+        if(target.getReportCenter().getId()!=r.getId() ){
+        	logger.error("activeUser 非法激活 " + id);
+        }else{
+        	if(r.getElectricMoney()==null){
+        		r.setElectricMoney(new BigDecimal(0));
+        	}
+			BigDecimal b = r.getElectricMoney().add(new BigDecimal(999).negate());
+			if (b.signum()==-1){
+				logger.error("activeUser 钱不够 " + id);
+			}else{
+				r.setElectricMoney(b);
+				Group group = groupDAO.getAvailableGroup();
+				List<User> users = group.getUsers();
+				logger.info(group.getName()+" group.getUsers().size() " +users.size());
+				if (users.size()==62){
+					target.setLevel("F");
+					target.setStatus(old_status);
+					users.add(target);
+					group.setEndDate(new Timestamp(System.currentTimeMillis()));
+					Group group1 = new Group();
+					Group group2 = new Group();
+					group1.setName(group.getId()+"-A");
+					group2.setName(group.getId()+"-B");
+					Group.transform(group);
+					for (int i = 1; i < Group.labels.length; i++) {
+						List<User> ulist = group.getLevelUsers().get(Group.labels[i]);
+						for (int j = 0; j < ulist.size();j++) {
+							User user = (User) ulist.get(j);
+							logger.debug("upgrade level:" + user.getId() + " level:"
+									+ user.getLevel() + " to:" + Group.labels[i - 1]);
+							user.setLevel(Group.labels[i - 1]);
+							//会员分红奖
+							user.addBonusMoney(Group.levelMoney[i-1]);
+							Operation op = new Operation();
+							op.setMoney(new BigDecimal(Group.levelMoney[i-1]));
+							op.setOperation(Group.labels[i]+"-"+Group.labels[i - 1]);
+							op.setReportCenter(r);
+							op.setUser(user);
+							operationDAO.addOperation(op);
+							if (j >= Group.maxLabels[i] / 2) {
+								user.setGroup(group2);
+								user.setPosition(j - Group.maxLabels[i] / 2+1);
+							} else {
+								user.setGroup(group1);
+								user.setPosition(j+1);
+							}
+						}
+					}
+					final User userLevealA = group.getLevelUsers().get(Group.labels[0]).get(0);
+					group.getUsers().clear();
+					groupDAO.addGroup(group1);
+					groupDAO.addGroup(group2);
+					groupDAO.updateGroup(group);
+//					target.setLevel("E");
+//					target.setGroup(group2);
+//					target.setStatus(old_status);
+//					userDAO.updateUser(target);
+					logger.debug(target.getName()+" 用户已经激活"
+							+"\r\n 分群成功:id"+group1.getId()+"和"+group2.getId());
+					userLevealA.setLevel("F");
+					userLevealA.setPosition(1);
+					userLevealA.setGroup(group1);
+					userDAO.updateUser(userLevealA);
+					//分享回馈奖
+					if(userLevealA.getParent()!=null){
+						userLevealA.getParent().addFeedbackMoney(3000);
+					}
+					Operation op = new Operation();
+					op.setMoney(90);
+					op.setOperation("回馈奖");
+					op.setReportCenter(r);
+					op.setUser(userLevealA);
+					operationDAO.addOperation(op);					
+					//有空测试下.
+					if(userLevealA.getParent()!=null){
+						userDAO.updateUser(userLevealA.getParent());
+					}
+//					出局服务费
+					Operation op1 = new Operation();
+					op1.setMoney(90);
+					op1.setOperation("出局");
+					op1.setReportCenter(r);
+					op1.setUser(userLevealA);
+					operationDAO.addOperation(op1);
+					r.addMoney1(90);
+				}else{
+					groupDAO.refresh(group);
+					Group.transform(group);
+					String string = group.getAvailbleLabes().get(0);
+					logger.debug(" getAvailbleLabes  "+string);
+					target.setLevel(string);
+					target.setGroup(group);
+					target.setStatus(old_status);
+					int i = userDAO.getCurrentPosiztionByGroup(group,"F");
+					target.setPosition(i+1);
+					userDAO.updateUser(target);
+					logger.debug(flashMsg+target.getName()+" 用户已经激活");
+				}
+				if(target.getParent()!=null){
+					target.getParent().addSaleMoney(100);
+					//有空测试下.直推奖
+					userDAO.updateUser(target.getParent());
+				}
+				
+				logger.info("active a user "+target.toString()+" with money");
+				//每报一单 10
+				Operation op = new Operation();
+				op.setMoney(10);
+				op.setOperation("报单");
+				op.setReportCenter(r);
+				op.setUser(target);
+				operationDAO.addOperation(op);	
+				r.addMoney1(10);
+				reportCenterDAO.updateReportCenter(r);
+			}
+        }
+	}
+	
+	
+	
 	Timestamp parseDate(Cell c){
 		if(c!=null&&c.getCellType()==Cell.CELL_TYPE_NUMERIC&&HSSFDateUtil.isCellDateFormatted(c)){
 			return new Timestamp(HSSFDateUtil.getJavaDate(c.getNumericCellValue()).getTime());

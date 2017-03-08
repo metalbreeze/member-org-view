@@ -99,10 +99,17 @@ public class GroupDAOImpl implements GroupDAO {
 		Group p = (Group) session.createQuery("from Group where endDate is null order by id").setFirstResult(0).setMaxResults(1).uniqueResult();
 		if (p==null){
 			p=new Group();
+			p.setName("CreatedByGetAvailableGroup");
 			session.persist(p);
 			logger.error("Should not created by AvailableGroupsuccessfully, Group details="+p);
 		}
 		return p;
+	}
+
+	@Override
+	public void refresh(Group group) {
+		Session session = this.sessionFactory.getCurrentSession();	
+		session.refresh(group);
 	}	
 	
 }
