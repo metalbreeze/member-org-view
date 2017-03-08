@@ -24,13 +24,14 @@
 	<sec:authorize access="hasRole('ROLE_REPORT')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
 	</sec:authorize>
+		|&nbsp;<a href="${pageContext.request.contextPath}/saleMoneyList">排行榜</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance">会员账务</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/platformFinance">平台账务</a>
-		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance">会员奖金</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/listoperations">账务流水</a>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">报单中心管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/groups">群管理</a>
-		|&nbsp;<a href="${pageContext.request.contextPath}/listoperations">账户流水</a>
 	</sec:authorize>
 	<c:if test="${pageContext.request.userPrincipal.name != null}">
     	|&nbsp;<a href="${pageContext.request.contextPath}/logout">退出</a>

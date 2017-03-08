@@ -55,7 +55,13 @@ public class Operation {
 		operation=o;
 		money=new BigDecimal(i);
 	}
-	
+	public Operation(User u , ReportCenter r , String o, BigDecimal m,String remark){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=m;
+		this.remark=remark;
+	}	
 	@Override
 	public String toString(){
 		return "id="+id+", operation="+operation;

@@ -54,6 +54,12 @@ public class MyselfController extends BaseObject {
 				logger.debug( "已经有同名用户");
 				return "redirect:/register";
 			}else{
+				User parenetUser = userDAO.getUserByName(p.getParent().getName());
+				if(parenetUser==null){
+					ra.addFlashAttribute("flashMsg", "错误推荐人");
+					logger.debug( "错误推荐人");
+					return "redirect:/register";
+				}
 				logger.debug("password  "+p.getPassword());
 				logger.debug("report center"+p.getReportCenter().getId());
 				String encode = encoder.encode(p.getPassword());
@@ -76,7 +82,7 @@ public class MyselfController extends BaseObject {
         // After user login successfully.
         String userName = principal.getName();
         User u = userDAO.getUserByName(userName);
-        logger.debug("User Name: "+ userName+"parent()"+u.getParent().getName());
+        logger.debug("User Name: "+ userName+"parent()"+u.getParent());
         model.addAttribute("user", u);
 		model.addAttribute("listUsers", this.userService.listUsers());
 		model.addAttribute("listProducts",this.productService.getProductList() );
@@ -88,7 +94,7 @@ public class MyselfController extends BaseObject {
     public String register(Model model) {
     	model.addAttribute("user", new User());
         // After user login successfully.
-		model.addAttribute("listUsers", this.userService.listUsers());
+//		model.addAttribute("listUsers", this.userService.listUsers());
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
 		model.addAttribute("listProducts",this.productService.getProductList() );
         return "register";

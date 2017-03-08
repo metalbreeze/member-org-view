@@ -23,4 +23,6 @@ public interface UserDAO {
 	public int getOldUser();
 	public BigDecimal getWithdraw();
 	List<User> listOldUsers();
+	List<User> listUserOrderBySaleMoney(int count);
+	void saveWithId(User p, int i);
 }

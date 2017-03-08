@@ -72,7 +72,7 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 	@Override
 	public BigDecimal getReportCenterCost() {
 		Session session = this.sessionFactory.getCurrentSession();
-		BigDecimal p = (BigDecimal) session.createQuery("select sum(money) from ReportCenter").uniqueResult();
+		BigDecimal p = (BigDecimal) session.createQuery("select sum(money1+money2) from ReportCenter").uniqueResult();
 		return p;
 	}
 }

@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.slf4j.Logger;
@@ -31,6 +32,12 @@ public class UserDAOImpl implements UserDAO {
 	public void addUser(User p) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.persist(p);
+		logger.info("User saved successfully, User Details="+p);
+	}
+	@Override
+	public void saveWithId(User p,int i) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.save("user",p);
 		logger.info("User saved successfully, User Details="+p);
 	}
 
@@ -74,6 +81,13 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User where group_id is null or group_id=0").list();
 		return UsersList;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> listUserOrderBySaleMoney(int count) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> list =session.createQuery("from User where id not in (1,2,3,18) order by saleMoney desc").setMaxResults(count).list();
+		return list;
 	}
 	@SuppressWarnings("unchecked")
 	@Override

@@ -55,7 +55,9 @@ public class ReportCenterController extends BaseObject{
 	// For add and update ReportCenter both
 	@RequestMapping(value = "/reportCenter/add", method = RequestMethod.POST)
 	@Transactional
-	public String addReportCenter(@ModelAttribute("reportCenter") ReportCenter p) {
+	public String addReportCenter(@ModelAttribute("reportCenter") ReportCenter p,Principal principal) {
+        String userName = principal.getName();
+        User owner = userDAO.getUserByName(userName);
 		if (p.getName()==null||p.getName().equals("")){
 			int userid = p.getOwner().getId();
 			User name = userDAO.getUserById(userid);
@@ -68,7 +70,7 @@ public class ReportCenterController extends BaseObject{
 				p.setName(name.getName()+"报单中心");
 			}
 			this.reportCenterDAO.addReportCenter(p);
-			
+			operationDAO.addOperation(new Operation(owner,p,"添加报单中心",p.getElectricMoney(),"1:"+p.getMoney1()+"2:"+p.getMoney2()));
 		} else {
 			if (p.getName()==null||p.getName().equals("")){
 				int userid = p.getOwner().getId();
@@ -81,8 +83,8 @@ public class ReportCenterController extends BaseObject{
 			x.setMoney2(p.getMoney2());
 			x.setElectricMoney(p.getElectricMoney());
 			this.reportCenterDAO.updateReportCenter(x);
+			operationDAO.addOperation(new Operation(owner,x,"修改电子币",x.getElectricMoney(),"1:"+x.getMoney1()+"2:"+x.getMoney2()));
 		}
-
 		return "redirect:/reportCenters";
 
 	}
@@ -167,6 +169,7 @@ public class ReportCenterController extends BaseObject{
 			if (b.signum()==-1){
 				ra.addFlashAttribute(flashMsg, "钱不够");
 			}else{
+				r.setElectricMoney(b);
 				Group group = groupDAO.getAvailableGroup();
 				List<User> users = group.getUsers();
 				logger.info(group.getName()+" group.getUsers().size() " +users.size());

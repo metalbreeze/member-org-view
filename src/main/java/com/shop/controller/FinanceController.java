@@ -8,6 +8,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -115,5 +117,15 @@ public class FinanceController extends BaseObject {
 			list.addAll(getAllChildren(user));
 		}
 		return list;
+	}
+	@RequestMapping(value = "/saleMoneyList", method = RequestMethod.GET)
+	@Transactional
+	public String saleMoneyList(Model model) {
+		if(hasRole("ROLE_ADMIN")){
+			model.addAttribute("userList", userDAO.listUserOrderBySaleMoney(-1));
+		}else{
+			model.addAttribute("userList", userDAO.listUserOrderBySaleMoney(10));
+		}
+		return "saleMoneyList";
 	}
 }

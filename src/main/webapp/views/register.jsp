@@ -94,7 +94,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:select path="parent.id" items="${listUsers}" itemLabel="name" itemValue="id" value=""/>
+			<form:input path="parent.name" />
 		</td>
 	</tr>
 	<tr>
@@ -148,15 +148,15 @@
 <script type="text/javascript" >
 function checkAndSubmit()
 {
-	if ( document.forms[0].name != "" )
+	if ( document.forms[0].name == "" )
 	{
 		alert("姓名不能为空");
 		document.forms[0].name.focus();
 		return;
 	}
-	if ( document.forms[0].password != document.forms[0].password_2 )
+	if ( document.forms[0].password.value != document.forms[0].password_2.value )
 		{
-			alert("密码不一样");
+			alert("密码不一样"+document.forms[0].password.value+document.forms[0].password_2.value);
 			document.forms[0].password.focus();   
 		}
 	else

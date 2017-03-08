@@ -28,7 +28,7 @@ import com.fasterxml.jackson.annotation.JsonView;
  */
 @Entity
 @Table(name="user")
-public class User {
+public class User implements Comparable<User> {
 
 	@Id
 	@Column(name="id")
@@ -354,6 +354,12 @@ public class User {
 
 	public void setProduct_id(Integer product_id) {
 		this.product_id = product_id;
+	}
+
+	@Override
+	public int compareTo(User o) {
+		if(o==null)return 1;
+		return id-o.getId();
 	}
 
 }

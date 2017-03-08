@@ -3,6 +3,7 @@ package com.shop.model;
 import java.sql.Date;
 import java.sql.Timestamp;
 import java.util.ArrayList;
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Iterator;
 import java.util.List;
@@ -121,6 +122,11 @@ public class Group {
 			List<User> list = hm.get(user.getLevel());
 			list.add(user);
 		}
+		for (Iterator iterator = hm.keySet().iterator(); iterator.hasNext();) {
+			String type = (String) iterator.next();
+			List<User> list = hm.get(type);
+			Collections.sort(list);
+		}
 		logger.debug("transform: g.getUsers().size "+g.getUsers().size());
 		ArrayList<String> al = new ArrayList<String>();
 		g.setAvailbleLabes(al);
@@ -129,7 +135,7 @@ public class Group {
 				al.add(labels[i]);
 			}
 		}
-		logger.debug("transform: av lable "+al);
+		logger.debug("transform: available label "+al);
 		return g;
 	}
 	public static String upgradeLevel (String level){
