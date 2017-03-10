@@ -6,6 +6,7 @@ import org.springframework.security.core.Authentication;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.context.SecurityContext;
 import org.springframework.security.core.context.SecurityContextHolder;
+import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 
 public class BaseObject {
@@ -30,4 +31,30 @@ public class BaseObject {
 
         return false;
     }
+	public void info(Object o , String s){
+		if(o==null){
+			logger.info(s);
+		}else if (o instanceof RedirectAttributes){
+			((RedirectAttributes)o).addAttribute(flashMsg,s);
+			logger.info(s);
+		}else{
+			logger.info(o.toString()+" : "+s);
+		}
+	}
+	public void error(Object o , String s){
+		if(o==null){
+			logger.error(s);
+		}else if (o instanceof RedirectAttributes){
+			((RedirectAttributes)o).addAttribute(flashMsg,s);
+			logger.error(s);
+		}else{
+			logger.error(o.toString()+" : "+s);
+		}
+	}
+	public void info(String s){
+		logger.info(s);
+	}
+	public void error(String s){
+		logger.error(s);
+	}
 }

@@ -46,7 +46,7 @@ public class Group {
 
 	private Timestamp createDate = new Timestamp(System.currentTimeMillis());
 	private Timestamp endDate ;
-
+	private String remark;
 	@JsonView(View.Collection.class)
 	@OneToMany(mappedBy = "group" ,cascade = CascadeType.ALL )
 	private List<User> users = new ArrayList<User>();
@@ -146,15 +146,23 @@ public class Group {
 		}
 		return null;
 	}
-	public static String[] labels = new String[]{"A","B","C","D","E","F"};
-	public static int[] maxLabels =  new int[]  {  1,  2,  4,  8, 16, 32};
-	public static int[] levelMoney =  new int[] {  4000, 400,  300,  200, 100, 0};
-	
+		public static String[] labels =      new String[]{"A", "B", "C", "D", "E", "F"};
+		public static int[] maxLabels =       new int[]{    1,   2,   4,   8,  16, 32 };
+		public static int[] levelMoney =       new int[]{4000, 400, 300, 200, 100,  0 };
+	public static int[] levelAllBeforeMoney =  new int[]{1000, 600, 300, 100,   0,  0 };
 	public Timestamp getEndDate() {
 		return endDate;
 	}
 
 	public void setEndDate(Timestamp endDate) {
 		this.endDate = endDate;
+	}
+
+	public String getRemark() {
+		return remark;
+	}
+
+	public void setRemark(String remark) {
+		this.remark = remark;
 	}
 }

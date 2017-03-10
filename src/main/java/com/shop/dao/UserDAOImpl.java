@@ -45,6 +45,7 @@ public class UserDAOImpl implements UserDAO {
 	public void updateUser(User p) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(p);
+		session.flush();
 		logger.info("User updated successfully, User Details="+p);
 	}
 
@@ -210,4 +211,9 @@ public class UserDAOImpl implements UserDAO {
 //		return person;
 //	}
 //	
+	@Override
+	public void refresh(User parent) {
+		Session session = this.sessionFactory.getCurrentSession();	
+		session.refresh(parent);
+	}
 }

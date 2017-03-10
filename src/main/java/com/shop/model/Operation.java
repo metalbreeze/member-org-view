@@ -61,6 +61,13 @@ public class Operation {
 		operation=o;
 		money=m;
 		this.remark=remark;
+	}
+	public Operation(User u , ReportCenter r , String o, int i,String remark){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=new BigDecimal(i);
+		this.remark=remark;
 	}	
 	@Override
 	public String toString(){

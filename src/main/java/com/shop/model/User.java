@@ -274,6 +274,16 @@ public class User implements Comparable<User> {
 			bonusMoney=bonusMoney.add(new BigDecimal(i));
 		}
 	}
+	public void addBonusBeforeMoneyByLevel(String s) {
+		if(bonusMoney==null){
+			bonusMoney=new BigDecimal(0);
+		}
+		for (int j = 0; j < Group.labels.length; j++) {
+			if(Group.labels[j].equalsIgnoreCase(s)){
+				bonusMoney=bonusMoney.add(new BigDecimal(Group.levelAllBeforeMoney[j]));
+			}
+		}
+	}
 	public void addFeedbackMoney(int i) {
 		if(feedbackMoney==null){
 			feedbackMoney=new BigDecimal(i);
