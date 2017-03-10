@@ -34,6 +34,7 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 	public void updateReportCenter(ReportCenter p) {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(p);
+		session.flush();
 		logger.info("ReportCenter updated successfully, ReportCenter Details="+p);
 	}
 

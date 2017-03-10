@@ -123,8 +123,11 @@ public class ReportService extends BaseObject {
 				userDAO.updateUser(userLevealA.getParent());
 			}
 			// 出局服务费
+			
 			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));
-			r.addMoney2(90);
+//			info("money2"+r.getName()+":"+userLevealA.getName()+":"+r.getMoney2());
+			userLevealA.getReportCenter().addMoney2(90);
+//			info("money2_after"+r.getName()+":"+userLevealA.getName()+":"+r.getMoney2());
 		}
 		if (target.getParent() != null) {
 			target.getParent().addSaleMoney(100);

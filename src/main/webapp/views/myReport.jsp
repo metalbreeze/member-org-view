@@ -87,7 +87,7 @@
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
-			<td>${loop.index}</td>
+			<td>${loop.index+1}</td>
 			<td>${user.id}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
