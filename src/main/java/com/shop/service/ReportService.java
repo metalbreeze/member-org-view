@@ -117,32 +117,18 @@ public class ReportService extends BaseObject {
 			userDAO.updateUser(userLevealA);
 			// 分享回馈奖
 			if (userLevealA.getParent() != null) {
-				userLevealA.getParent().addFeedbackMoney(Group.levelMoney[0]);
+				userLevealA.getParent().addFeedbackMoney(3000);
 				operationDAO.addOperation(new Operation(target.getParent(), r,
 						"回馈奖", 3000));
-			}
-			Operation op = new Operation();
-			op.setMoney(90);
-			op.setOperation("费用2");
-			op.setReportCenter(r);
-			op.setUser(userLevealA);
-			operationDAO.addOperation(op);
-			// 有空测试下.
-			if (userLevealA.getParent() != null) {
 				userDAO.updateUser(userLevealA.getParent());
 			}
 			// 出局服务费
-			Operation op1 = new Operation();
-			op1.setMoney(90);
-			op1.setOperation("出局");
-			op1.setReportCenter(r);
-			op1.setUser(userLevealA);
-			operationDAO.addOperation(op1);
-			r.addMoney1(90);
+			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));
+			r.addMoney2(90);
 		}
 		if (target.getParent() != null) {
 			target.getParent().addSaleMoney(100);
-			// 有空测试下.直推奖
+			// 有空测试下
 			userDAO.updateUser(target.getParent());
 			operationDAO.addOperation(new Operation(target.getParent(), r,
 					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"
@@ -153,12 +139,7 @@ public class ReportService extends BaseObject {
 		info(owner + "active a user " + target.toString()
 				+ " with money");
 		// 每报一单 10
-		Operation op = new Operation();
-		op.setMoney(10);
-		op.setOperation("费用1");
-		op.setReportCenter(r);
-		op.setUser(target);
-		operationDAO.addOperation(op);
+		operationDAO.addOperation(new Operation(target,r,"费用1",10));
 		r.addMoney1(10);
 		reportCenterDAO.updateReportCenter(r);
 		// return "redirect:/myReport";

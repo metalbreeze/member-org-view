@@ -4,7 +4,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>我报单</title>
+	<title>报单</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
@@ -72,6 +72,7 @@
 <c:if test="${!empty listUsers}">
 	<table class="tg">
 	<tr>
+		<th width="80">序号</th>
 		<th width="80">用户 ID</th>
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
@@ -84,8 +85,9 @@
 		<th width="120">推荐人</th>
 		<th width="120">激活</th>
 	</tr>
-	<c:forEach items="${listUsers}" var="user">
+	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
+			<td>${loop.index}</td>
 			<td>${user.id}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
