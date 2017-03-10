@@ -6,7 +6,7 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>平台帐务</title>
+	<title>会员账务</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
@@ -30,9 +30,10 @@
 		<th width="60">销售奖励</th>
 		<th width="60">分红</th>
 		<th width="60">回馈</th>
-<!-- 		<th width="60">个人业绩领导奖励</th>
-		<th width="60">团队业绩领导奖励</th> -->
+<%-- 		<th width="60">个人业绩领导奖励</th>
+		<th width="60">团队业绩领导奖励</th> --%>
 		<th width="60">总计</th>
+		<th width="60">应发奖金</th>
 		<th width="60">提现</th>
 		<th width="60">资金余额</th>
 	</tr>
@@ -53,22 +54,26 @@
 		<td>
 			${user.feedbackMoney}
 		</td>
-<!--	<td>
+<%--	<td>
  		${user.personalScore}
 		</td>
 		<td>
 			${user.groupScore}
-		</td> -->
+		</td> --%>
 		<td>
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${user.saleMoney +  user.bonusMoney + user.feedbackMoney }" />
+		</td>
+		<td>
+			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 }" />
 		</td>
 		<td>
 			${user.withdraw}
 		</td>
 		<td>
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
-			value="${user.saleMoney + user.bonusMoney + user.feedbackMoney - user.withdraw}" />
+			value="${user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8  - user.withdraw}" />
 		</td>
 	</tr>
 	</c:forEach>
