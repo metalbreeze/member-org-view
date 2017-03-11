@@ -106,6 +106,9 @@
 		<th width="120">报单中心名字</th>
 		<th width="120">费用1</th>
 		<th width="120">费用2</th>
+		<th width="120">总计</th>
+		<th width="120">提现</th>
+		<th width="120">余额</th>
 		<th width="120">电子币</th>
 		<th width="120">负责人</th>
 		<th width="60">修改</th>
@@ -118,6 +121,9 @@
 			<td>${reportCenter.name}</td>
 			<td>${reportCenter.money1}</td>
 			<td>${reportCenter.money2}</td>
+			<td>${reportCenter.money2+reportCenter.money1}</td>
+			<td>${reportCenter.withdraw}</td>
+			<td>${reportCenter.money2+reportCenter.money1-reportCenter.withdraw}</td>
 			<td>${reportCenter.electricMoney}</td>
 			<td>${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>

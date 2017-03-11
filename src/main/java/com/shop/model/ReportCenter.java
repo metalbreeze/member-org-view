@@ -42,6 +42,7 @@ public class ReportCenter {
 	private BigDecimal money2=new BigDecimal(0);	
 	
 	private BigDecimal electricMoney=new BigDecimal(0);
+	private BigDecimal withdraw=new BigDecimal(0);
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User owner;
@@ -128,5 +129,13 @@ public class ReportCenter {
 		}else{
 			money2=money2.add(new BigDecimal(i));
 		}
+	}
+
+	public BigDecimal getWithdraw() {
+		return withdraw;
+	}
+
+	public void setWithdraw(BigDecimal withdraw) {
+		this.withdraw = withdraw;
 	}
 }
