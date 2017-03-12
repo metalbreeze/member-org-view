@@ -5,9 +5,7 @@
 <html>
 <head><title>登录</title></head>
 <body>
-<div align="center" style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
-<span style="font-size:30px">商务管理系统</span>
-</div> 
+<jsp:include page="_menu.jsp" />
      
      <!-- /login?error=true -->
      <c:if test="${! empty param.error}">

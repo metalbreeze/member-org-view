@@ -32,16 +32,16 @@
 		<td>
 			${user.name }
 		</td>
-		<td>
+		<td align="right">
 			${user.saleMoney}
 		</td>
-		<td>
+		<td align="right">
 			${user.bonusMoney}
 		</td>
-		<td>
+		<td align="right">
 			${user.feedbackMoney}
 		</td>
-		<td>
+		<td align="right">
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${user.saleMoney + user.bonusMoney + user.feedbackMoney }" />
 		</td>

@@ -119,13 +119,13 @@
 		<tr>
 			<td>${reportCenter.id}</td>
 			<td>${reportCenter.name}</td>
-			<td>${reportCenter.money1}</td>
-			<td>${reportCenter.money2}</td>
-			<td>${reportCenter.money2+reportCenter.money1}</td>
-			<td>${reportCenter.withdraw}</td>
-			<td>${reportCenter.money2+reportCenter.money1-reportCenter.withdraw}</td>
-			<td>${reportCenter.electricMoney}</td>
-			<td>${reportCenter.owner.name}</td>
+			<td align="right">${reportCenter.money1}</td>
+			<td align="right">${reportCenter.money2}</td>
+			<td align="right">${reportCenter.money2+reportCenter.money1}</td>
+			<td align="right">${reportCenter.withdraw}</td>
+			<td align="right">${reportCenter.money2+reportCenter.money1-reportCenter.withdraw}</td>
+			<td align="right">${reportCenter.electricMoney}</td>
+			<td align="right">${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
 			<td><a href="<c:url value='/reportCenter/${reportCenter.id}' />" >详细</a></td>

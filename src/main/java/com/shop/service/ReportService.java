@@ -61,6 +61,7 @@ public class ReportService extends BaseObject {
 		target.setStatus(old_status);
 		target.setPosition(userDAO.getCurrentPosiztionByGroup(group, string) + 1);
 		target.setGroup(group);
+		target.setOrderStatus(ProductService.order_init);
 		userDAO.updateUser(target);
 		groupDAO.refresh(group);
 		Group.transform(group);

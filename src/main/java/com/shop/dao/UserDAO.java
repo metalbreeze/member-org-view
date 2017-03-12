@@ -26,4 +26,5 @@ public interface UserDAO {
 	List<User> listUserOrderBySaleMoney(int count);
 	void saveWithId(User p, int i);
 	public void refresh(User parent);
+	public List<User> getOrderList(int i);
 }

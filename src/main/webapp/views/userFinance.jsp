@@ -60,18 +60,18 @@
 		<td>
 			${user.groupScore}
 		</td> --%>
-		<td>
+		<td align="right">
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${user.saleMoney +  user.bonusMoney + user.feedbackMoney }" />
 		</td>
-		<td>
+		<td align="right">
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 }" />
 		</td>
-		<td>
+		<td align="right">
 			${user.withdraw}
 		</td>
-		<td>
+		<td align="right">
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8  - user.withdraw}" />
 		</td>

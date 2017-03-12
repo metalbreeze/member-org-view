@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.model.Group;
 import com.shop.model.User;
+import com.shop.service.ProductService;
 
 @Repository
 public class UserDAOImpl implements UserDAO {
@@ -215,5 +216,13 @@ public class UserDAOImpl implements UserDAO {
 	public void refresh(User parent) {
 		Session session = this.sessionFactory.getCurrentSession();	
 		session.refresh(parent);
+	}
+
+	@Override
+	public List<User> getOrderList(int i) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> l = session.createQuery("FROM User  where product_id=:id and orderStatus=:send order by id ")
+				.setInteger("id", i).setInteger("send", ProductService.order_init).list();
+		return l;
 	}
 }

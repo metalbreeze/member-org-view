@@ -10,7 +10,7 @@
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
 </style>
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
+<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;" >
 <span style="font-size:30px">商务管理系统</span>
 <br/>
 	<a href="${pageContext.request.contextPath}/views/brief.jsp">简介</a> 
@@ -20,6 +20,9 @@
 	</c:if>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myself">用户信息</a> 
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_SENDER')">
+		|&nbsp;<a href="${pageContext.request.contextPath}/product/orders">快递单</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_REPORT')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 

@@ -21,25 +21,25 @@
 		<th width="60">资金余额</th>
 	</tr>
 	<tr>
-		<td>
+		<td align="right">
 			${sellTotal}
 		</td>
-		<td>
+		<td align="right">
 			${produceCost }
 		</td>
-		<td>
+		<td align="right">
 			${withdraw}
 		</td>
-		<td>
+		<td align="right">
 			${reportCenterCost}
 		</td>
-		<td>
+		<td align="right">
 			${otherCost}
 		</td>
-		<td>
+		<td align="right">
 			${totalCost}
 		</td>
-		<td>
+		<td align="right">
 			${remain}
 		</td>
 	</tr>

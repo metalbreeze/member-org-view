@@ -26,7 +26,7 @@
 <td>${p.operation}</td>
 <td>${p.user.name}</td>
 <td>${p.reportCenter.name}</td>
-<td>${p.money}</td>
+<td align="right">${p.money}</td>
 <td>${p.operationDate}</td>
 <td>${p.remark}</td>
 		</tr>

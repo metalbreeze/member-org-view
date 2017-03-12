@@ -71,6 +71,8 @@ public class User implements Comparable<User> {
 	private BigDecimal personalScore=new BigDecimal(0);
 	private BigDecimal directScore=new BigDecimal(0);
 	
+	private int orderStatus = 0 ;
+	
 	public String getLevel() {
 		return level;
 	}
@@ -370,6 +372,14 @@ public class User implements Comparable<User> {
 	public int compareTo(User o) {
 		if(o==null)return 1;
 		return id-o.getId();
+	}
+
+	public int getOrderStatus() {
+		return orderStatus;
+	}
+
+	public void setOrderStatus(int orderStatus) {
+		this.orderStatus = orderStatus;
 	}
 
 }

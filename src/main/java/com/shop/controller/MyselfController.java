@@ -60,6 +60,7 @@ public class MyselfController extends BaseObject {
 					logger.debug( "错误推荐人");
 					return "redirect:/register";
 				}
+				p.setParent(parenetUser);
 				logger.debug("password  "+p.getPassword());
 				logger.debug("report center"+p.getReportCenter().getId());
 				String encode = encoder.encode(p.getPassword());
