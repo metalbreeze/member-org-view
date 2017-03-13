@@ -6,6 +6,7 @@ import java.util.Hashtable;
 import java.util.Iterator;
 import java.util.List;
 
+import org.hibernate.Hibernate;
 import org.hibernate.ReplicationMode;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -112,6 +113,15 @@ public class UserDAOImpl implements UserDAO {
 	public User getUserByName(String s) {
 		Session session = this.sessionFactory.getCurrentSession();
 		 User u = (User)session.createQuery("from User where name=:name").setString("name", s).uniqueResult();
+		 logger.debug("getUserByName"+s);
+		return u;
+	}
+	@Override
+	@Transactional
+	public User getUserByNameWithChildren(String s) {
+		Session session = this.sessionFactory.getCurrentSession();
+		 User u = (User)session.createQuery("from User where name=:name").setString("name", s).uniqueResult();
+		 Hibernate.initialize(u.getChildren());
 		 logger.debug("getUserByName"+s);
 		return u;
 	}

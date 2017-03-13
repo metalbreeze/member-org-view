@@ -28,4 +28,5 @@ public interface UserDAO {
 	public void refresh(User parent);
 	public List<User> getOrderList(int i);
 	public List<User> getOldOrderList(int i);
+	User getUserByNameWithChildren(String s);
 }

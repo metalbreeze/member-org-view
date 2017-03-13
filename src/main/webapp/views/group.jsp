@@ -18,7 +18,7 @@
 </h1>
 <c:url var="addAction" value="/group/add" ></c:url>
 
-<form:form action="${addAction}" commandName="group">
+<form:form action="${addAction}" modelAttribute="group">
 <table>
 	<c:if test="${!empty group.id}">
 	<tr>

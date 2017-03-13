@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page session="false" %>
 <%@ page language="Java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
@@ -13,7 +14,7 @@
 <c:url var="addAction" value="/myself/edit" ></c:url>
 --%>
 <c:url var="withDrawAction" value="/myself/withDrawRequest" ></c:url>
-<form:form action="${withDrawAction}" commandName="user">
+<form:form action="${withDrawAction}" modelAttribute="user">
 <table>
 	<c:if test="${!empty user.name}">
 	<tr>
@@ -100,12 +101,74 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="reportCenter">
-				<spring:message text="销售中心"/>
+			<form:label path="saleMoney">
+				<spring:message text="销售奖励"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="reportCenter.name"  readonly="true" />
+			<form:input path="saleMoney"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="bonusMoney">
+				<spring:message text="分红"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="bonusMoney"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="feedbackMoney">
+				<spring:message text="回馈"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="feedbackMoney"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="总计"/>
+			</form:label>
+		</td>
+		<td>
+			${user.saleMoney +  user.bonusMoney + user.feedbackMoney }
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="应发奖金"/>
+			</form:label>
+		</td>
+		<td>
+		<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 }" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="已经提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="withdraw"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="资金余额"/>
+			</form:label>
+		</td>
+		<td>
+			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw}" />
 		</td>
 	</tr>
 	<tr>
@@ -176,5 +239,52 @@
 	</tr>
 </table>	
 </form:form>
+<c:if test="${!empty levelUsers}">
+<h3>所在群</h3>
+<table class="tg">
+	<tr>
+		<th>
+				层级
+		</th> 
+		<th>
+				群成员
+		</th> 
+	</tr>
+	<c:forEach items="${labels}" var="label">
+	<tr>
+		<td>${label}层</td>
+		<c:forEach items="${levelUsers[label]}" var="list">
+				<td>
+				 ${list.name}
+				</td>
+   		</c:forEach>
+  	</tr>
+	</c:forEach>
+</table>
+</c:if>
+<c:if test="${!empty list}">
+<h3>推荐人员</h3>
+<table class="tg">
+	<tr>
+		<th width="80">ID</th>
+		<th width="60">姓名</th>
+		<th width="60">激活时间</th>
+	</tr>
+	<c:forEach items="${list}" var="user">
+	<tr>
+		<td>
+			${user.id}
+		</td>
+		<td>
+			${user.name }
+		</td>
+		<td>
+			${user.activeDate}
+		</td>
+	</tr>
+	</c:forEach>
+</table>
+</c:if>
+
 </body>
 </html>

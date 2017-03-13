@@ -25,7 +25,7 @@
 
 <c:url var="addAction" value="/user/add" ></c:url>
 
-<form:form action="${addAction}" commandName="user">
+<form:form action="${addAction}" modelAttribute="user">
 
 <table>
 	<c:if test="${!empty user.name}">
@@ -149,7 +149,7 @@
 		<%--<th width="60">删除</th>--%>
 		<th width="120">微信号</th>
 		<th width="120">支付宝号</th>
-		<th width="120">银行名称和银行帐号</th>
+		<th width="120">银行及帐号</th>
 		<th width="120">地址</th>
 		<th width="120">身份</th>
 		<th width="120">注册时间</th>

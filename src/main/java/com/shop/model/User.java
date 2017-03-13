@@ -51,6 +51,7 @@ public class User implements Comparable<User> {
 	private Integer position;
 	@Column(name="register_date")
 	private Timestamp registerDate = new Timestamp(System.currentTimeMillis());
+	private Timestamp activeDate;
 	
 	private String wechat;
 	@Column(name="account_number")
@@ -417,6 +418,14 @@ public class User implements Comparable<User> {
 
 	public void addWithdraw(BigDecimal withdrawRequest2) {
 		withdraw=withdraw.add(withdrawRequest2);
+	}
+
+	public Timestamp getActiveDate() {
+		return activeDate;
+	}
+
+	public void setActiveDate(Timestamp activeDate) {
+		this.activeDate = activeDate;
 	}
 
 }

@@ -128,7 +128,7 @@ public class GroupController {
 							@ModelAttribute("group2") final Group group2 ,
 							@ModelAttribute("user") User u, Model model) {
 		logger.debug("/listgroup group id" + u.getGroup().getId()+"with alert msg:"+msg);
-		Group g = this.ajaxList(u.getGroup().getId());
+		Group g = Group.transform(groupDAO.getGroupById(u.getGroup().getId()));
 		model.addAttribute("group", g);
 		// Hibernate.initialize(g.getUsers());
 		// for html Select

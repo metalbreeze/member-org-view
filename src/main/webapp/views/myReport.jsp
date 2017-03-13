@@ -13,7 +13,7 @@
 	${reportCenter.name }
 </h1>
 <c:url var="withDrawAction" value="/reportCenter/withDrawRequest" ></c:url>
-<form:form action="${withDrawAction}" commandName="reportCenter">
+<form:form action="${withDrawAction}" modelAttribute="reportCenter">
 <table>
 	<tr>
 		<td>

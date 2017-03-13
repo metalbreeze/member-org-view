@@ -18,7 +18,7 @@
 </h1>
 <c:url var="addAction" value="/reportCenter/add" ></c:url>
 
-<form:form action="${addAction}" commandName="reportCenter">
+<form:form action="${addAction}" modelAttribute="reportCenter">
 <table>
 	<c:if test="${!empty reportCenter.id}">
 	<tr>

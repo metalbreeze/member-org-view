@@ -18,6 +18,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.base.BaseObject;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
+import com.shop.model.Group;
 import com.shop.model.User;
 import com.shop.service.CostService;
 import com.shop.service.ProductService;
@@ -85,23 +86,27 @@ public class MyselfController extends BaseObject {
     public String userInfo(Model model, Principal principal) {
         // After user login successfully.
         String userName = principal.getName();
-        User u = userDAO.getUserByName(userName);
+        User u = userDAO.getUserByNameWithChildren(userName);
         logger.debug("User Name: "+ userName+"parent()"+u.getParent());
+        Group g = Group.transform(u.getGroup());
+        if(g!=null)model.addAttribute("levelUsers", g.getLevelUsers());
+		model.addAttribute("labels", Group.labels);
         model.addAttribute("user", u);
-		model.addAttribute("listUsers", this.userService.listUsers());
-		model.addAttribute("listProducts",this.productService.getProductList() );
+        model.addAttribute("list", u.getChildren());
+//		model.addAttribute("listUsers", this.userService.listUsers());
+//		model.addAttribute("listProducts",this.productService.getProductList() );
         logger.debug("User Name: "+ userName);
         return "myself";
     }
     
-    @RequestMapping(value = "/myself/withDrawRequest", method = RequestMethod.GET)
+    @RequestMapping(value = "/myself/withDrawRequest", method = RequestMethod.POST)
     @Transactional
     public String withDrawRequest(Model model, Principal principal,@ModelAttribute("user") User p,RedirectAttributes ra){
         String userName = principal.getName();
         User user = userDAO.getUserByName(userName);
         if (user.getId()!=p.getId()){
         	ra.addFlashAttribute("flashMsg", "用户不对");
-        }else if (p.getWithdrawRequest().compareTo(user.getAccountRemain())<0){
+        }else if (user.getAccountRemain().compareTo(p.getWithdrawRequest())<0){
         	ra.addFlashAttribute("flashMsg", "额度不够");
         }else if (user.getWithdrawStatus()== CostService.withdraw_init){
         	ra.addFlashAttribute("flashMsg", "上次提现请求在等待批准,不能再次申请");

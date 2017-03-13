@@ -112,6 +112,7 @@ public class Group {
 	}
 
 	public static Group transform(Group g) {
+		if(g==null)return null;
 		HashMap<String, List<User>> hm= new HashMap<String, List<User>>();
 		g.setLevelUsers(hm);
 		for (int i = 0; i < labels.length; i++) {
