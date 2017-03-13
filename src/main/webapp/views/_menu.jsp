@@ -23,6 +23,7 @@
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_SENDER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/orders">快递单</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/product/oldOrders">已发送快递单</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_REPORT')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 

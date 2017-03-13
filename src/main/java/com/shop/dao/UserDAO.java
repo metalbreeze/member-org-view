@@ -27,4 +27,5 @@ public interface UserDAO {
 	void saveWithId(User p, int i);
 	public void refresh(User parent);
 	public List<User> getOrderList(int i);
+	public List<User> getOldOrderList(int i);
 }

@@ -114,6 +114,8 @@
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 		<th width="60">详细</th>
+		<th width="60">提现请求</th>
+		<th width="60">同意提现</th>
 	</tr>
 	<c:forEach items="${listReportCenters}" var="reportCenter">
 		<tr>
@@ -129,6 +131,19 @@
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
 			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
 			<td><a href="<c:url value='/reportCenter/${reportCenter.id}' />" >详细</a></td>
+			<td align="right">
+				${reportCenter.withdrawRequest}
+			</td>
+			<td align="right">
+				<c:choose>
+					<c:when test="${reportCenter.withdrawStatus == 1 }">
+								<a href="<c:url value='/platformReportCenterWithDrawRequest/${reportCenter.id}' />" >同意提现</a>
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 2 }">
+								已提现
+					</c:when>
+				</c:choose>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>

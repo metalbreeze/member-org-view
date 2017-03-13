@@ -43,6 +43,10 @@ public class ReportCenter {
 	
 	private BigDecimal electricMoney=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
+	private BigDecimal withdrawRequest=new BigDecimal(0);
+	private Integer withdrawStatus;
+	private Timestamp withdrawDate;
+	
 	@OneToOne
 	@JoinColumn(name="user_id")
 	private User owner;
@@ -138,4 +142,35 @@ public class ReportCenter {
 	public void setWithdraw(BigDecimal withdraw) {
 		this.withdraw = withdraw;
 	}
+
+	public BigDecimal getWithdrawRequest() {
+		return withdrawRequest;
+	}
+
+	public void setWithdrawRequest(BigDecimal withdrawRequest) {
+		this.withdrawRequest = withdrawRequest;
+	}
+
+	public Integer getWithdrawStatus() {
+		return withdrawStatus;
+	}
+
+	public void setWithdrawStatus(Integer withdrawStatus) {
+		this.withdrawStatus = withdrawStatus;
+	}
+
+	public Timestamp getWithdrawDate() {
+		return withdrawDate;
+	}
+
+	public void setWithdrawDate(Timestamp withdrawDate) {
+		this.withdrawDate = withdrawDate;
+	}
+	public void addWithdraw(BigDecimal withdrawRequest2) {
+		withdraw=withdraw.add(withdrawRequest2);
+	}
+	public BigDecimal getAccountRemain(){
+		return money1.add(money2).add(withdraw.negate());
+	}
+	
 }

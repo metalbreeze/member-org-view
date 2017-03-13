@@ -65,6 +65,9 @@ public class User implements Comparable<User> {
 	private BigDecimal bonusMoney=new BigDecimal(0);
 	private BigDecimal feedbackMoney=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
+	private BigDecimal withdrawRequest=new BigDecimal(0);
+	private Integer withdrawStatus;
+	private Timestamp withdrawDate;
 	private BigDecimal saleMoney=new BigDecimal(0);
 	
 	private BigDecimal groupScore=new BigDecimal(0);
@@ -373,13 +376,47 @@ public class User implements Comparable<User> {
 		if(o==null)return 1;
 		return id-o.getId();
 	}
-
+	public BigDecimal getAccountRemain(){
+		return getAccountTotal().add(this.withdraw.negate());
+	}
+	public BigDecimal getAccountTotal(){
+		return this.saleMoney .add ( this.bonusMoney .add(this.feedbackMoney ) .multiply(new BigDecimal( 0.8)));
+	}
 	public int getOrderStatus() {
 		return orderStatus;
 	}
 
 	public void setOrderStatus(int orderStatus) {
 		this.orderStatus = orderStatus;
+	}
+
+	public BigDecimal getWithdrawRequest() {
+		return withdrawRequest;
+	}
+
+	public void setWithdrawRequest(BigDecimal withdrawRequest) {
+		this.withdrawRequest = withdrawRequest;
+	}
+
+
+	public Timestamp getWithdrawDate() {
+		return withdrawDate;
+	}
+
+	public void setWithdrawDate(Timestamp withdrawDate) {
+		this.withdrawDate = withdrawDate;
+	}
+
+	public Integer getWithdrawStatus() {
+		return withdrawStatus;
+	}
+
+	public void setWithdrawStatus(Integer withdrawStatus) {
+		this.withdrawStatus = withdrawStatus;
+	}
+
+	public void addWithdraw(BigDecimal withdrawRequest2) {
+		withdraw=withdraw.add(withdrawRequest2);
 	}
 
 }

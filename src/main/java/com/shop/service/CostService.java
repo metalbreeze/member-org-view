@@ -29,4 +29,6 @@ public class CostService extends BaseObject{
 	public Cost getOtherCost(){
 		return costList.get(1);
 	}
+	public static int withdraw_init=1;
+	public static int withdraw_send=2;
 }

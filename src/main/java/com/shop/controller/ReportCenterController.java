@@ -28,6 +28,7 @@ import com.shop.model.Operation;
 import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.model.View;
+import com.shop.service.CostService;
 import com.shop.service.ReportService;
 
 @Controller
@@ -102,6 +103,43 @@ public class ReportCenterController extends BaseObject {
 
 	}
 
+	@RequestMapping(value = "/reportCenter/withDrawRequest", method = RequestMethod.POST)
+	@Transactional
+	public String withDrawRequest(
+			@ModelAttribute("reportCenter") ReportCenter p, Principal principal,RedirectAttributes ra) {
+		String userName = principal.getName();
+		User owner = userDAO.getUserByName(userName);
+		ReportCenter rep = reportCenterDAO.getReportCenterById(p.getId());
+		if(rep==null||rep.getOwner()==null||rep.getOwner().getId()!=owner.getId()){
+			ra.addFlashAttribute("flashMsg", "非法提现请求");
+		}else if (rep.getAccountRemain().compareTo(p.getWithdrawRequest())<0) {
+			ra.addFlashAttribute("flashMsg", "额度不够");
+		}else{
+			rep.setWithdrawRequest(p.getWithdrawRequest());
+			rep.setWithdrawStatus(CostService.withdraw_init);
+		}
+		return "redirect:/myReport";
+	}
+
+	@RequestMapping(value = "/platformReportCenterWithDrawRequest/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String withDrawRequest(
+			@PathVariable int id, Principal principal,RedirectAttributes ra) {
+		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+		if(rep==null){
+			ra.addFlashAttribute("flashMsg", "非法提现请求");
+		}else if (rep.getAccountRemain().compareTo(rep.getWithdrawRequest())<0) {
+			ra.addFlashAttribute("flashMsg", "额度不够");
+		}else{
+			BigDecimal withdrawRequest = rep.getWithdrawRequest();
+			rep.addWithdraw(withdrawRequest);
+			rep.setWithdrawRequest(new BigDecimal(0));
+			rep.setWithdrawStatus(CostService.withdraw_send);
+			reportCenterDAO.updateReportCenter(rep);
+			operationDAO.addOperation(new Operation(null,rep,"提现",withdrawRequest));
+		}
+		return "redirect:/reportCenters";
+	}	
 	@RequestMapping("/reportCenter/edit/{id}")
 	@Transactional
 	public String editReportCenter(@PathVariable("id") int id, Model model) {

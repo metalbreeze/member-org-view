@@ -9,10 +9,11 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-
+<%-- 
 <c:url var="addAction" value="/myself/edit" ></c:url>
-
-<form:form action="${addAction}" commandName="user">
+--%>
+<c:url var="withDrawAction" value="/myself/withDrawRequest" ></c:url>
+<form:form action="${withDrawAction}" commandName="user">
 <table>
 	<c:if test="${!empty user.name}">
 	<tr>
@@ -33,7 +34,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="name" />
+			<form:input path="name"  readonly="true" />
 		</td> 
 	</tr>
 	<tr>
@@ -43,7 +44,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="mobile" />
+			<form:input path="mobile"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
@@ -53,7 +54,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="wechat" />
+			<form:input path="wechat"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
@@ -63,17 +64,17 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="alipay" />
+			<form:input path="alipay"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
 		<td>
 			<form:label path="accountNumber">
-				<spring:message text="银行帐号"/>
+				<spring:message text="银行及帐号"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="accountNumber" />
+			<form:input path="accountNumber"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
@@ -83,7 +84,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="address" />
+			<form:input path="address"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
@@ -100,22 +101,78 @@
 	<tr>
 		<td>
 			<form:label path="reportCenter">
-				<spring:message text="报单中心"/>
+				<spring:message text="销售中心"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="reportCenter.name" />
+			<form:input path="reportCenter.name"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
-		<td colspan="2">
-		 <!-- 
-			<c:if test="${!empty user.name}">
-				<input type="submit"
-					value="<spring:message text="修改"/>" />
-			</c:if>
-		-->
+		<td>
+			<form:label path="orderStatus">
+				<spring:message text="订单状态"/>
+			</form:label>
 		</td>
+		<td>
+			<c:if test="${user.orderStatus == 0}">
+				
+			</c:if>
+			<c:if test="${user.orderStatus == 1}">
+				订单已提交
+			</c:if>
+			<c:if test="${user.orderStatus == 2}">
+				订单已发送
+			</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="withdraw">
+				<spring:message text="已经提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="withdraw"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<c:if test="${user.withdrawStatus == 0}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest"/>
+			</td>
+			<td>
+				<input type="submit" value="<spring:message text="提现"/>" />
+			</td>
+		</c:if>
+		<c:if test="${user.withdrawStatus == 1}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest" readonly="true" />(上次提现请求在等待批准,不能再次申请)
+			</td>
+		</c:if>
+		<c:if test="${user.withdrawStatus == 2}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest"/>(上次提现已经批准)
+			</td>
+			<td>
+				<input type="submit" value="<spring:message text="提现"/>" />
+			</td>
+		</c:if>
 	</tr>
 </table>	
 </form:form>

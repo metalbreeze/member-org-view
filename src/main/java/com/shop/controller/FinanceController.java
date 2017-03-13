@@ -2,6 +2,7 @@ package com.shop.controller;
 
 import java.math.BigDecimal;
 import java.security.Principal;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
@@ -127,5 +128,18 @@ public class FinanceController extends BaseObject {
 			model.addAttribute("userList", userDAO.listUserOrderBySaleMoney(10));
 		}
 		return "saleMoneyList";
+	}
+	@RequestMapping(value = "/platformWithdraw/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String platformWithdraw(@PathVariable("id") int id) {
+		User user = userDAO.getUserById(id);
+		final BigDecimal withdrawRequest = user.getWithdrawRequest();
+		user.addWithdraw(withdrawRequest);
+		user.setWithdrawRequest(new BigDecimal(0));
+		user.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
+		user.setWithdrawStatus(CostService.withdraw_send);
+		userDAO.updateUser(user);
+		operationDAO.addOperation(new Operation(user,null,"同意提现",withdrawRequest));
+		return "redirect:/userFinance";
 	}
 }

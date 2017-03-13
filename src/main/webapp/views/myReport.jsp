@@ -12,8 +12,8 @@
 <h1>
 	${reportCenter.name }
 </h1>
-
-<form:form action="" commandName="reportCenter">
+<c:url var="withDrawAction" value="/reportCenter/withDrawRequest" ></c:url>
+<form:form action="${withDrawAction}" commandName="reportCenter">
 <table>
 	<tr>
 		<td>
@@ -64,6 +64,54 @@
 		<td>
 			<form:input path="electricMoney" readonly="true" />
 		</td>
+	</tr>
+		<tr>
+		<td>
+			<form:label path="withdraw">
+				<spring:message text="已经提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="withdraw"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<c:if test="${reportCenter.withdrawStatus == 0}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest"/>
+			</td>
+			<td>
+				<input type="submit" value="<spring:message text="提现"/>" />
+			</td>
+		</c:if>
+		<c:if test="${reportCenter.withdrawStatus == 1}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest" readonly="true" />(上次提现请求在等待批准,不能再次申请)
+			</td>
+		</c:if>
+		<c:if test="${reportCenter.withdrawStatus == 2}">
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest"/>(上次提现已经批准)
+			</td>
+			<td>
+				<input type="submit" value="<spring:message text="提现"/>" />
+			</td>
+		</c:if>
 	</tr>
 </table>	
 </form:form>

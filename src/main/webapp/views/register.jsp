@@ -80,7 +80,7 @@
 	<tr>
 		<td>
 			<form:label path="address">
-				<spring:message text="地址"/>
+				<spring:message text="收货地址"/>
 			</form:label>
 		</td>
 		<td>
