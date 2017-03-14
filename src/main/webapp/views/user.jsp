@@ -166,14 +166,13 @@
 			<td>${user.alipay}</td>
 			<td>${user.accountNumber}</td>
 			<td>${user.address}</td>
-			<td>
-				<c:choose>
-					<c:when test="${user.status == 'new' }">
-						新会员
+			<td><c:choose>
+					<c:when test="${user.available == -1 }">
+						暂停会员
 					</c:when>
-					<c:when test="${user.status == 'old' }">
+					<c:otherwise>
 						会员
-					</c:when>
+					</c:otherwise>
 				</c:choose>
 			</td>
 			<td>${user.registerDate}</td>

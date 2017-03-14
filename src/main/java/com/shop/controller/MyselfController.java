@@ -126,7 +126,7 @@ public class MyselfController extends BaseObject {
         // After user login successfully.
 //		model.addAttribute("listUsers", this.userService.listUsers());
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
-		model.addAttribute("listProducts",this.productService.getProductList() );
+		model.addAttribute("listProducts",this.productService.getCurrentProductList() );
         return "register";
     }
 }

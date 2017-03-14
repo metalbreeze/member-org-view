@@ -96,7 +96,7 @@
 		</td>
 		<td>
 			<form:input path="parent.id" readonly="true" hidden="true"/>
-			${user.parent.name}
+			<form:input path="" readonly="true" value="${user.parent.name}"/>
 		</td>
 	</tr>
 	<tr>
@@ -136,7 +136,7 @@
 			</form:label>
 		</td>
 		<td>
-			${user.saleMoney +  user.bonusMoney + user.feedbackMoney }
+			<form:input path="" readonly="true" value="${user.saleMoney +  user.bonusMoney + user.feedbackMoney }"/>
 		</td>
 	</tr>
 	<tr>
@@ -190,16 +190,6 @@
 		</td>
 	</tr>
 	<tr>
-		<td>
-			<form:label path="withdraw">
-				<spring:message text="已经提现"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="withdraw"  readonly="true" />
-		</td>
-	</tr>
-	<tr>
 		<c:if test="${user.withdrawStatus == 0}">
 			<td>
 				<form:label path="withdrawRequest">
@@ -220,7 +210,7 @@
 				</form:label>
 			</td>
 			<td>
-				<form:input path="withdrawRequest" readonly="true" />(上次提现请求在等待批准,不能再次申请)
+				<form:input path="withdrawRequest" readonly="true" />(等待审核)
 			</td>
 		</c:if>
 		<c:if test="${user.withdrawStatus == 2}">

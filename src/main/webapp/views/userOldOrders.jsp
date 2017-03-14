@@ -17,6 +17,7 @@
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
 		<th width="120">地址</th>
+		<th width="120">产品</th>
 	</tr>
 	<c:forEach items="${list2}" var="user">
 		<tr>
@@ -24,6 +25,16 @@
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
 			<td>${user.address}</td>
+			<td>
+			<c:choose>
+				<c:when test="${user.product_id == null || user.product_id==0 || user.product_id==1}">
+					${productList[2].name}
+				</c:when>
+				<c:otherwise>
+					${productList[user.product_id].name}
+				</c:otherwise>				
+			</c:choose>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>
@@ -36,6 +47,7 @@
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
 		<th width="120">地址</th>
+		<th width="120">产品</th>
 	</tr>
 	<c:forEach items="${list3}" var="user">
 		<tr>
@@ -43,6 +55,16 @@
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
 			<td>${user.address}</td>
+			<td>
+			<c:choose>
+				<c:when test="${user.product_id == null || user.product_id==0 || user.product_id==1}">
+					${productList[2].name}
+				</c:when>
+				<c:otherwise>
+					${productList[user.product_id].name}
+				</c:otherwise>				
+			</c:choose>
+			</td>
 		</tr>
 	</c:forEach>
 	</table>

@@ -76,7 +76,7 @@ public class User implements Comparable<User> {
 	private BigDecimal directScore=new BigDecimal(0);
 	
 	private int orderStatus = 0 ;
-	
+	private Integer available;
 	public String getLevel() {
 		return level;
 	}
@@ -426,6 +426,14 @@ public class User implements Comparable<User> {
 
 	public void setActiveDate(Timestamp activeDate) {
 		this.activeDate = activeDate;
+	}
+
+	public Integer getAvailable() {
+		return available;
+	}
+
+	public void setAvailable(Integer available) {
+		this.available = available;
 	}
 
 }

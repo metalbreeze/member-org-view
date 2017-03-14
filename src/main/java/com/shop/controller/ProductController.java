@@ -56,6 +56,7 @@ public class ProductController extends BaseObject {
 		model.addAttribute("list2", list2);
 		model.addAttribute("product3", productService.getProductById(3));
 		model.addAttribute("list3", list3);
+		model.addAttribute("productList", ProductService.getProductList());
 		return "userOrders";
 	}
 	@RequestMapping(value= "/product/oldOrders", method = RequestMethod.GET)
@@ -67,6 +68,7 @@ public class ProductController extends BaseObject {
 		model.addAttribute("list2", list2);
 		model.addAttribute("product3", productService.getProductById(3));
 		model.addAttribute("list3", list3);
+		model.addAttribute("productList", ProductService.getProductList());
 		return "userOldOrders";
 	}
 }

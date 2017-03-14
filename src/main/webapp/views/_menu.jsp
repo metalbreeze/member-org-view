@@ -9,11 +9,21 @@
 	.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
+	body {background-color: #80da82;}
+	input {background-color: #80da82;}
 </style>
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;" >
-<span style="font-size:30px">商务管理系统</span>
-<br/>
-	<a href="${pageContext.request.contextPath}/views/brief.jsp">简介</a> 
+<script
+  src="https://code.jquery.com/jquery-3.1.1.min.js"
+  integrity="sha256-hVVnYaiADRTO2PzUGmuLJr8BLUSjGIZsDYGmIJLv2b8="
+  crossorigin="anonymous"></script>
+<script
+  src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
+  integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
+  crossorigin="anonymous"></script>
+<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #7cee7f;" >
+<span style="font-size:30px">商务管理系统</span><br/>
+<%-- testing https://jqueryui.com/menu/ --%>
+	<a href="${pageContext.request.contextPath}/brief">简介</a> 
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
     	|&nbsp;<a href="${pageContext.request.contextPath}/login">登录</a>
     	|&nbsp;<a href="${pageContext.request.contextPath}/register">注册</a>

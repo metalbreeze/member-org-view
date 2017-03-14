@@ -37,7 +37,7 @@
 		<th width="60">已经提现</th>
 		<th width="60">资金余额</th>
 		<th width="60">提现请求</th>
-		<th width="60">同意提现</th>
+		<th width="60">提现状态</th>
 	</tr>
 	<c:forEach items="${userList}" var="user">
 	<tr>
@@ -83,7 +83,7 @@
 		<td align="right">
 			<c:choose>
 				<c:when test="${user.withdrawStatus == 1 }">
-							<a href="<c:url value='/platformWithdraw/${user.id}' />" >同意提现</a>
+							<a href="<c:url value='/platformWithdraw/${user.id}' />" >同意</a>
 				</c:when>
 				<c:when test="${user.withdrawStatus == 2 }">
 							已提现

@@ -58,6 +58,10 @@ public class CommonController extends BaseObject {
         }
         return "403Page";
     }
+    @RequestMapping(value = "/brief", method = RequestMethod.GET)
+    public String brief() {
+        return "brief";
+    }
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}

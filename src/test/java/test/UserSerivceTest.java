@@ -105,12 +105,12 @@ public class UserSerivceTest extends BaseObject {
 	}
 	@Test
 	// 标明是测试方法
-
 	// 标明使用完此方法后事务不回滚,true时为回滚
+	@Rollback(false)
 	public void importExcel() {
 		FileInputStream in = null;
 		try {
-			in = new FileInputStream("C:\\Users\\niesh\\Documents\\Tencent Files\\16914358\\FileRecv\\茶多酚(新后台测试数据）.xls");
+			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康科技正常数据.xls");
 			Workbook wb = new HSSFWorkbook(in);
 			Sheet sheet = wb.getSheetAt(0);
 			for (Row row : sheet) {
@@ -118,34 +118,32 @@ public class UserSerivceTest extends BaseObject {
 				if (rowNum < 1||rowNum>495) {
 					continue;
 				}
-				String msg="rowNum:"+rowNum;
+				info("==========================\nrowNum"+rowNum);
+				Cell cell = row.getCell(0);
+				if(cell==null)continue;
 				User u = new User();
-				u.setId(10000+parseInt(row.getCell(0)));
-				msg+="id:"+u.getId();
+				u.setId(10000+parseInt(cell));
 				reportService.activeUser(null,u.getId(),null);
 //				u.setRegisterDate(parseDate(row.getCell(1)));
 //				String parentName= parseString(row.getCell(2));
 //				if (parentName!=null&&!parentName.equals("")){
-//					msg+="parent:"+parentName;
+//					info("parent:"+parentName);
 //					User p = userDAO.getUserByName(parentName);
 //					u.setParent(p);
 //				}
 //				u.setName(row.getCell(3).getStringCellValue());
-//				msg+="name"+u.getName();
+//				info("name"+u.getName()+"id:"+u.getId());
 //				u.setMobile(parseString(row.getCell(4)));
 //				u.setWechat(parseString(row.getCell(6)));
 //				ReportCenter rc = new ReportCenter();
 //				rc.setId(Integer.parseInt(parseString(row.getCell(9))));
 //				u.setReportCenter(rc);
 //				userDAO.saveWithId(u,u.getId());
-				
-				logger.info(msg+u.toString());
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
 		} 
-	}
-
+	}	
 	public void active(int id) {
 		logger.info("activeUser " + id);
 		User target = userDAO.getUserById(id);

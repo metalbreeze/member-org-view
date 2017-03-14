@@ -21,6 +21,7 @@ public class ProductService extends BaseObject{
 	
 	static List<Product> productList = new ArrayList();  
 	static {
+		productList.add(new Product(0,"无产品",0,0));
 		productList.add(new Product(1,"茶多酚",999,300));
 		productList.add(new Product(2,"东革阿里",999,200));
 		productList.add(new Product(3,"卡琪花",999,200));
@@ -32,13 +33,16 @@ public class ProductService extends BaseObject{
 	}
 	
 	public Product getProductById(int i){
-		if(i<1||i>3){
+		if(i<0||i>3){
 			return null;
 		}
-		return productList.get(i-1);
+		return productList.get(i);
 	}
-	public List<Product> getProductList(){
+	public static List<Product> getCurrentProductList(){
 		return currentProductList;
+	}
+	public static List<Product> getProductList(){
+		return productList;
 	}
 	public static int order_init=1;
 	public static int order_send=2;

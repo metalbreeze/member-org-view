@@ -122,6 +122,7 @@
 	<tr>
 		<th width="80">序号</th>
 		<th width="80">用户 ID</th>
+		<th width="120">推荐人</th>
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
 		<th width="120">微信号</th>
@@ -130,13 +131,13 @@
 		<th width="120">地址</th>
 		<th width="120">身份</th>
 		<th width="120">注册时间</th>
-		<th width="120">推荐人</th>
 		<th width="120">激活</th>
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
 			<td>${loop.index+1}</td>
 			<td>${user.id}</td>
+			<td>${user.parent.name}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
 			<td>${user.wechat}</td>
@@ -157,17 +158,14 @@
 				</c:choose>
 			</td>
 			<td>${user.registerDate}</td>
-			<td>${user.parent.name}</td>
 			<td>
 			    <c:choose>
-					<c:when test="${user.status == 'new' }">
+					<c:when test="${user.status == 'new' || user.status == null }">
 						<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
+						<a href="<c:url value='/myReport/delete/${user.id}' />" >删除</a>
 					</c:when>
 					<c:when test="${user.status == 'old' }">
 						
-					</c:when>
-					<c:when test="${user.status == null }">
-						<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
 					</c:when>
 				</c:choose>
 			</td>

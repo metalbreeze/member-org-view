@@ -133,7 +133,7 @@ public class ReportService extends BaseObject {
 		}
 		if (target.getParent() != null) {
 			target.getParent().addSaleMoney(100);
-			// 有空测试下
+			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
 			operationDAO.addOperation(new Operation(target.getParent(), r,
 					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"

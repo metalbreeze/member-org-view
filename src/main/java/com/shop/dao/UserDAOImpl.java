@@ -243,4 +243,11 @@ public class UserDAOImpl implements UserDAO {
 				.setInteger("id", i).setInteger("send", ProductService.order_send).list();
 		return l;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getAvailableUserList() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> UsersList = session.createQuery("from User where status='old' ").list();
+		return UsersList;
+	}
 }

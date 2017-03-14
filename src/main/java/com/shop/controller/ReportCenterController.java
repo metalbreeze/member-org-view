@@ -206,7 +206,6 @@ public class ReportCenterController extends BaseObject {
 	}
 
 	static final BigDecimal A_REPORT_COST = new BigDecimal(999);
-
 	@RequestMapping("/myReport/active/{id}")
 	@Transactional
 	public String activeUser(@PathVariable("id") int id, Principal principal,
@@ -350,7 +349,22 @@ public class ReportCenterController extends BaseObject {
 //		}
 		return "redirect:/myReport";
 	}
-
+	@RequestMapping("/myReport/delete/{id}")
+	@Transactional
+	public String deleteUser(@PathVariable("id") int id, Principal principal,
+			RedirectAttributes ra) {
+		logger.info("activeUser " + id);
+		String userName = principal.getName();
+		User owner = userDAO.getUserByName(userName);
+		User target = userDAO.getUserById(id);
+		if (target.getReportCenter()!=null&&target.getReportCenter().getOwner().getId()==owner.getId()){
+			userDAO.removeUser(target.getId());
+		}else{
+			ra.addAttribute(flashMsg, "非本报单中心用户");
+		}
+				
+		return "redirect:/myReport";
+	}
 	
 
 }
