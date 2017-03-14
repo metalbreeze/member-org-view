@@ -95,7 +95,6 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="parent.id" readonly="true" hidden="true"/>
 			<form:input path="" readonly="true" value="${user.parent.name}"/>
 		</td>
 	</tr>

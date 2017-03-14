@@ -62,6 +62,10 @@ public class CommonController extends BaseObject {
     public String brief() {
         return "brief";
     }
+    @RequestMapping(value = "/images", method = RequestMethod.GET)
+    public String images() {
+        return "images";
+    }
 	public UserDAO getUserDAO() {
 		return userDAO;
 	}
