@@ -132,6 +132,7 @@
 		<th width="120">身份</th>
 		<th width="120">注册时间</th>
 		<th width="120">激活</th>
+		<th width="120">发货状态</th>
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
@@ -166,6 +167,16 @@
 					</c:when>
 					<c:when test="${user.status == 'old' }">
 						
+					</c:when>
+				</c:choose>
+			</td>
+			<td>
+			    <c:choose>
+					<c:when test="${user.orderStatus == 1 }">
+						已出单
+					</c:when>
+					<c:when test="${user.orderStatus == 2 }">
+						已发货
 					</c:when>
 				</c:choose>
 			</td>

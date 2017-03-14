@@ -5,8 +5,8 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <style type="text/css">
 	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
-	.tg th{font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#f0f0f0;}
+	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#7fcc67;}
+	.tg th {font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#86ba75;}
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
 	body {background-color: #80da82;}
@@ -23,7 +23,7 @@
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #7cee7f;" >
 <span style="font-size:30px">商务管理系统</span><br/>
 <%-- testing https://jqueryui.com/menu/ --%>
-	<a href="${pageContext.request.contextPath}/brief">简介</a> 
+	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
     	|&nbsp;<a href="${pageContext.request.contextPath}/login">登录</a>
     	|&nbsp;<a href="${pageContext.request.contextPath}/register">注册</a>

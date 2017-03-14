@@ -233,6 +233,7 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> l = session.createQuery("FROM User  where product_id=:id and orderStatus=:send order by id ")
 				.setInteger("id", i).setInteger("send", ProductService.order_init).list();
+		logger.info("order list size is "+l.size());
 		return l;
 	}
 

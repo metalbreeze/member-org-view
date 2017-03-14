@@ -202,7 +202,9 @@
 				<input type="submit" value="<spring:message text="提现"/>" />
 			</td>
 		</c:if>
-		<c:if test="${user.withdrawStatus == 1}">
+		
+		<c:choose>
+		<c:when test="${user.withdrawStatus == 1}">
 			<td>
 				<form:label path="withdrawRequest">
 					<spring:message text="请求提现"/>
@@ -211,8 +213,8 @@
 			<td>
 				<form:input path="withdrawRequest" readonly="true" />(等待审核)
 			</td>
-		</c:if>
-		<c:if test="${user.withdrawStatus == 2}">
+		</c:when>
+		<c:when test="${user.withdrawStatus == 2}">
 			<td>
 				<form:label path="withdrawRequest">
 					<spring:message text="请求提现"/>
@@ -224,7 +226,21 @@
 			<td>
 				<input type="submit" value="<spring:message text="提现"/>" />
 			</td>
-		</c:if>
+		</c:when>
+		<c:otherwise>
+			<td>
+				<form:label path="withdrawRequest">
+					<spring:message text="请求提现"/>
+				</form:label>
+			</td>
+			<td>
+				<form:input path="withdrawRequest"/>
+			</td>
+			<td>
+				<input type="submit" value="<spring:message text="提现"/>" />
+			</td>
+		</c:otherwise>		
+		</c:choose>
 	</tr>
 </table>	
 </form:form>
@@ -252,7 +268,7 @@
 </table>
 </c:if>
 <c:if test="${!empty list}">
-<h3>推荐人员</h3>
+<h3>我的客户</h3>
 <table class="tg">
 	<tr>
 		<th width="80">ID</th>
