@@ -13,8 +13,9 @@
 <%-- 
 <c:url var="addAction" value="/myself/edit" ></c:url>
 --%>
+<c:url var="changePasswd" value="/myself/changePasswd" ></c:url>
 <c:url var="withDrawAction" value="/myself/withDrawRequest" ></c:url>
-<form:form action="${withDrawAction}" modelAttribute="user">
+<form:form action="" modelAttribute="user">
 <table>
 	<c:if test="${!empty user.name}">
 	<tr>
@@ -117,6 +118,12 @@
 		<td>
 			<form:password path="password_2" />
 		</td> 
+	</tr>
+	<tr>
+		<td colspan="2">
+				<input type="button" onclick=checkAndSubmit()
+					value="<spring:message text="修改密码"/>" />
+		</td>
 	</tr>
 	<tr>
 		<td>
@@ -257,7 +264,8 @@
 				<form:input path="withdrawRequest"/>
 			</td>
 			<td>
-				<input type="submit" value="<spring:message text="提现"/>" />
+				<input type="button" onclick=withdraw()
+					value="<spring:message text="修改密码"/>" />
 			</td>
 		</c:otherwise>		
 		</c:choose>
@@ -349,6 +357,26 @@
 	</c:forEach>
 </table>
 </c:if>
-
+<script type="text/javascript" >
+function checkAndSubmit()
+{
+	
+	if ( document.forms[0].password.value != document.forms[0].password_2.value )
+		{
+			alert("密码不一样"+document.forms[0].password.value+document.forms[0].password_2.value);
+			document.forms[0].password.focus();   
+		}
+	else
+		{
+			document.forms[0].action.value="${changePasswd}";
+			document.forms[0].submit();
+		}
+}
+function withdraw()
+{
+	document.forms[0].action.value="${withDrawAction}";
+	document.forms[0].submit();
+}
+</script>
 </body>
 </html>

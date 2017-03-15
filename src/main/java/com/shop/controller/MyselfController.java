@@ -106,7 +106,18 @@ public class MyselfController extends BaseObject {
         logger.debug("User Name: "+ userName);
         return "myself";
     }
-    
+    @RequestMapping(value = "/myself/changePasswd", method = RequestMethod.GET)
+    @Transactional
+    public String changePasswd(Model model, Principal principal) {
+        // After user login successfully.
+        String userName = principal.getName();
+        User u = userDAO.getUserByName(userName);
+		String encode = encoder.encode(u.getPassword());
+		u.setPassword(encode);
+		userDAO.updateUser(u);
+        logger.debug("User Name: "+ userName);
+        return "redirect:/myself";
+    }   
     @RequestMapping(value = "/myself/withDrawRequest", method = RequestMethod.POST)
     @Transactional
     public String withDrawRequest(Model model, Principal principal,@ModelAttribute("user") User p,RedirectAttributes ra){
