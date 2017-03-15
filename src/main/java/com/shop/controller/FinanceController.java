@@ -110,6 +110,27 @@ public class FinanceController extends BaseObject {
 		return "userFinance";
 	}
 	
+	@RequestMapping(value = "/platformWithdraw/agree/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String userFinanceAgree(@PathVariable int id) {
+		User u = userDAO.getUserById(id);
+		if (u != null ){
+			u.setWithdrawStatus(CostService.withdraw_agree);
+			userDAO.updateUser(u);
+		}
+		return "redirect:/userFinance";
+	}
+	
+	@RequestMapping(value = "/platformWithdraw/disagree/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String userFinanceDisagree(@PathVariable int id) {
+		User u = userDAO.getUserById(id);
+		if (u != null ){
+			u.setWithdrawStatus(CostService.withdraw_disagree);
+			userDAO.updateUser(u);
+		}
+		return "redirect:/userFinance";
+	}	
 	static List<User> getAllChildren(User u) {
 		ArrayList<User> list = new ArrayList<User>();
 		list.add(u);
@@ -129,7 +150,7 @@ public class FinanceController extends BaseObject {
 		}
 		return "saleMoneyList";
 	}
-	@RequestMapping(value = "/platformWithdraw/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/finance/withdraw/{id}", method = RequestMethod.GET)
 	@Transactional
 	public String platformWithdraw(@PathVariable("id") int id) {
 		User user = userDAO.getUserById(id);
@@ -139,7 +160,19 @@ public class FinanceController extends BaseObject {
 		user.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
 		user.setWithdrawStatus(CostService.withdraw_send);
 		userDAO.updateUser(user);
-		operationDAO.addOperation(new Operation(user,null,"同意提现",withdrawRequest));
-		return "redirect:/userFinance";
+		operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest));
+		return "userFinance";
+	}
+	@RequestMapping(value = "/finance/users", method = RequestMethod.GET)
+	@Transactional
+	public String financeUsers(Model model) {
+		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_agree));
+		return "userFinance";
+	}
+	@RequestMapping(value = "/finance/users/already", method = RequestMethod.GET)
+	@Transactional
+	public String financeUsersAlready(Model model) {
+		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_send));
+		return "userFinance";
 	}
 }

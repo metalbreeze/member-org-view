@@ -17,6 +17,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.model.Group;
 import com.shop.model.User;
+import com.shop.service.CostService;
 import com.shop.service.ProductService;
 
 @Repository
@@ -227,7 +228,7 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();	
 		session.refresh(parent);
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getOrderList(int i) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -236,7 +237,7 @@ public class UserDAOImpl implements UserDAO {
 		logger.info("order list size is "+l.size());
 		return l;
 	}
-
+	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> getOldOrderList(int i) {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -250,5 +251,13 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User where status='old' ").list();
 		return UsersList;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public Object listWithdrawStatusUsers(int status) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> l = session.createQuery("FROM User  where withdrawStatus=:agree order by id")
+				.setInteger("agree", status).list();
+		return l;
 	}
 }

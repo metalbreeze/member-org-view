@@ -70,11 +70,11 @@ public class User implements Comparable<User> {
 	private Integer withdrawStatus;
 	private Timestamp withdrawDate;
 	private BigDecimal saleMoney=new BigDecimal(0);
-	
+	private BigDecimal reGroupMoney=new BigDecimal(0);
 	private BigDecimal groupScore=new BigDecimal(0);
 	private BigDecimal personalScore=new BigDecimal(0);
 	private BigDecimal directScore=new BigDecimal(0);
-	
+	private String withdrawReason;
 	private int orderStatus = 0 ;
 	private Integer available;
 	public String getLevel() {
@@ -434,6 +434,29 @@ public class User implements Comparable<User> {
 
 	public void setAvailable(Integer available) {
 		this.available = available;
+	}
+
+	public String getWithdrawReason() {
+		return withdrawReason;
+	}
+
+	public void setWithdrawReason(String withdrawReason) {
+		this.withdrawReason = withdrawReason;
+	}
+
+	public BigDecimal getReGroupMoney() {
+		return reGroupMoney;
+	}
+
+	public void setReGroupMoney(BigDecimal reGroupMoney) {
+		this.reGroupMoney = reGroupMoney;
+	}
+
+	public void addReGroupMoney(Product productById) {
+		if(reGroupMoney==null){
+			reGroupMoney=new BigDecimal(0);
+		}
+		reGroupMoney=reGroupMoney.add(productById.getCost());
 	}
 
 }

@@ -17,6 +17,7 @@
 
 <table class="tg">
 	<tr>
+		<th width="80">序号</th>
 		<th width="80">ID</th>
 		<th width="60">姓名</th>
 		<th width="60">销售奖励</th>
@@ -24,8 +25,11 @@
 		<th width="60">回馈</th>
 		<th width="60">总计</th>
 	</tr>
-	<c:forEach items="${userList}" var="user">
+	<c:forEach items="${userList}" var="user"  varStatus="loop">
 	<tr>
+		<td>
+			${loop.index+1}
+		</td>
 		<td>
 			${user.id}
 		</td>

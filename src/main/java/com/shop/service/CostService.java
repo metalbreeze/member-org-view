@@ -31,4 +31,6 @@ public class CostService extends BaseObject{
 	}
 	public static int withdraw_init=1;
 	public static int withdraw_send=2;
+	public static int withdraw_agree=3;
+	public static int withdraw_disagree=4;
 }

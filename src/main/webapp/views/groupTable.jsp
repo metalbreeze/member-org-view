@@ -15,9 +15,9 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-<h1>
-	层级关系
-</h1>
+<h3>
+群${group.name}:	
+</h3>
 <c:if test="${!empty message}">
 		<h2>	${message}</h2>
 		组1：
@@ -26,6 +26,7 @@
 		组2：
 		<a href="<c:url value="/listgroup?group.id="/>${group2.id}">${group2.name}</a>
 </c:if>
+<%--
 <sec:authorize access="hasRole('ROLE_ADMIN')">
 <c:url var="addAction" value="/group/addUser" ></c:url>
 <form:form action="${addAction}" modelAttribute="user">
@@ -59,7 +60,7 @@
 		</table>
 </form:form>
 </sec:authorize>
-
+--%>
 <table class="tg">
 	<tr>
 		<th>

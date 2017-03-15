@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.base.BaseObject;
+import com.shop.dao.GroupDAO;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Group;
@@ -42,6 +43,11 @@ public class MyselfController extends BaseObject {
 	@Autowired(required=true)
 	@Qualifier(value="reportCenterDAO")
 	private ReportCenterDAO reportCenterDao;
+	
+	
+	@Autowired(required=true)
+	@Qualifier(value="groupDAO")
+	private GroupDAO groupDAO;
 	
     @Autowired(required=true)
     @Qualifier(value="encoder")
@@ -91,8 +97,10 @@ public class MyselfController extends BaseObject {
         Group g = Group.transform(u.getGroup());
         if(g!=null)model.addAttribute("levelUsers", g.getLevelUsers());
 		model.addAttribute("labels", Group.labels);
+		model.addAttribute("group", g);
         model.addAttribute("user", u);
         model.addAttribute("list", u.getChildren());
+        model.addAttribute("currentGroup", Group.transform(groupDAO.getAvailableGroup()));
 //		model.addAttribute("listUsers", this.userService.listUsers());
 //		model.addAttribute("listProducts",this.productService.getProductList() );
         logger.debug("User Name: "+ userName);
@@ -108,13 +116,17 @@ public class MyselfController extends BaseObject {
         	ra.addFlashAttribute("flashMsg", "用户不对");
         }else if (user.getAccountRemain().compareTo(p.getWithdrawRequest())<0){
         	ra.addFlashAttribute("flashMsg", "额度不够");
-        }else if (user.getWithdrawStatus()== CostService.withdraw_init){
-        	ra.addFlashAttribute("flashMsg", "上次提现请求在等待批准,不能再次申请");
-        }else {
+        }else if (null == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_disagree
+        		||user.getWithdrawStatus()==CostService.withdraw_send){
         	ra.addFlashAttribute("flashMsg", "提现请求已发送");
         	user.setWithdrawRequest(p.getWithdrawRequest());
         	user.setWithdrawStatus(CostService.withdraw_init);
           	userDAO.updateUser(user);
+        }else if (CostService.withdraw_init == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_agree){
+        	ra.addFlashAttribute("flashMsg", "上次提现请求在等待批准,不能再次申请");
+        }else {
+        	ra.addFlashAttribute("flashMsg", "有异常,请联系管理员");
+        	logger.info("should not go those code");
         }
         return "redirect:/myself";
     }

@@ -8,7 +8,7 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-<h1>注册</h1>
+<h3>注册</h3>
 
 <c:url var="addAction" value="/myself/edit" ></c:url>
 

@@ -22,13 +22,13 @@
 	</tr>
 	<c:forEach items="${operationList}" var="p">
 		<tr>
-<td>${p.id}</td>
-<td>${p.operation}</td>
-<td>${p.user.name}</td>
-<td>${p.reportCenter.name}</td>
-<td align="right">${p.money}</td>
-<td>${p.operationDate}</td>
-<td>${p.remark}</td>
+			<td align="center">${p.id}</td>
+			<td>${p.operation}</td>
+			<td>${p.user.name}</td>
+			<td>${p.reportCenter.name}</td>
+			<td align="right">${p.money}</td>
+			<td>${p.operationDate}</td>
+			<td>${p.remark}</td>
 		</tr>
 	</c:forEach>
 	</table>

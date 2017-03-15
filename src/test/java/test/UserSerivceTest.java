@@ -106,6 +106,7 @@ public class UserSerivceTest extends BaseObject {
 	@Test
 	// 标明是测试方法
 	// 标明使用完此方法后事务不回滚,true时为回滚
+	@Transactional
 	@Rollback(false)
 	public void importExcel() {
 		FileInputStream in = null;
@@ -123,7 +124,7 @@ public class UserSerivceTest extends BaseObject {
 				if(cell==null)continue;
 				User u = new User();
 				u.setId(10000+parseInt(cell));
-				reportService.activeUser(null,u.getId(),null);
+
 //				u.setRegisterDate(parseDate(row.getCell(1)));
 //				String parentName= parseString(row.getCell(2));
 //				if (parentName!=null&&!parentName.equals("")){
@@ -139,6 +140,8 @@ public class UserSerivceTest extends BaseObject {
 //				rc.setId(Integer.parseInt(parseString(row.getCell(9))));
 //				u.setReportCenter(rc);
 //				userDAO.saveWithId(u,u.getId());
+
+				reportService.activeUser(null,u.getId(),null);
 			}
 		} catch (Exception e) {
 			e.printStackTrace();
@@ -264,7 +267,7 @@ public class UserSerivceTest extends BaseObject {
 									+ "xx 直推" + target.getId() + "直推"));
 				} else {
 					operationDAO.addOperation(new Operation(target, r,
-							"直推奖设定不了", 100));
+							"无直推人", 100));
 				}
 
 				logger.info("active a user " + target.toString()

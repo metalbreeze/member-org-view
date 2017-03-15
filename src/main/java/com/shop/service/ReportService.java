@@ -116,6 +116,11 @@ public class ReportService extends BaseObject {
 			userLevealA.setPosition(1);
 			userLevealA.setGroup(groupDAO.getAvailableGroup());
 			userLevealA.addBonusMoney(4000);
+			userLevealA.addReGroupMoney(ProductService.getProductById(2));
+			if(userLevealA.getProduct_id()==0||userLevealA.getProduct_id()==1){
+				userLevealA.setProduct_id(2);
+			}
+			userLevealA.setOrderStatus(ProductService.order_init);
 			userDAO.updateUser(userLevealA);
 			// 分享回馈奖
 			if (userLevealA.getParent() != null) {
@@ -139,7 +144,7 @@ public class ReportService extends BaseObject {
 					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"
 							+ target.getId() + "直推"));
 		} else {
-			operationDAO.addOperation(new Operation(target, r, "直推奖设定不了", 100));
+			operationDAO.addOperation(new Operation(target, r, "无直推人", 100));
 		}
 		info(owner + "active a user " + target.toString()
 				+ " with money");

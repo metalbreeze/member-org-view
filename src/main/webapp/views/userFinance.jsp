@@ -4,6 +4,7 @@
 <%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ taglib prefix="fn" uri="http://java.sun.com/jsp/jstl/functions" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <html>
 <head>
 	<title>会员账务</title>
@@ -25,7 +26,7 @@
  -->
 <table class="tg">
 	<tr>
-		<th width="80">ID</th>
+		<th width="40">ID</th>
 		<th width="60">姓名</th>
 		<th width="60">销售奖励</th>
 		<th width="60">分红</th>
@@ -41,19 +42,19 @@
 	</tr>
 	<c:forEach items="${userList}" var="user">
 	<tr>
-		<td>
+		<td align="center">
 			${user.id}
 		</td>
 		<td>
 			${user.name }
 		</td>
-		<td>
+		<td align="right">
 			${user.saleMoney}
 		</td>
-		<td>
+		<td align="right">
 			${user.bonusMoney}
 		</td>
-		<td>
+		<td align="right">
 			${user.feedbackMoney}
 		</td>
 <%--	<td>
@@ -83,11 +84,30 @@
 		<td align="right">
 			<c:choose>
 				<c:when test="${user.withdrawStatus == 1 }">
-							<a href="<c:url value='/platformWithdraw/${user.id}' />" >同意</a>
+					<sec:authorize access="hasRole('ROLE_FINANCE')">
+							提现等待批准
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+							<a href="<c:url value='/platformWithdraw/agree/${user.id}' />" >同意</a>
+							<a href="<c:url value='/platformWithdraw/disagree/${user.id}' />" >不同意</a>
+					</sec:authorize>
 				</c:when>
 				<c:when test="${user.withdrawStatus == 2 }">
-							已提现
+							已经提现
 				</c:when>
+				<c:when test="${user.withdrawStatus == 3 }">
+					<sec:authorize access="hasRole('ROLE_FINANCE')">
+							<a href="<c:url value='/finance/withdraw/${user.id}' />" >
+							给客户提现(请在微信上操作)
+							</a>
+					</sec:authorize>
+					<sec:authorize access="hasRole('ROLE_ADMIN')">
+							等待财务人员操作
+					</sec:authorize>
+				</c:when>
+				<c:when test="${user.withdrawStatus == 4 }">
+							不同意提现
+				</c:when>		
 			</c:choose>
 		</td>
 	</tr>

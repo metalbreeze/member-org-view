@@ -18,6 +18,9 @@ public class ProductService extends BaseObject{
 	@Autowired(required = true)
 	@Qualifier(value = "userDAO")
 	private UserDAO userDAO;
+	@Autowired(required = true)
+	@Qualifier(value = "operationDAOImpl")
+	private OperationDAOImpl operationDAO;
 	
 	static List<Product> productList = new ArrayList();  
 	static {
@@ -32,7 +35,7 @@ public class ProductService extends BaseObject{
 		currentProductList.add(new Product(3,"卡琪花",999,200));
 	}
 	
-	public Product getProductById(int i){
+	public static Product getProductById(int i){
 		if(i<0||i>3){
 			return null;
 		}
@@ -62,6 +65,7 @@ public class ProductService extends BaseObject{
 		}
 		u.setOrderStatus(order_send);
 		userDAO.updateUser(u);
+		operationDAO.addOperation(new Operation(u, null, "发快递单", 0));
 	}
 	
 }

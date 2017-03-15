@@ -100,6 +100,26 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="password">
+				<spring:message text="密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="password_2">
+				<spring:message text="重复密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password_2" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
 			<form:label path="saleMoney">
 				<spring:message text="销售奖励"/>
 			</form:label>
@@ -184,7 +204,7 @@
 				订单已提交
 			</c:if>
 			<c:if test="${user.orderStatus == 2}">
-				订单已发送
+				已发货
 			</c:if>
 		</td>
 	</tr>
@@ -245,7 +265,7 @@
 </table>	
 </form:form>
 <c:if test="${!empty levelUsers}">
-<h3>所在群</h3>
+<h3>我的排位&nbsp;&nbsp;&nbsp;&nbsp;${group.name}</h3>
 <table class="tg">
 	<tr>
 		<th>
@@ -256,9 +276,48 @@
 		</th> 
 	</tr>
 	<c:forEach items="${labels}" var="label">
+  	<tr>
+		<td>&nbsp;</td>
+		<c:forEach items="${levelUsers[label]}" var="list" varStatus="loop">
+				<td style="font-family:Arial, sans-serif;font-size:11px;font-weight:normal;">
+				 ${loop.index+1}
+				</td>
+   		</c:forEach>
+  	</tr>
 	<tr>
 		<td>${label}层</td>
 		<c:forEach items="${levelUsers[label]}" var="list">
+				<td>
+				 ${list.name}
+				</td>
+   		</c:forEach>
+  	</tr>
+	</c:forEach>
+</table>
+</c:if>
+<c:if test="${!empty currentGroup}">
+<h3>工作群&nbsp;&nbsp;&nbsp;&nbsp;${currentGroup.name}</h3>
+<table class="tg">
+	<tr>
+		<th>
+				层级
+		</th> 
+		<th>
+				群成员
+		</th> 
+	</tr>
+	<c:forEach items="${labels}" var="label">
+  	<tr>
+		<td>&nbsp;</td>
+		<c:forEach items="${currentGroup.levelUsers[label]}" var="list" varStatus="loop">
+				<td style="font-family:Arial, sans-serif;font-size:11px;font-weight:normal;">
+				 ${loop.index+1}
+				</td>
+   		</c:forEach>
+  	</tr>
+	<tr>
+		<td>${label}层</td>
+		<c:forEach items="${currentGroup.levelUsers[label]}" var="list" varStatus="loop">
 				<td>
 				 ${list.name}
 				</td>
@@ -284,7 +343,7 @@
 			${user.name }
 		</td>
 		<td>
-			${user.activeDate}
+			<fmt:formatDate pattern="yyyy-MM-dd KK:H:m" value="${user.activeDate}" />
 		</td>
 	</tr>
 	</c:forEach>

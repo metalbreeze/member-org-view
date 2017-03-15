@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -14,6 +15,7 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
+<%--
 <h1>
 	<c:if test="${!empty user.name}">
 	修改用户
@@ -110,7 +112,7 @@
 			<form:input path="address" />
 		</td>
 	</tr>
-<%--
+<!--
 	<tr>
 		<td>
 			<form:label path="status">
@@ -121,7 +123,7 @@
 			<form:select path="status" items="${userStatus}" />
 		</td>
 	</tr>
---%>
+-->
 	<tr>
 		<td colspan="2">
 			<c:if test="${!empty user.name}">
@@ -137,25 +139,28 @@
 </table>	
 </form:form>
 <br>
+ --%>
 <h3>用户列表</h3>
 <c:if test="${!empty listUsers}">
 	<table class="tg">
 	<tr>
-		<th width="80">用户 ID</th>
-		<th width="120">推荐人</th>
-		<th width="120">用户姓名</th>
-		<th width="120">用户手机</th>
-		<th width="60">修改</th>
+		<th>注册时间</th>
+		<th>用户 ID</th>
+		<th>推荐人</th>
+		<th>用户姓名</th>
+		<th>用户手机</th>
+		<th>修改</th>
 		<%--<th width="60">删除</th>--%>
-		<th width="120">微信号</th>
-		<th width="120">支付宝号</th>
-		<th width="120">银行及帐号</th>
-		<th width="120">地址</th>
-		<th width="120">身份</th>
-		<th width="120">注册时间</th>
+		<th>微信号</th>
+		<th>支付宝号</th>
+		<th>银行及帐号</th>
+		<th>地址</th>
+		<th>身份</th>
+
 	</tr>
 	<c:forEach items="${listUsers}" var="user">
 		<tr>
+			<td><fmt:formatDate pattern="yy-MM-dd KK:H:m" value="${user.activeDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
 			<td>${user.name}</td>
@@ -175,7 +180,6 @@
 					</c:otherwise>
 				</c:choose>
 			</td>
-			<td>${user.registerDate}</td>
 		</tr>
 	</c:forEach>
 	</table>

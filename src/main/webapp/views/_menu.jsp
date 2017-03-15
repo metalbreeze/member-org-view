@@ -21,7 +21,7 @@
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #7cee7f;" >
-<span style="font-size:30px">商务管理系统</span><br/>
+<span style="font-size:30px">绿康科技商务管理系统</span><br/>
 <%-- testing https://jqueryui.com/menu/ --%>
 	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
 	<c:if test="${pageContext.request.userPrincipal.name == null}">
@@ -38,9 +38,13 @@
 	<sec:authorize access="hasRole('ROLE_REPORT')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
 	</sec:authorize>
-	<c:if test="${pageContext.request.userPrincipal.name == null}">
+	<sec:authorize access="hasRole('ROLE_FINANCE')">
+		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users">提现</a> 
+		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users/already">已经提现</a>
+	</sec:authorize>
+	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/saleMoneyList">排行榜</a>
-	</c:if>
+	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_ADMIN')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance">会员账务</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/platformFinance">平台账务</a>
