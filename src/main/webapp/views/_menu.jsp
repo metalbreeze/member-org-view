@@ -5,12 +5,17 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <style type="text/css">
 	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
-	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#7fcc67;}
-	.tg th {font-family:Arial, sans-serif;font-size:14px;font-weight:normal;padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;word-break:normal;border-color:#ccc;color:#333;background-color:#86ba75;}
+	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;
+			border-style:solid;border-width:1px;overflow:hidden;word-break:normal;
+			border-color:#ccc;color:#333;background-color:#7fcc67;}
+	.tg th {font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
+			padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;
+			word-break:normal;border-color:#ccc;color:#333;background-color:#86ba75;}
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
 	body {background-color: #80da82;}
 	input {background-color: #80da82;}
+	body {font-family:Arial, sans-serif;font-size:14px;}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -29,7 +34,7 @@
     	|&nbsp;<a href="${pageContext.request.contextPath}/register">注册</a>
 	</c:if>
 	<sec:authorize access="hasRole('ROLE_USER')">
-		|&nbsp;<a href="${pageContext.request.contextPath}/myself">用户信息</a> 
+		|&nbsp;<a href="${pageContext.request.contextPath}/myself">个人信息</a> 
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_SENDER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/orders">快递单</a>
@@ -49,7 +54,7 @@
 		|&nbsp;<a href="${pageContext.request.contextPath}/userFinance">会员账务</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/platformFinance">平台账务</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/listoperations">账务流水</a>
-		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">报单中心管理</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/reportCenters">销售中心管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/groups">群管理</a>
 	</sec:authorize>

@@ -6,7 +6,7 @@
 <%@ page language="Java" contentType="text/html;charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>用户Page</title>
+	<title>个人信息</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
@@ -25,7 +25,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="id" readonly="true" size="8"/>
+			<form:input path="id" readonly="true" size="8"  align="center"/>
 		</td> 
 	</tr>
 	</c:if>
@@ -46,7 +46,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="mobile"  readonly="true" />
+			<form:input path="mobile"  readonly="true"  align="center"/>
 		</td>
 	</tr>
 	<tr>
@@ -56,7 +56,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="wechat"  readonly="true" />
+			<form:input path="wechat"  readonly="true" align="left"/>
 		</td>
 	</tr>
 	<tr>
@@ -66,7 +66,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="alipay"  readonly="true" />
+			<form:input path="alipay"  readonly="true" align="left"/>
 		</td>
 	</tr>
 	<tr>
@@ -76,11 +76,11 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="accountNumber"  readonly="true" />
+			<form:input path="accountNumber"  readonly="true" align="left"/>
 		</td>
 	</tr>
 	<tr>
-		<td>
+		<td align="left">
 			<form:label path="address">
 				<spring:message text="地址"/>
 			</form:label>
@@ -99,32 +99,7 @@
 			<form:input path="" readonly="true" value="${user.parent.name}"/>
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<form:label path="password">
-				<spring:message text="密码"/>
-			</form:label>
-		</td>
-		<td>
-			<form:password path="password" />
-		</td> 
-	</tr>
-	<tr>
-		<td>
-			<form:label path="password_2">
-				<spring:message text="重复密码"/>
-			</form:label>
-		</td>
-		<td>
-			<form:password path="password_2" />
-		</td> 
-	</tr>
-	<tr>
-		<td colspan="2">
-				<input type="button" onclick=checkAndSubmit()
-					value="<spring:message text="修改密码"/>" />
-		</td>
-	</tr>
+
 	<tr>
 		<td>
 			<form:label path="saleMoney">
@@ -265,44 +240,14 @@
 			</td>
 			<td>
 				<input type="button" onclick=withdraw()
-					value="<spring:message text="修改密码"/>" />
+					value="<spring:message text="提现"/>" />
 			</td>
 		</c:otherwise>		
 		</c:choose>
 	</tr>
 </table>	
 </form:form>
-<c:if test="${!empty levelUsers}">
-<h3>我的排位&nbsp;&nbsp;&nbsp;&nbsp;${group.name}</h3>
-<table class="tg">
-	<tr>
-		<th>
-				层级
-		</th> 
-		<th>
-				群成员
-		</th> 
-	</tr>
-	<c:forEach items="${labels}" var="label">
-  	<tr>
-		<td>&nbsp;</td>
-		<c:forEach items="${levelUsers[label]}" var="list" varStatus="loop">
-				<td style="font-family:Arial, sans-serif;font-size:11px;font-weight:normal;">
-				 ${loop.index+1}
-				</td>
-   		</c:forEach>
-  	</tr>
-	<tr>
-		<td>${label}层</td>
-		<c:forEach items="${levelUsers[label]}" var="list">
-				<td>
-				 ${list.name}
-				</td>
-   		</c:forEach>
-  	</tr>
-	</c:forEach>
-</table>
-</c:if>
+
 <c:if test="${!empty currentGroup}">
 <h3>工作群&nbsp;&nbsp;&nbsp;&nbsp;${currentGroup.name}</h3>
 <table class="tg">
@@ -334,13 +279,47 @@
 	</c:forEach>
 </table>
 </c:if>
+
+<c:if test="${!empty levelUsers}">
+<h3>我的排位&nbsp;&nbsp;&nbsp;&nbsp;${group.name}</h3>
+<table class="tg">
+	<tr>
+		<th>
+				层级
+		</th> 
+		<th>
+				群成员
+		</th> 
+	</tr>
+	<c:forEach items="${labels}" var="label">
+  	<tr>
+		<td>&nbsp;</td>
+		<c:forEach items="${levelUsers[label]}" var="list" varStatus="loop">
+				<td style="font-family:Arial, sans-serif;font-size:11px;font-weight:normal;">
+				 ${loop.index+1}
+				</td>
+   		</c:forEach>
+  	</tr>
+	<tr>
+		<td>${label}层</td>
+		<c:forEach items="${levelUsers[label]}" var="list">
+				<td>
+				 ${list.name}
+				</td>
+   		</c:forEach>
+  	</tr>
+	</c:forEach>
+</table>
+</c:if>
+
+
 <c:if test="${!empty list}">
 <h3>我的客户</h3>
 <table class="tg">
 	<tr>
 		<th width="80">ID</th>
+		<th width="60">注册时间</th>
 		<th width="60">姓名</th>
-		<th width="60">激活时间</th>
 	</tr>
 	<c:forEach items="${list}" var="user">
 	<tr>
@@ -357,19 +336,59 @@
 	</c:forEach>
 </table>
 </c:if>
+
+<form:form action="${changePasswd}" modelAttribute="user">
+<table>
+	<tr>
+		<td colspan="2">
+			修改密码
+		</td> 
+	</tr>
+
+	<tr>
+		<td>
+			<form:label path="password">
+				<spring:message text="密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="password_2">
+				<spring:message text="重复密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password_2" />
+		</td> 
+	</tr>
+	<tr>
+		<td colspan="2">
+				<input type="button" onclick=checkAndSubmit()
+					value="<spring:message text="修改密码"/>" />
+		</td>
+	</tr>
+</table>	
+</form:form>
+
+
+
 <script type="text/javascript" >
 function checkAndSubmit()
 {
 	
-	if ( document.forms[0].password.value != document.forms[0].password_2.value )
+	if ( document.forms[1].password.value != document.forms[1].password_2.value )
 		{
-			alert("密码不一样"+document.forms[0].password.value+document.forms[0].password_2.value);
-			document.forms[0].password.focus();   
+			alert("密码不一样");
+			document.forms[1].password.focus();   
 		}
 	else
 		{
-			document.forms[0].action.value="${changePasswd}";
-			document.forms[0].submit();
+			document.forms[1].action.value="${changePasswd}";
+			document.forms[1].submit();
 		}
 }
 function withdraw()

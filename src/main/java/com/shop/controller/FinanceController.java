@@ -25,9 +25,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.shop.base.BaseObject;
 import com.shop.dao.OperationDAOImpl;
 import com.shop.dao.ReportCenterDAO;
+import com.shop.dao.SiteOptionDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Cost;
 import com.shop.model.Operation;
+import com.shop.model.SiteOption;
 import com.shop.model.User;
 import com.shop.service.CostService;
 import com.shop.service.UserService;
@@ -46,6 +48,10 @@ public class FinanceController extends BaseObject {
 	@Autowired(required = true)
 	@Qualifier(value = "reportCenterDAO")
 	private ReportCenterDAO reportCenterDao;
+	
+	@Autowired(required = true)
+	@Qualifier(value = "siteOptionDAO")
+	private SiteOptionDAO siteOptionDAO;
 
 	@Autowired(required = true)
 	@Qualifier(value = "operationDAOImpl")
@@ -65,21 +71,25 @@ public class FinanceController extends BaseObject {
 
 		final int sum = userDAO.getOldUser() * 999;
 		model.addAttribute("sellTotal", sum);
-		final BigDecimal productCost = costService.getProductCost().getCost();
-		model.addAttribute("produceCost", productCost);
-		final BigDecimal otherCost = costService.getOtherCost().getCost();
-		model.addAttribute("otherCost", otherCost);
-		BigDecimal withdraw = userDAO.getWithdraw();
-		if (withdraw == null) {
-			withdraw = new BigDecimal(0);
-		}
-		model.addAttribute("withdraw", withdraw);
+		final BigDecimal userCostMoney = costService.getTotalReGroupMoney();
+		model.addAttribute("userCostMoney", userCostMoney);
+		final BigDecimal userAward = costService.getUserAwardMoney();
+		model.addAttribute("totolAward", userAward);
+		final BigDecimal platformCost1 = costService.getplatformCost1();
+		model.addAttribute(CostService.platformCost1, platformCost1);
+		final BigDecimal platformCost2 = costService.getplatformCost2();
+		model.addAttribute(CostService.platformCost2, platformCost2);
+//		BigDecimal withdraw = userDAO.getWithdraw();
+//		if (withdraw == null) {
+//			withdraw = new BigDecimal(0);
+//		}
+//		model.addAttribute("withdraw", withdraw);
 		BigDecimal reportCenterCost = reportCenterDao.getReportCenterCost();
 		if (reportCenterCost == null) {
 			reportCenterCost = new BigDecimal(0);
 		}
 		model.addAttribute("reportCenterCost", reportCenterCost);
-		final BigDecimal totalCost = productCost.add(otherCost).add(withdraw)
+		final BigDecimal totalCost = userCostMoney.add(userAward).add(platformCost1).add(platformCost2)
 				.add(reportCenterCost);
 		model.addAttribute("totalCost", totalCost);
 		BigDecimal remain = new BigDecimal(sum).add(totalCost.negate());
@@ -108,6 +118,37 @@ public class FinanceController extends BaseObject {
 	public String userFinance(Model model) {
 		model.addAttribute("userList", userDAO.listOldUsers());
 		return "userFinance";
+	}
+
+
+	@RequestMapping(value = "/platformCost", method = RequestMethod.POST)
+	@Transactional
+	public String platformCost(@RequestParam(value="platformCost1",required = false) String s1,
+			@RequestParam(value="platformCost2",required = false) String s2) {
+		BigDecimal b1 = null;
+		BigDecimal b2 = null;
+		try{
+			b1=new BigDecimal(s1);
+		}catch(NumberFormatException e){
+			logger.debug(e.toString());
+		}
+		try{
+			b2=new BigDecimal(s2);
+		}catch(NumberFormatException e){
+			logger.debug(e.toString());
+		}
+		if (b1!=null){
+			SiteOption key1 = siteOptionDAO.getSiteOptionByKey(CostService.platformCost1);
+			key1.setMoney(b1);
+			siteOptionDAO.addSiteOption(key1);
+		}
+		if(b2!=null){
+			SiteOption key2 = siteOptionDAO.getSiteOptionByKey(CostService.platformCost2);
+			key2.setMoney(b2);
+			siteOptionDAO.addSiteOption(key2);
+		}
+		logger.debug("platformCost"+s1+"/"+s2);
+		return "redirect:/platformFinance";
 	}
 	
 	@RequestMapping(value = "/platformWithdraw/agree/{id}", method = RequestMethod.GET)

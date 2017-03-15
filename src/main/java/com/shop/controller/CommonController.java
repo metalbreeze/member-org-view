@@ -28,9 +28,9 @@ public class CommonController extends BaseObject {
 	
     @RequestMapping(value = { "/", "/welcome" }, method = RequestMethod.GET)
     public String welcomePage(Model model) {
-        model.addAttribute("title", "Welcome");
-        model.addAttribute("message", "This is welcome page!");
-        return "redirect:login";
+//        model.addAttribute("title", "Welcome");
+//        model.addAttribute("message", "This is welcome page!");
+        return "brief";
     }
     @RequestMapping(value = "/login", method = RequestMethod.GET)
     public String loginPage(Model model ) {

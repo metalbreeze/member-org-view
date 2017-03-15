@@ -31,13 +31,14 @@
 				<beans:value>com.shop.model.Profile</beans:value>
 				<beans:value>com.shop.model.ReportCenter</beans:value>
 				<beans:value>com.shop.model.Operation</beans:value>
+				<beans:value>com.shop.model.SiteOption</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
 			<beans:props>
 				<beans:prop key="hibernate.dialect">org.hibernate.dialect.MySQLDialect
 				</beans:prop>
-				<beans:prop key="hibernate.show_sql">false</beans:prop>
+				<beans:prop key="hibernate.show_sql">true</beans:prop>
 			</beans:props>
 		</beans:property>
 	</beans:bean>

@@ -71,23 +71,23 @@ public class ReportCenterController extends BaseObject {
 		if (p.getName() == null || p.getName().equals("")) {
 			int userid = p.getOwner().getId();
 			User name = userDAO.getUserById(userid);
-			p.setName(name.getName() + "报单中心");
+			p.setName(name.getName() + "销售中心");
 		}
 		if (p.getId() == 0) {
 			if (p.getName() == null || p.getName().equals("")) {
 				int userid = p.getOwner().getId();
 				User name = userDAO.getUserById(userid);
-				p.setName(name.getName() + "报单中心");
+				p.setName(name.getName() + "销售中心");
 			}
 			this.reportCenterDAO.addReportCenter(p);
-			operationDAO.addOperation(new Operation(owner, p, "添加报单中心", p
+			operationDAO.addOperation(new Operation(owner, p, "添加销售中心", p
 					.getElectricMoney(), "1:" + p.getMoney1() + "2:"
 					+ p.getMoney2()));
 		} else {
 			if (p.getName() == null || p.getName().equals("")) {
 				int userid = p.getOwner().getId();
 				User name = userDAO.getUserById(userid);
-				p.setName(name.getName() + "报单中心");
+				p.setName(name.getName() + "销售中心");
 			}
 			ReportCenter x = reportCenterDAO.getReportCenterById(p.getId());
 			x.setOwner(p.getOwner());
@@ -360,7 +360,7 @@ public class ReportCenterController extends BaseObject {
 		if (target.getReportCenter()!=null&&target.getReportCenter().getOwner().getId()==owner.getId()){
 			userDAO.removeUser(target.getId());
 		}else{
-			ra.addAttribute(flashMsg, "非本报单中心用户");
+			ra.addAttribute(flashMsg, "非本销售中心用户");
 		}
 				
 		return "redirect:/myReport";

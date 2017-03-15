@@ -106,7 +106,7 @@ public class MyselfController extends BaseObject {
         logger.debug("User Name: "+ userName);
         return "myself";
     }
-    @RequestMapping(value = "/myself/changePasswd", method = RequestMethod.GET)
+    @RequestMapping(value = "/myself/changePasswd", method = RequestMethod.POST)
     @Transactional
     public String changePasswd(Model model, Principal principal) {
         // After user login successfully.

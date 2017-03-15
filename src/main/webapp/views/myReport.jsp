@@ -28,7 +28,7 @@
 	<tr>
 		<td>
 			<form:label path="name">
-				<spring:message text="报单中心名字"/>
+				<spring:message text="销售中心名字"/>
 			</form:label>
 		</td>
 		<td>

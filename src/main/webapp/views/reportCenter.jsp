@@ -4,16 +4,16 @@
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
-	<title>报单中心</title>
+	<title>销售中心</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
 <h1>
 	<c:if test="${!empty reportCenter.name}">
-	修改报单中心
+	修改销售中心
 	</c:if>
 	<c:if test="${empty reportCenter.name}">
-	添加报单中心
+	添加销售中心
 	</c:if>
 </h1>
 <c:url var="addAction" value="/reportCenter/add" ></c:url>
@@ -36,7 +36,7 @@
 	<tr>
 		<td>
 			<form:label path="name">
-				<spring:message text="报单中心名字"/>
+				<spring:message text="销售中心名字"/>
 			</form:label>
 		</td>
 		<td>
@@ -98,12 +98,12 @@
 </table>	
 </form:form>
 <br>
-<h3>报单中心列表</h3>
+<h3>销售中心列表</h3>
 <c:if test="${!empty listReportCenters}">
 	<table class="tg">
 	<tr>
-		<th width="80">报单中心 ID</th>
-		<th width="120">报单中心名字</th>
+		<th width="80">销售中心 ID</th>
+		<th width="120">销售中心名字</th>
 		<th width="120">费用1</th>
 		<th width="120">费用2</th>
 		<th width="120">总计</th>

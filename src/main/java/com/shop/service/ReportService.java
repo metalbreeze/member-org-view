@@ -62,6 +62,11 @@ public class ReportService extends BaseObject {
 		target.setPosition(userDAO.getCurrentPosiztionByGroup(group, string) + 1);
 		target.setGroup(group);
 		target.setOrderStatus(ProductService.order_init);
+		if(target.getProduct_id()==null||target.getProduct_id()==1||target.getProduct_id()==0){
+			target.addReGroupMoney(ProductService.getProductById(1));
+		}else{
+			target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
+		}
 		target.setActiveDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.updateUser(target);
 		groupDAO.refresh(group);
@@ -117,7 +122,7 @@ public class ReportService extends BaseObject {
 			userLevealA.setGroup(groupDAO.getAvailableGroup());
 			userLevealA.addBonusMoney(4000);
 			userLevealA.addReGroupMoney(ProductService.getProductById(2));
-			if(userLevealA.getProduct_id()==0||userLevealA.getProduct_id()==1){
+			if(userLevealA.getProduct_id()==null||userLevealA.getProduct_id()==0||userLevealA.getProduct_id()==1){
 				userLevealA.setProduct_id(2);
 			}
 			userLevealA.setOrderStatus(ProductService.order_init);

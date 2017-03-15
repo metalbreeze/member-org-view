@@ -31,4 +31,6 @@ public interface UserDAO {
 	public List<User> getOldOrderList(int i);
 	User getUserByNameWithChildren(String s);
 	public Object listWithdrawStatusUsers(int status);
+	public BigDecimal getTotalReGroupMoney();
+	BigDecimal getTotalSpendMoney();
 }

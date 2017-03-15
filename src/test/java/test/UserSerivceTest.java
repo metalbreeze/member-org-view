@@ -106,8 +106,8 @@ public class UserSerivceTest extends BaseObject {
 	@Test
 	// 标明是测试方法
 	// 标明使用完此方法后事务不回滚,true时为回滚
-	@Transactional
-	@Rollback(false)
+//	@Transactional
+//	@Rollback(false)
 	public void importExcel() {
 		FileInputStream in = null;
 		try {

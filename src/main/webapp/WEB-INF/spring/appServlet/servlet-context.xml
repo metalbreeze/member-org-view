@@ -35,7 +35,9 @@
 	<beans:bean id="personService" class="com.journaldev.spring.service.PersonServiceImpl">
 		<beans:property name="personDAO" ref="personDAO"></beans:property>
 	</beans:bean>
-
+	<beans:bean id="siteOptionDAO" class="com.shop.dao.SiteOptionDAO">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 
 	<beans:bean id="groupDAO" class="com.shop.dao.GroupDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />

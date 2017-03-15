@@ -15,7 +15,7 @@
 		<th width="80">ID</th>
 		<th width="120">操作</th>
 		<th width="120">用户</th>
-		<th width="60">报单中心</th>
+		<th width="60">销售中心</th>
 		<th width="60">金额</th>
 		<th width="60">日期</th>
 		<th width="60">备注</th>

@@ -110,7 +110,7 @@
 	<tr>
 		<td>
 			<form:label path="reportCenter.id">
-				<spring:message text="报单中心"/>
+				<spring:message text="销售中心"/>
 			</form:label>
 		</td>
 		<td>

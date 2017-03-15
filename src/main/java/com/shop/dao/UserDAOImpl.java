@@ -260,4 +260,17 @@ public class UserDAOImpl implements UserDAO {
 				.setInteger("agree", status).list();
 		return l;
 	}
+
+	@Override
+	public BigDecimal getTotalReGroupMoney() {
+		Session session = this.sessionFactory.getCurrentSession();
+		BigDecimal d = (BigDecimal)session.createQuery("select sum(reGroupMoney) FROM User").uniqueResult();
+		return d;
+	}
+	@Override
+	public BigDecimal getTotalSpendMoney() {
+		Session session = this.sessionFactory.getCurrentSession();
+		Double d = (Double)session.createQuery("select sum(saleMoney) + sum(bonusMoney)*0.8 +sum (feedbackMoney)*0.8 FROM User").uniqueResult();
+		return new BigDecimal(d);
+	}
 }
