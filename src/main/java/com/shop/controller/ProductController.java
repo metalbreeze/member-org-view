@@ -64,9 +64,9 @@ public class ProductController extends BaseObject {
 	public String oldOrders(Model model) {
 		List<User> list2 = productService.getOldOrderList(2);
 		List<User> list3 = productService.getOldOrderList(3);
-		model.addAttribute("product2", productService.getProductById(2));
+		model.addAttribute("product2", ProductService.getProductById(2));
 		model.addAttribute("list2", list2);
-		model.addAttribute("product3", productService.getProductById(3));
+		model.addAttribute("product3", ProductService.getProductById(3));
 		model.addAttribute("list3", list3);
 		model.addAttribute("productList", ProductService.getProductList());
 		return "userOldOrders";
