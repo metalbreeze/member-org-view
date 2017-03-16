@@ -8,14 +8,14 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-<h1>
+<h3>
 	<c:if test="${!empty reportCenter.name}">
 	修改销售中心
 	</c:if>
 	<c:if test="${empty reportCenter.name}">
 	添加销售中心
 	</c:if>
-</h1>
+</h3>
 <c:url var="addAction" value="/reportCenter/add" ></c:url>
 
 <form:form action="${addAction}" modelAttribute="reportCenter">

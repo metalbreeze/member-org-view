@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib prefix="fmt" uri="http://java.sun.com/jsp/jstl/fmt" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -120,23 +121,24 @@
 <c:if test="${!empty listUsers}">
 	<table class="tg">
 	<tr>
-		<th width="80">序号</th>
-		<th width="80">用户 ID</th>
-		<th width="120">推荐人</th>
-		<th width="120">用户姓名</th>
-		<th width="120">用户手机</th>
-		<th width="120">微信号</th>
-		<th width="120">支付宝号</th>
+		<th width="20">序号</th>
+		<th width="160">注册时间</th>
+		<th width="50">用户 ID</th>
+		<th width="70">推荐人</th>
+		<th width="70">用户姓名</th>
+		<th width="100">用户手机</th>
+		<th width="100">微信号</th>
+		<th width="100">支付宝号</th>
 		<th width="120">银行帐号</th>
 		<th width="120">地址</th>
-		<th width="120">身份</th>
-		<th width="120">注册时间</th>
-		<th width="120">激活</th>
-		<th width="120">发货状态</th>
+		<th width="30">身份</th>
+		<th width="30">激活</th>
+		<th width="40">发货状态</th>
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
 			<td>${loop.index+1}</td>
+			<td><fmt:formatDate pattern="yyyy-MM-dd KK:HH:mm" value="${user.registerDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
 			<td>${user.name}</td>
@@ -158,7 +160,7 @@
 					</c:when>
 				</c:choose>
 			</td>
-			<td>${user.registerDate}</td>
+			
 			<td>
 			    <c:choose>
 					<c:when test="${user.status == 'new' || user.status == null }">

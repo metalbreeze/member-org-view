@@ -1,3 +1,4 @@
+ALTER TABLE `user` AUTO_INCREMENT = 10001;
 update user set available = -1  where name in ('胡洪涛',
 '莫兴冰',
 '冉光武',

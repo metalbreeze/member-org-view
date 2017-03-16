@@ -24,7 +24,7 @@ import com.fasterxml.jackson.annotation.JsonView;
  *
  */
 @Entity
-@Table(name="SiteOptions")
+@Table(name="siteoptions")
 public class SiteOption {
 
 	@Id
