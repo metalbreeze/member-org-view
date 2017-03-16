@@ -24,7 +24,7 @@
          width: 8000%;
          height: 30px;
      }
-     #wrap .wrapIn div{
+     #wrap .wrapIn .div_float{
          float: left;
          margin-right: 50px;
      }
