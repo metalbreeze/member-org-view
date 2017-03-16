@@ -22,14 +22,12 @@
          <tr>
             <td>用户名</td>
             <td><input type='text' name='username' value=''></td>
+            <td><input name="submit" type="submit" onclick=register() value="注册" /></td>
          </tr>
          <tr>
             <td>密码</td>
             <td><input type='password' name='password' /></td>
-         </tr>
-         <tr>
             <td><input name="submit" type="submit" value="登录" /></td>
-            <td><input name="submit" type="submit" onclick=register() value="注册" /></td>
          </tr>
       </table>
   </form>
