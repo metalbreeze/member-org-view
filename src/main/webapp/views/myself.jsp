@@ -247,7 +247,7 @@
 	</tr>
 </table>	
 </form:form>
-
+<br />
 <c:if test="${!empty currentGroup}">
 <h3>工作群&nbsp;&nbsp;&nbsp;&nbsp;${currentGroup.name}</h3>
 <table class="tg">
@@ -279,7 +279,7 @@
 	</c:forEach>
 </table>
 </c:if>
-
+<br />
 <c:if test="${!empty levelUsers}">
 <h3>我的排位&nbsp;&nbsp;&nbsp;&nbsp;${group.name}</h3>
 <table class="tg">
@@ -311,8 +311,7 @@
 	</c:forEach>
 </table>
 </c:if>
-
-
+<br />
 <c:if test="${!empty list}">
 <h3>我的客户</h3>
 <table class="tg">
@@ -336,7 +335,7 @@
 	</c:forEach>
 </table>
 </c:if>
-
+<br /><br />
 <form:form action="${changePasswd}" modelAttribute="user">
 <table>
 	<tr>
