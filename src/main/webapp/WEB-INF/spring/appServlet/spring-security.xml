@@ -11,6 +11,7 @@
         <csrf disabled="true"/>
          
         <intercept-url pattern="/" access="permitAll()" />
+        <intercept-url pattern="/images" access="permitAll()" />
         <intercept-url pattern="/html/*" access="permitAll()" />
         <intercept-url pattern="/login" access="permitAll()" />
         <intercept-url pattern="/register" access="permitAll()" />
@@ -18,11 +19,14 @@
  
  		<intercept-url pattern="/myself**" access="hasAnyRole('ROLE_USER')" />
  		<intercept-url pattern="/myReport**" access="hasAnyRole('ROLE_REPORT')" />
+        
         <intercept-url pattern="/user**" access="hasAnyRole('ROLE_ADMIN')" />
         <intercept-url pattern="/group**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/reportCenter**" access="hasRole('ROLE_ADMIN')" />
-        <intercept-url pattern="/other/**" access="isAuthenticated()" />
- 
+        <intercept-url pattern="/platform**" access="hasRole('ROLE_ADMIN')" />
+        
+        <intercept-url pattern="/*" access="isAuthenticated()" />
+        
         <access-denied-handler error-page="/403" />
  
         <form-login login-page='/login' login-processing-url="/j_spring_security_check"

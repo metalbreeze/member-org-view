@@ -44,7 +44,7 @@
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_FINANCE')">
-		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users">提现</a> 
+		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users">提现管理</a> 
 		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users/already">已经提现</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_USER')">

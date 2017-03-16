@@ -29,12 +29,16 @@
          </tr>
          <tr>
             <td><input name="submit" type="submit" value="登录" /></td>
-            <td><a href="${pageContext.request.contextPath}/register">注册</a></td>
+            <td><input name="submit" type="submit" onclick=register() value="注册" /></td>
          </tr>
       </table>
   </form>
-  管理员 admin20 密码12345
- 报单用户  report1 密码12345
-  普通用户 user1 密码12345
 </body>
+<script type="text/javascript">
+function register()
+{
+	document.forms[0].action="${pageContext.request.contextPath}/register";
+	document.forms[0].submit();
+}
+</script>
 </html>

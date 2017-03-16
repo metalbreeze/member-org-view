@@ -108,14 +108,18 @@ public class MyselfController extends BaseObject {
     }
     @RequestMapping(value = "/myself/changePasswd", method = RequestMethod.POST)
     @Transactional
-    public String changePasswd(Model model, Principal principal) {
+    public String changePasswd(Model model, Principal principal,@ModelAttribute("user") User p,RedirectAttributes ra) {
         // After user login successfully.
         String userName = principal.getName();
         User u = userDAO.getUserByName(userName);
-		String encode = encoder.encode(u.getPassword());
-		u.setPassword(encode);
-		userDAO.updateUser(u);
-        logger.debug("User Name: "+ userName);
+        if(p.getPassword()==null||"".equals(p.getPassword())||!encoder.matches(p.getPassword(), u.getPassword())){
+        	ra.addFlashAttribute(flashMsg,"旧密码不匹配");
+        }else{
+	        String encode = encoder.encode(p.getPassword_2());
+	        u.setPassword(encode);
+	        userDAO.updateUser(u);
+	        ra.addFlashAttribute(flashMsg,"新密码修改成功");
+        }
         return "redirect:/myself";
     }   
     @RequestMapping(value = "/myself/withDrawRequest", method = RequestMethod.POST)
@@ -142,14 +146,14 @@ public class MyselfController extends BaseObject {
         return "redirect:/myself";
     }
     
-    @RequestMapping(value = "/register", method = RequestMethod.GET)
+    @RequestMapping(value = "/register", method = {RequestMethod.GET,RequestMethod.POST})
     @Transactional
     public String register(Model model) {
     	model.addAttribute("user", new User());
         // After user login successfully.
 //		model.addAttribute("listUsers", this.userService.listUsers());
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
-		model.addAttribute("listProducts",this.productService.getCurrentProductList() );
+		model.addAttribute("listProducts",ProductService.getCurrentProductList() );
         return "register";
     }
 }

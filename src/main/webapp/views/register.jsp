@@ -156,7 +156,7 @@ function checkAndSubmit()
 	}
 	if ( document.forms[0].password.value != document.forms[0].password_2.value )
 		{
-			alert("密码不一样"+document.forms[0].password.value+document.forms[0].password_2.value);
+			alert("2次密码不一样");
 			document.forms[0].password.focus();   
 		}
 	else

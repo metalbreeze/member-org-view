@@ -318,8 +318,8 @@
 <table class="tg">
 	<tr>
 		<th width="80">ID</th>
-		<th width="60">注册时间</th>
 		<th width="60">姓名</th>
+		<th width="60">注册时间</th>
 	</tr>
 	<c:forEach items="${list}" var="user">
 	<tr>
@@ -348,7 +348,7 @@
 	<tr>
 		<td>
 			<form:label path="password">
-				<spring:message text="密码"/>
+				<spring:message text="旧密码"/>
 			</form:label>
 		</td>
 		<td>
@@ -358,11 +358,22 @@
 	<tr>
 		<td>
 			<form:label path="password_2">
-				<spring:message text="重复密码"/>
+				<spring:message text="新密码"/>
 			</form:label>
 		</td>
 		<td>
 			<form:password path="password_2" />
+		</td> 
+	</tr>
+
+	<tr>
+		<td>
+			<label for="password_3">
+				重复新密码
+			</label>
+		</td>
+		<td>
+			<input id="password_3" name="password_3" type="password" value=""/>
 		</td> 
 	</tr>
 	<tr>
@@ -380,10 +391,10 @@
 function checkAndSubmit()
 {
 	
-	if ( document.forms[1].password.value != document.forms[1].password_2.value )
+	if ( document.forms[1].password_3.value != document.forms[1].password_2.value )
 		{
 			alert("密码不一样");
-			document.forms[1].password.focus();   
+			document.forms[1].password_2.focus();   
 		}
 	else
 		{

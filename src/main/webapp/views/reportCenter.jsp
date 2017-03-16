@@ -50,7 +50,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="money1" />
+			<form:input path="money1" readonly="true"/>
 		</td> 
 	</tr>
 	<tr>
@@ -60,7 +60,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="money2" />
+			<form:input path="money2" readonly="true"/>
 		</td> 
 	</tr>
 		<tr>
@@ -76,7 +76,7 @@
 	<tr>
 		<td>
 			<form:label path="owner.id">
-				<spring:message text="推荐人"/>
+				<spring:message text="负责人"/>
 			</form:label>
 		</td>
 		<td>

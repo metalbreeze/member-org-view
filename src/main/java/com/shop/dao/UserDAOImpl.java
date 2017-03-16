@@ -90,7 +90,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public List<User> listUserOrderBySaleMoney(int count) {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<User> list =session.createQuery("from User where id not in (1,2,3,18) order by saleMoney desc").setMaxResults(count).list();
+		List<User> list =session.createQuery("from User where id not in (10001,2,3,10017) order by saleMoney desc").setMaxResults(count).list();
 		return list;
 	}
 	@SuppressWarnings("unchecked")
@@ -98,7 +98,7 @@ public class UserDAOImpl implements UserDAO {
 	@Transactional
 	public List<User> listAvailableReporterCenterUsers() {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<User> UsersList = session.createQuery("from User where reportCenter_id is null or reportCenter_id=0").list();
+		List<User> UsersList = session.createQuery("from User where id not in (select owner from ReportCenter) ").list();
 		return UsersList;
 	}
 	@SuppressWarnings("unchecked")

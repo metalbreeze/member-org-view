@@ -45,7 +45,6 @@ public class User implements Comparable<User> {
 	private String password;
 	@Transient
 	private String password_2;
-//	private int available=1;
 	
 	private String level;
 	private Integer position;

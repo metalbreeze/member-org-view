@@ -7,9 +7,12 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
+import org.springframework.web.bind.annotation.ExceptionHandler;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.ResponseStatus;
+import org.springframework.web.servlet.NoHandlerFoundException;
 
 import com.shop.base.BaseObject;
 import com.shop.dao.UserDAO;
@@ -45,16 +48,22 @@ public class CommonController extends BaseObject {
         model.addAttribute("title", "Logout");
         return "redirect:login";
     }
+
+    @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
+    public String NotFoudPage() {
+        return "404";
+
+    }
     @RequestMapping(value = "/403", method = RequestMethod.GET)
 	@Transactional
     public String accessDenied(Model model, Principal principal) {
          
         if (principal != null) {
             model.addAttribute("message", "Hi " + principal.getName()
-                    + "<br> You do not have permission to access this page!");
+                    + "<br/> 你没有权限访问!");
         } else {
             model.addAttribute("msg",
-                    "You do not have permission to access this page!");
+                    "你没有权限访问!");
         }
         return "403Page";
     }

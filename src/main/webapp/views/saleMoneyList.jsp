@@ -21,16 +21,17 @@
 		<th width="80">ID</th>
 		<th width="60">姓名</th>
 		<th width="60">销售奖励</th>
+		<%--
 		<th width="60">分红</th>
 		<th width="60">回馈</th>
-		<th width="60">总计</th>
+		<th width="60">总计</th> --%>
 	</tr>
 	<c:forEach items="${userList}" var="user"  varStatus="loop">
 	<tr>
 		<td>
 			${loop.index+1}
 		</td>
-		<td>
+		<td align="center">
 			${user.id}
 		</td>
 		<td>
@@ -39,6 +40,7 @@
 		<td align="right">
 			${user.saleMoney}
 		</td>
+		<%--
 		<td align="right">
 			${user.bonusMoney}
 		</td>
@@ -49,6 +51,7 @@
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
 			value="${user.saleMoney + user.bonusMoney + user.feedbackMoney }" />
 		</td>
+		 --%>
 	</tr>
 	</c:forEach>
 </table>	

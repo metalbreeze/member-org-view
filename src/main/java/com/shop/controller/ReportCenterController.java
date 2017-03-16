@@ -74,26 +74,27 @@ public class ReportCenterController extends BaseObject {
 			p.setName(name.getName() + "销售中心");
 		}
 		if (p.getId() == 0) {
-			if (p.getName() == null || p.getName().equals("")) {
-				int userid = p.getOwner().getId();
-				User name = userDAO.getUserById(userid);
-				p.setName(name.getName() + "销售中心");
-			}
+//			if (p.getName() == null || p.getName().equals("")) {
+//				int userid = p.getOwner().getId();
+//				User name = userDAO.getUserById(userid);
+//				p.setName(name.getName() + "销售中心");
+//			}
 			this.reportCenterDAO.addReportCenter(p);
 			operationDAO.addOperation(new Operation(owner, p, "添加销售中心", p
 					.getElectricMoney(), "1:" + p.getMoney1() + "2:"
 					+ p.getMoney2()));
 		} else {
-			if (p.getName() == null || p.getName().equals("")) {
-				int userid = p.getOwner().getId();
-				User name = userDAO.getUserById(userid);
-				p.setName(name.getName() + "销售中心");
-			}
+//			if (p.getName() == null || p.getName().equals("")) {
+//				int userid = p.getOwner().getId();
+//				User name = userDAO.getUserById(userid);
+//				p.setName(name.getName() + "销售中心");
+//			}
 			ReportCenter x = reportCenterDAO.getReportCenterById(p.getId());
 			x.setOwner(p.getOwner());
-			x.setMoney1(p.getMoney1());
-			x.setMoney2(p.getMoney2());
+//			x.setMoney1(p.getMoney1());
+//			x.setMoney2(p.getMoney2());
 			x.setElectricMoney(p.getElectricMoney());
+			x.setName(p.getName());
 			this.reportCenterDAO.updateReportCenter(x);
 			operationDAO.addOperation(new Operation(owner, x, "修改电子币", x
 					.getElectricMoney(), "1:" + x.getMoney1() + "2:"
