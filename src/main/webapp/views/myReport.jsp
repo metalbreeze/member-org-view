@@ -165,7 +165,8 @@
 			    <c:choose>
 					<c:when test="${user.status == 'new' || user.status == null }">
 						<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
-						<a href="<c:url value='/myReport/delete/${user.id}' />" >删除</a>
+						<a href="<c:url value='/myReport/delete/${user.id}' />" 
+						     onclick="return confirm('删除不可恢复,是否继续?');" >删除</a>
 					</c:when>
 					<c:when test="${user.status == 'old' }">
 						

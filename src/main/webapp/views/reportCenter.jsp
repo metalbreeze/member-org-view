@@ -129,7 +129,7 @@
 			<td align="right">${reportCenter.electricMoney}</td>
 			<td align="right">${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
-			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" >删除</a></td>
+			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" onclick="return confirm('删除不可恢复,是否继续?');" >删除</a></td>
 			<td><a href="<c:url value='/reportCenter/${reportCenter.id}' />" >详细</a></td>
 			<td align="right">
 				${reportCenter.withdrawRequest}

@@ -174,7 +174,7 @@
 			<td>${user.registerDate}</td>
 			<td>${user.parent.name}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
-			<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>
+			<td><a href="<c:url value='/user/remove/${user.id}' />" onclick="return confirm('删除不可恢复,是否继续?');" >删除</a></td>
 		</tr>
 	</c:forEach>
 	</table>

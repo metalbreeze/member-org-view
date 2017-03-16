@@ -87,7 +87,7 @@
 			<td>${group.createDate}</td>
 			<td>${group.endDate}</td>
 			<td><a href="<c:url value='/group/edit/${group.id}' />" >修改</a></td>
-			<td><a href="<c:url value='/group/remove/${group.id}' />" >删除</a></td>
+			<td><a href="<c:url value='/group/remove/${group.id}' />" onclick="return confirm('删除不可恢复,是否继续?');" >删除</a></td>
 			<td><a href="<c:url value='/listgroup?group.id=${group.id}'/>">查看群成员</a></td>
 		</tr>
 	</c:forEach>
