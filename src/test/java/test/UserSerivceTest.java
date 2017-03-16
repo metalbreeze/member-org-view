@@ -1,6 +1,7 @@
 package test;
 
 import java.io.FileInputStream;
+import java.io.FileNotFoundException;
 import java.io.IOException;
 import java.math.BigDecimal;
 import java.sql.Timestamp;
@@ -13,6 +14,7 @@ import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.CellStyle;
 import org.apache.poi.ss.usermodel.DataFormat;
+import org.apache.poi.ss.usermodel.FormulaEvaluator;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
@@ -103,50 +105,96 @@ public class UserSerivceTest extends BaseObject {
 	public static void main(String[] ss){
 		new UserSerivceTest().importExcel();
 	}
-	@Test
-	// 标明是测试方法
-	// 标明使用完此方法后事务不回滚,true时为回滚
-//	@Transactional
-//	@Rollback(false)
-	public void importExcel() {
-		FileInputStream in = null;
+	public UserSerivceTest(){
 		try {
 			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康科技正常数据.xls");
-			Workbook wb = new HSSFWorkbook(in);
-			Sheet sheet = wb.getSheetAt(0);
+			wb = new HSSFWorkbook(in);
+		} catch (FileNotFoundException e) {
+			e.printStackTrace();
+			System.exit(1);
+		} catch (IOException e) {
+			e.printStackTrace();
+			System.exit(1);
+		}
+		evaluator = wb.getCreationHelper().createFormulaEvaluator();
+	}
+	FileInputStream in = null;
+	Workbook wb =null;
+	FormulaEvaluator evaluator =null; 
+	@Test
+	@Transactional
+	@Rollback(false)
+	public void importExcel() {
+		importWithdraw();
+	}
+
+	void importWithdraw(){
+			Sheet sheet = wb.getSheetAt(3);
 			for (Row row : sheet) {
 				final int rowNum = row.getRowNum();
-				if (rowNum < 1||rowNum>495) {
+				if (rowNum < 6||rowNum>498) {
 					continue;
 				}
 				info("==========================\nrowNum"+rowNum);
 				Cell cell = row.getCell(0);
-				if(cell==null)continue;
-				User u = new User();
-				u.setId(10000+parseInt(cell));
-
-//				u.setRegisterDate(parseDate(row.getCell(1)));
-//				String parentName= parseString(row.getCell(2));
-//				if (parentName!=null&&!parentName.equals("")){
-//					info("parent:"+parentName);
-//					User p = userDAO.getUserByName(parentName);
-//					u.setParent(p);
-//				}
-//				u.setName(row.getCell(3).getStringCellValue());
-//				info("name"+u.getName()+"id:"+u.getId());
-//				u.setMobile(parseString(row.getCell(4)));
-//				u.setWechat(parseString(row.getCell(6)));
-//				ReportCenter rc = new ReportCenter();
-//				rc.setId(Integer.parseInt(parseString(row.getCell(9))));
-//				u.setReportCenter(rc);
-//				userDAO.saveWithId(u,u.getId());
-
-				reportService.activeUser(null,u.getId(),null);
+				if(cell==null||"".equals(cell.toString()))continue;
+				evaluator.evaluateFormulaCell(row.getCell(34));
+				info("cell is"+cell+" id is "+cell+" name is "+row.getCell(3)+" withdraw:"+row.getCell(34).getNumericCellValue());
+				User u = userDAO.getUserById(10000+parseInt(cell));
+				u.setWithdraw(new BigDecimal(row.getCell(34).getNumericCellValue()));
+				userDAO.updateUser(u);
 			}
-		} catch (Exception e) {
-			e.printStackTrace();
-		} 
-	}	
+	}
+	@Transactional
+	@Rollback(false)
+	void importUser(){
+		Sheet sheet = wb.getSheetAt(0);
+		for (Row row : sheet) {
+			final int rowNum = row.getRowNum();
+			if (rowNum < 6||rowNum>498) {
+				continue;
+			}
+			info("==========================\nrowNum"+rowNum);
+			Cell cell = row.getCell(0);
+			if(cell==null||"".equals(cell.toString()))continue;
+			User u = new User();
+			u.setId(10000+parseInt(cell));
+			u.setRegisterDate(parseDate(row.getCell(1)));
+			String parentName= parseString(row.getCell(2));
+			if (parentName!=null&&!parentName.equals("")){
+				info("parent:"+parentName);
+				User p = userDAO.getUserByName(parentName);
+				u.setParent(p);
+			}
+			u.setName(row.getCell(3).getStringCellValue());
+			info("name"+u.getName()+"id:"+u.getId());
+			u.setMobile(parseString(row.getCell(4)));
+			u.setWechat(parseString(row.getCell(6)));
+			ReportCenter rc = new ReportCenter();
+			rc.setId(Integer.parseInt(parseString(row.getCell(9))));
+			u.setReportCenter(rc);
+			userDAO.saveWithId(u,u.getId());
+
+//			reportService.activeUser(null,u.getId(),null);
+		}
+	}
+	@Transactional
+	@Rollback(false)
+	void importGroup(){
+		Sheet sheet = wb.getSheetAt(0);
+		for (Row row : sheet) {
+			final int rowNum = row.getRowNum();
+			if (rowNum < 6||rowNum>498) {
+				continue;
+			}
+			info("==========================\nrowNum"+rowNum);
+			Cell cell = row.getCell(0);
+			if(cell==null||"".equals(cell.toString()))continue;
+			User u = new User();
+			u.setId(10000+parseInt(cell));
+			reportService.activeUser(null,u.getId(),null);
+		}
+	}
 	public void active(int id) {
 		logger.info("activeUser " + id);
 		User target = userDAO.getUserById(id);
