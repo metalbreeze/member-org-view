@@ -16,6 +16,18 @@
 	body {background-color: #80da82;}
 	input {background-color: #80da82;}
 	body {font-family:Arial, sans-serif;font-size:14px;}
+     #wrap{
+         overflow: hidden;
+         width: 815px;
+     }
+     #wrap .wrapIn{
+         width: 8000%;
+         height: 30px;
+     }
+     #wrap .wrapIn div{
+         float: left;
+         margin-right: 50px;
+     }
 </style>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"

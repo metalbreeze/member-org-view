@@ -175,8 +175,17 @@
 					<c:when test="${user.available == -1 }">
 						暂停会员
 					</c:when>
-					<c:otherwise>
+					<c:when test="${user.status == 'old' }">
 						会员
+					</c:when>
+					<c:when test="${user.status == null}">
+						待激活会员
+					</c:when>
+					<c:when test="${user.status　＝＝　'new' }">
+						待激活会员
+					</c:when>
+					<c:otherwise>
+						状态不明
 					</c:otherwise>
 				</c:choose>
 			</td>
