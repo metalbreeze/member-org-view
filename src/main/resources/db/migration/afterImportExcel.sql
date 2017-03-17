@@ -1,4 +1,5 @@
-ALTER TABLE `user` AUTO_INCREMENT = 10001;
+update user set  password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK';
+
 update user set available = -1  where name in ('胡洪涛',
 '莫兴冰',
 '冉光武',

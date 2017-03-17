@@ -24,7 +24,6 @@
 		<beans:property name="dataSource" ref="dataSource" />
 		<beans:property name="annotatedClasses">
 			<beans:list>
-				<beans:value>com.journaldev.spring.model.Person</beans:value>
 				<beans:value>com.shop.model.User</beans:value>
 				<beans:value>com.shop.model.Group</beans:value>
 				<beans:value>com.shop.model.Node</beans:value>
@@ -32,6 +31,7 @@
 				<beans:value>com.shop.model.ReportCenter</beans:value>
 				<beans:value>com.shop.model.Operation</beans:value>
 				<beans:value>com.shop.model.SiteOption</beans:value>
+				<beans:value>com.journaldev.spring.model.Person</beans:value>
 			</beans:list>
 		</beans:property>
 		<beans:property name="hibernateProperties">
