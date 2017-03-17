@@ -7,14 +7,14 @@
 	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;
 			border-style:solid;border-width:1px;overflow:hidden;word-break:normal;
-			border-color:#ccc;color:#333;background-color:#7fcc67;}
+			border-color:#ccc;color:#333;background-color:#c6f8ad;}
 	.tg th {font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
 			padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;
-			word-break:normal;border-color:#ccc;color:#333;background-color:#86ba75;}
+			word-break:normal;border-color:#ccc;color:#333;background-color:#acf6af;}
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
-	body {background-color: #80da82;}
-	input {background-color: #80da82;}
+	body {background-color: #befdb8;}
+	input {background-color: #befdb8;}
 	body {font-family:Arial, sans-serif;font-size:14px;}
      #wrap{
          overflow: hidden;
@@ -37,7 +37,7 @@
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #7cee7f;" >
+<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #a4ee9f;" >
 <span style="font-size:30px">绿康科技商务管理系统</span><br/>
 <%-- testing https://jqueryui.com/menu/ --%>
 	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
