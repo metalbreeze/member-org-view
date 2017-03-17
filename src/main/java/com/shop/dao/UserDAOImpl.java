@@ -273,4 +273,11 @@ public class UserDAOImpl implements UserDAO {
 		Double d = (Double)session.createQuery("select sum(saleMoney) + sum(bonusMoney)*0.8 +sum (feedbackMoney)*0.8 FROM User").uniqueResult();
 		return new BigDecimal(d);
 	}
+
+	@Override
+	public List<User> listAvailableReporterCenterUsersPlusOwner(int i) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> UsersList = session.createQuery("from User where id not in (select owner from ReportCenter  where id !=:id)  and status='old' ").setInteger("id", i).list();
+		return UsersList;
+	}
 }

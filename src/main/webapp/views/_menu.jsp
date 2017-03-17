@@ -3,6 +3,7 @@
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
+<link rel="shortcut icon" href="${pageContext.request.contextPath}/favicon.ico" type="image/x-icon" />
 <style type="text/css">
 	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;

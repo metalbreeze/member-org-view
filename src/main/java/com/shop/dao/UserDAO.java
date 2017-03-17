@@ -33,4 +33,5 @@ public interface UserDAO {
 	public Object listWithdrawStatusUsers(int status);
 	public BigDecimal getTotalReGroupMoney();
 	BigDecimal getTotalSpendMoney();
+	public List<User> listAvailableReporterCenterUsersPlusOwner(int i);
 }

@@ -7,6 +7,8 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
@@ -144,12 +146,15 @@ public class ReportCenterController extends BaseObject {
 	@RequestMapping("/reportCenter/edit/{id}")
 	@Transactional
 	public String editReportCenter(@PathVariable("id") int id, Model model) {
+//	      Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//	      String name = auth.getName();
+//		  User owner = userDAO.getUserByName(name);
 		model.addAttribute("reportCenter",
 				this.reportCenterDAO.getReportCenterById(id));
 		model.addAttribute("listReportCenters",
 				this.reportCenterDAO.listReportCenters());
 		model.addAttribute("listUsers",
-				this.userDAO.listAvailableReporterCenterUsers());
+				this.userDAO.listAvailableReporterCenterUsersPlusOwner(id));
 		return "reportCenter";
 	}
 
