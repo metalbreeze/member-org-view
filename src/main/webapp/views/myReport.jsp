@@ -121,7 +121,7 @@
 <c:if test="${!empty listUsers}">
 	<table class="tg">
 	<tr>
-		<th width="20">序号</th>
+		<th>序号</th>
 		<th width="160">注册时间</th>
 		<th width="50">用户 ID</th>
 		<th width="70">推荐人</th>
@@ -133,7 +133,7 @@
 		<th width="120">地址</th>
 		<th width="30">身份</th>
 		<th width="30">激活</th>
-		<th width="40">发货状态</th>
+		<th>发货状态</th>
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>

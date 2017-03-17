@@ -114,8 +114,8 @@
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 		<th width="60">详细</th>
-		<th width="60">提现请求</th>
-		<th width="60">同意提现</th>
+		<th >提现请求</th>
+		<th >同意提现</th>
 	</tr>
 	<c:forEach items="${listReportCenters}" var="reportCenter">
 		<tr>

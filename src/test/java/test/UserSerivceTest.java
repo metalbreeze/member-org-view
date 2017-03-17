@@ -139,7 +139,7 @@ public class UserSerivceTest extends BaseObject {
 	public void importExcel() {
 //		importUser();
 //		importGroup();
-		importWithdraw();
+//		importWithdraw();
 	}
 
 	void importWithdraw(){

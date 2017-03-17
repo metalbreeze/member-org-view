@@ -52,7 +52,10 @@ public class CommonController extends BaseObject {
     @RequestMapping(value = {"/404"}, method = RequestMethod.GET)
     public String NotFoudPage() {
         return "404";
-
+    }
+    @RequestMapping(value = {"/favicon.ico"}, method = RequestMethod.GET)
+    public String favicon() {
+        return "forward:/img/favicon.ico";
     }
     @RequestMapping(value = "/403", method = RequestMethod.GET)
 	@Transactional
