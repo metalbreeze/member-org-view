@@ -190,6 +190,7 @@ public class UserSerivceTest extends BaseObject {
 //			reportService.activeUser(null,u.getId(),null);
 		}
 	}
+	
 	void importGroup(){
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
