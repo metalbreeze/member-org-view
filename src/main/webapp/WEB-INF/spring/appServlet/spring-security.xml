@@ -9,7 +9,7 @@
      
     <http use-expressions="true">
         <csrf disabled="true"/>
-         
+         <intercept-url pattern="/favicon.ico" access="permitAll()" />
         <intercept-url pattern="/" access="permitAll()" />
         <intercept-url pattern="/brief" access="permitAll()" />
         <intercept-url pattern="/images" access="permitAll()" />

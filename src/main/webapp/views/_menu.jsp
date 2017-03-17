@@ -41,10 +41,10 @@
 <span style="font-size:30px">绿康科技商务管理系统</span><br/>
 <%-- testing https://jqueryui.com/menu/ --%>
 	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
-	<c:if test="${pageContext.request.userPrincipal.name == null}">
+	<sec:authorize access="!hasRole('ROLE_USER')">
     	|&nbsp;<a href="${pageContext.request.contextPath}/login">登录</a>
     	|&nbsp;<a href="${pageContext.request.contextPath}/register">注册</a>
-	</c:if>
+	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myself">个人信息</a> 
 	</sec:authorize>
@@ -70,10 +70,9 @@
 		|&nbsp;<a href="${pageContext.request.contextPath}/users">用户管理</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/groups">群管理</a>
 	</sec:authorize>
-	<c:if test="${pageContext.request.userPrincipal.name != null}">
+	<sec:authorize access="hasRole('ROLE_USER')">
     	|&nbsp;<a href="${pageContext.request.contextPath}/logout">退出</a>
-	</c:if>
-
+    </sec:authorize>
 </div>
 
 <c:if test="${!empty flashMsg}">
