@@ -181,7 +181,7 @@
 					<c:when test="${user.status == null}">
 						待激活会员
 					</c:when>
-					<c:when test="${user.status　＝＝　'new' }">
+					<c:when test="${user.status == 'new' }">
 						待激活会员
 					</c:when>
 					<c:otherwise>
