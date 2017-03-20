@@ -8,15 +8,14 @@
 	.tg  {border-collapse:collapse;border-spacing:0;border-color:#ccc;}
 	.tg td {font-family:Arial, sans-serif;font-size:14px;padding:10px 5px;
 			border-style:solid;border-width:1px;overflow:hidden;word-break:normal;
-			border-color:#ccc;color:#333;background-color:#c6f8ad;}
+			border-color:#ccc;color:#333;background-color:#fff;}
 	.tg th {font-family:Arial, sans-serif;font-size:14px;font-weight:normal;
 			padding:10px 5px;border-style:solid;border-width:1px;overflow:hidden;
-			word-break:normal;border-color:#ccc;color:#333;background-color:#acf6af;}
+			word-break:normal;border-color:#ccc;color:#333;background-color:#fff;}
 	.tg .tg-4eph{background-color:#f9f9f9}
 	.alertMsg {font-size:20px;color:red}
-	body {background-color: #befdb8;}
-	input {background-color: #befdb8;}
-	body {font-family:Arial, sans-serif;font-size:14px;}
+	input {background-color: #fff;}
+	body {font-family:Arial, sans-serif;font-size:14px;background-color: #bfddf6;}
      #wrap{
          overflow: hidden;
          width: 815px;
@@ -30,6 +29,7 @@
          margin-right: 50px;
      }
      .div_default {style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;"}
+     .div_stringBox {style="padding: 5px;background-color: #ffffff;"}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -39,8 +39,21 @@
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;background-color: #a4ee9f;" >
-<span style="font-size:30px">绿康科技商务管理系统</span><br/>
+<div style="background-color: #fff">
+	<div style="width:40px;">
+	<img alt="" src="${pageContext.request.contextPath}/img/titile.jpg">
+	</div>
+	<div style="position:absolute;top:0px;left:60px;">
+		<div style="border: 4px solid #ccc;background-color: #435fd6;color:#fff">
+			<span style="font-style:italic;font-size:30px;">&nbsp;绿康生物科技&nbsp;&nbsp;&nbsp;</span><br/>
+		</div>
+		<div style="align:center;">
+			<span style="align:center;font-style:italic;font-size:10px">&nbsp;&nbsp;&nbsp;
+			&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;LVKANG Biological Technology&nbsp;</span>
+		</div>
+	</div>
+</div>
+<div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 20px;background-color: #a6e9a8;color: #fff" >
 <%-- testing https://jqueryui.com/menu/ --%>
 	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
 	<sec:authorize access="!hasRole('ROLE_USER')">

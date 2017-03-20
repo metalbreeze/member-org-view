@@ -44,24 +44,20 @@ setInterval(function() {
 <img alt="" src="${pageContext.request.contextPath}/img/1126a2a08941c3443f8820a74dba644.jpg">
 </div>
 
-<table>
+<table border="1" style="BORDER=30;BORDERCOLOR#fff">
 <tr>
-<td><div>
+<td valign="top">
 <img alt="" src="${pageContext.request.contextPath}/img/ke1.jpg">
-</div></td>
-<td><div style="float:right">
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国-马来西亚钦州产业园区是一个集工业、商业、居住三位一体的产业新城。总体规划面积55平方公里，中马两国总理在2011年4月达成共识，温家宝总理提议 “广西钦州中马产业园区是双方在中国西部地区合作的第一个工业园，具有示范意义。”园区的产业定位以装备制造业、电子信息业、新能源及新材料、农副产品深加工、现代服务业为主导。
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2011年4月28日，在中国与东盟建立对话关系20周年之际，时任国务院总理温家宝访问马来西亚，与马来西亚总理纳吉布达成双方共建中马钦州产业园区的共识。同年10月21日第八届中国－东盟博览会期间，温家宝总理和纳吉布总理亲自见证两国商务部/贸工部签署中马钦州产业园区合作文件并为园区揭牌。2012年3月26日，国务院批复设立中马钦州产业园区。2012年4月1日，温家宝总理和纳吉布总理共同出席园区开园仪式并为园区奠基。2013年2月5日，时任全国政协主席贾庆林在马来西亚关丹与马来西亚总理纳吉布共同出席马中关丹产业园启动仪式。“两国双园”模式，开创了我国园区国际合作的先例。
 <br/>
-&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依托临近东盟的优势区位，将中马钦州产业园区打造成服务中国—东盟自由贸易区的信息发布平台、贸易往来平台、项目展示及商务合作窗口。<br/>
+<div style="padding: 5px;background-color: #ffffff">
+客服微信&nbsp;&nbsp;&nbsp;17180458767
 <br/>
-</div></td>
-</tr>
-</table>
-
-
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
+客服电话
+</div>
+</td>
+<td>
+<div style="padding: 5px;background-color: #ffffff">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 广西绿康【归君堂】生物科技有限公司是一家 “传承天然健康养生，弘扬原生态滋补”真谛的新兴生物科技型企业，
 致力于打造东南亚纯正原生态草本植物滋补调理第一品牌，公司集【提炼·研发·加工·推广·销售】为一体，
@@ -73,9 +69,11 @@ setInterval(function() {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 【归君堂】这个正在迅速壮大崛起的民族骄子，正满怀信心，一步一个脚印走向全国，走向世界！！！
 欢迎融入【归君堂】一起创造辉煌人生！！！ 
-</div>
-
-
+</div></td>
+</tr>
+</table>
+<br/>
+<br/>
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
 		<a href="http://mp.weixin.qq.com/s/-y2TueV6e4tGNEjMasu0jA">香港“健康卫视”报导归君堂"东革阿里”神奇功效</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -83,8 +81,28 @@ setInterval(function() {
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/images">公司证件</a>
 </div>
+<span>中国-马来西亚钦州产业园区简介</span>
 
-<h4>中国-马来西亚钦州产业园区</h4>
+<div>
+<img alt="" src="${pageContext.request.contextPath}/img/ma1.jpg">
+</div>
+
+<br/>
+
+<div style="float:right">
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;中国-马来西亚钦州产业园区是一个集工业、商业、居住三位一体的产业新城。总体规划面积55平方公里，中马两国总理在2011年4月达成共识，温家宝总理提议 “广西钦州中马产业园区是双方在中国西部地区合作的第一个工业园，具有示范意义。”园区的产业定位以装备制造业、电子信息业、新能源及新材料、农副产品深加工、现代服务业为主导。
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;2011年4月28日，在中国与东盟建立对话关系20周年之际，时任国务院总理温家宝访问马来西亚，与马来西亚总理纳吉布达成双方共建中马钦州产业园区的共识。同年10月21日第八届中国－东盟博览会期间，温家宝总理和纳吉布总理亲自见证两国商务部/贸工部签署中马钦州产业园区合作文件并为园区揭牌。2012年3月26日，国务院批复设立中马钦州产业园区。2012年4月1日，温家宝总理和纳吉布总理共同出席园区开园仪式并为园区奠基。2013年2月5日，时任全国政协主席贾庆林在马来西亚关丹与马来西亚总理纳吉布共同出席马中关丹产业园启动仪式。“两国双园”模式，开创了我国园区国际合作的先例。
+<br/>
+&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依托临近东盟的优势区位，将中马钦州产业园区打造成服务中国—东盟自由贸易区的信息发布平台、贸易往来平台、项目展示及商务合作窗口。<br/>
+<br/>
+</div>
+
+
+
+
+
+
 
    
 </html>
