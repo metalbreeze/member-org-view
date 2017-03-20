@@ -1,5 +1,6 @@
 package com.shop.service;
 
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.List;
@@ -29,7 +30,7 @@ public class ProductService extends BaseObject{
 		productList.add(new Product(2,"东革阿里",999,200));
 		productList.add(new Product(3,"卡琪花",999,200));
 	}
-	static List<Product> currentProductList = new ArrayList();  
+	static List<Product> currentProductList = new ArrayList<Product>();  
 	static {
 		currentProductList.add(new Product(2,"东革阿里",999,200));
 		currentProductList.add(new Product(3,"卡琪花",999,200));
@@ -64,6 +65,7 @@ public class ProductService extends BaseObject{
 			return;
 		}
 		u.setOrderStatus(order_send);
+		u.setOrderSendDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.updateUser(u);
 		operationDAO.addOperation(new Operation(u, null, "发快递单", 0));
 	}

@@ -1,6 +1,7 @@
 <%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <%@ taglib uri="http://www.springframework.org/tags" prefix="spring" %>
 <%@ taglib uri="http://www.springframework.org/tags/form" prefix="form" %>
+<%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <%@ page language="Java" contentType="text/html; charset=UTF-8"  pageEncoding="UTF-8"%>
 <html>
 <head>
@@ -24,7 +25,9 @@
 		<th width="120">用户手机</th>
 		<th width="120">地址</th>
 		<th width="120">产品</th>
-		<th width="120">送出快递单</th>
+		<sec:authorize access="hasRole('ROLE_SENDER')">
+			<th width="120">送出快递单</th>
+		</sec:authorize>
 	</tr>
 	<c:forEach items="${list2}" var="user">
 		<tr>
@@ -42,7 +45,9 @@
 				</c:otherwise>				
 			</c:choose>
 			</td>
-			<td><a href="<c:url value='/product/edit/${user.id}' />" >发送</a></td>
+			<sec:authorize access="hasRole('ROLE_SENDER')">
+				<td><a href="<c:url value='/product/edit/${user.id}' />" >发送</a></td>
+			</sec:authorize>
 		</tr>
 	</c:forEach>
 	</table>
@@ -58,7 +63,7 @@
 		<th width="120">产品</th>
 		<th width="120">送出快递单</th>
 	</tr>
-	<c:forEach items="${listUsers}" var="user">
+	<c:forEach items="${list3}" var="user">
 		<tr>
 			<td>${user.id}</td>
 			<td>${user.name}</td>

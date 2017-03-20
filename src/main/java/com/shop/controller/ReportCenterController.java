@@ -60,6 +60,7 @@ public class ReportCenterController extends BaseObject {
 				this.reportCenterDAO.listReportCenters());
 		model.addAttribute("listUsers",
 				this.userDAO.listAvailableReporterCenterUsers());
+		model.addAttribute("withdrawDescription",CostService.withdrawDescription);
 		return "reportCenter";
 	}
 
@@ -124,25 +125,32 @@ public class ReportCenterController extends BaseObject {
 		return "redirect:/myReport";
 	}
 
-	@RequestMapping(value = "/platformReportCenterWithDrawRequest/{id}", method = RequestMethod.GET)
+	@RequestMapping(value = "/platformReportCenterWithDrawRequest/disagree/{id}", method = RequestMethod.GET)
 	@Transactional
-	public String withDrawRequest(
+	public String withDrawRequestDisagree(
 			@PathVariable int id, Principal principal,RedirectAttributes ra) {
 		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
 		if(rep==null){
 			ra.addFlashAttribute("flashMsg", "非法提现请求");
-		}else if (rep.getAccountRemain().compareTo(rep.getWithdrawRequest())<0) {
-			ra.addFlashAttribute("flashMsg", "额度不够");
-		}else{
-			BigDecimal withdrawRequest = rep.getWithdrawRequest();
-			rep.addWithdraw(withdrawRequest);
-			rep.setWithdrawRequest(new BigDecimal(0));
-			rep.setWithdrawStatus(CostService.withdraw_send);
+		}else {
+			rep.setWithdrawStatus(CostService.withdraw_disagree);
 			reportCenterDAO.updateReportCenter(rep);
-			operationDAO.addOperation(new Operation(null,rep,"提现",withdrawRequest));
 		}
 		return "redirect:/reportCenters";
-	}	
+	}
+	@RequestMapping(value = "/platformReportCenterWithDrawRequest/agree/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String withDrawRequestAgree(
+			@PathVariable int id, Principal principal,RedirectAttributes ra) {
+		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+		if(rep==null){
+			ra.addFlashAttribute("flashMsg", "非法提现请求");
+		}else {
+			rep.setWithdrawStatus(CostService.withdraw_agree);
+			reportCenterDAO.updateReportCenter(rep);
+		}
+		return "redirect:/reportCenters";
+	}
 	@RequestMapping("/reportCenter/edit/{id}")
 	@Transactional
 	public String editReportCenter(@PathVariable("id") int id, Model model) {
@@ -208,6 +216,7 @@ public class ReportCenterController extends BaseObject {
 			model.addAttribute("listUsers", ul);
 		}
 		model.addAttribute("reportCenter", r);
+		 model.addAttribute("withdrawDescription",CostService.withdrawDescription);
 		return "myReport";
 	}
 

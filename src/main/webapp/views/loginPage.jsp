@@ -16,7 +16,7 @@
                  
          </div>
     </c:if>
-     
+     <div class="div_default">
    <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
       <table>
          <tr>
@@ -31,6 +31,7 @@
          </tr>
       </table>
   </form>
+  </div>
 </body>
 <script type="text/javascript">
 function register()

@@ -47,7 +47,7 @@ public class UserController extends BaseObject {
 	@Transactional
 	public String listUsers(Model model) {
 		model.addAttribute("user", new User());
-		model.addAttribute("listUsers", userDAO.listOldUsers());
+		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(-1));
 		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}
@@ -87,11 +87,11 @@ public class UserController extends BaseObject {
 		this.userService.removeUser(id);
 		return "redirect:/users";
 	}
-
 	@RequestMapping("/user/edit/{id}")
-	public String editUser(@PathVariable("id") int id, Model model) {
+	@Transactional
+	public String editUser(@PathVariable("id") int id, Model model,RedirectAttributes ra) {
 		model.addAttribute("user", this.userService.getUserById(id));
-		model.addAttribute("listUsers", userDAO.getOldUser());
+		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(id));
 		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}

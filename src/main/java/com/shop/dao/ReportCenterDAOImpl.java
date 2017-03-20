@@ -76,4 +76,12 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 		BigDecimal p = (BigDecimal) session.createQuery("select sum(money1+money2) from ReportCenter").uniqueResult();
 		return p;
 	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<ReportCenter> listWithdrawStatus(int withdraw_status) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<ReportCenter> ReportCentersList = session.createQuery("from ReportCenter where withdrawStatus=:withdraw_status")
+				.setInteger("withdraw_status", withdraw_status).list();
+		return ReportCentersList;
+	}
 }

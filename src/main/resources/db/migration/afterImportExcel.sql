@@ -1,6 +1,7 @@
-update user set  password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK';
+update user set password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK';
 
-update user set available = -1  where name in ('胡洪涛',
+update user set available = -1 , password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pq11'
+where name in ('胡洪涛',
 '莫兴冰',
 '冉光武',
 '黄少凡',
@@ -73,7 +74,7 @@ update user set available = -1  where name in ('胡洪涛',
 '黄国楚',
 '林惠',
 '林国丽',
-'玉稳/2017',
+'玉稳日',
 '莫振鹏',
 '李梅',
 '莫兴云',

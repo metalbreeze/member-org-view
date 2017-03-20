@@ -10,6 +10,7 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
+
 <%-- 
 <c:url var="addAction" value="/myself/edit" ></c:url>
 --%>
@@ -191,59 +192,21 @@
 		</td>
 	</tr>
 	<tr>
-		<c:if test="${user.withdrawStatus == 0}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest"/>
-			</td>
-			<td>
-				<input type="submit" value="<spring:message text="提现"/>" />
-			</td>
-		</c:if>
-		
-		<c:choose>
-		<c:when test="${user.withdrawStatus == 1}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest" readonly="true" />(等待审核)
-			</td>
-		</c:when>
-		<c:when test="${user.withdrawStatus == 2}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest"/>(上次提现已经批准)
-			</td>
-			<td>
-				<input type="submit" value="<spring:message text="提现"/>" />
-			</td>
-		</c:when>
-		<c:otherwise>
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest"/>
-			</td>
-			<td>
-				<input type="button" onclick=withdraw()
-					value="<spring:message text="提现"/>" />
-			</td>
-		</c:otherwise>		
-		</c:choose>
+		<td>
+			<form:label path="withdrawRequest">
+				<spring:message text="请求提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="withdrawRequest"/>
+		</td>	
+		<td>
+			<c:if test="${user.withdrawStatus == null || user.withdrawStatus == 0 || user.withdrawStatus == 2 || user.withdrawStatus == 4 }">
+				<input type="button" onclick=myWithdraw()
+						value="<spring:message text="提现"/>" />
+			</c:if>
+			${withdrawDescription[user.withdrawStatus]}
+		</td>
 	</tr>
 </table>	
 </form:form>
@@ -329,7 +292,7 @@
 			${user.name }
 		</td>
 		<td>
-			<fmt:formatDate pattern="yyyy-MM-dd KK:H:m" value="${user.activeDate}" />
+			<fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.activeDate}" />
 		</td>
 	</tr>
 	</c:forEach>
@@ -383,9 +346,7 @@
 	</tr>
 </table>	
 </form:form>
-
-
-
+</body>
 <script type="text/javascript" >
 function checkAndSubmit()
 {
@@ -397,15 +358,14 @@ function checkAndSubmit()
 		}
 	else
 		{
-			document.forms[1].action.value="${changePasswd}";
+			document.forms[1].action="${changePasswd}";
 			document.forms[1].submit();
 		}
 }
-function withdraw()
+function myWithdraw()
 {
-	document.forms[0].action.value="${withDrawAction}";
+	document.forms[0].action="${withDrawAction}";
 	document.forms[0].submit();
 }
 </script>
-</body>
 </html>

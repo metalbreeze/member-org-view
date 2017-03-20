@@ -104,9 +104,9 @@ public class UserDAOImpl implements UserDAO {
 	@SuppressWarnings("unchecked")
 	@Override
 	@Transactional
-	public List<User> listOldUsers() {
+	public List<User> listOldUsersWithOutUserId(int i) {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<User> UsersList = session.createQuery("from User where status='old'").list();
+		List<User> UsersList = session.createQuery("from User where status='old' and id !=:id").setInteger("id", i).list();
 		return UsersList;
 	}
 	@Override

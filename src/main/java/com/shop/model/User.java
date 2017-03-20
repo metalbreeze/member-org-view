@@ -75,6 +75,7 @@ public class User implements Comparable<User> {
 	private BigDecimal directScore=new BigDecimal(0);
 	private String withdrawReason;
 	private int orderStatus = 0 ;
+	private Timestamp orderSendDate;
 	private Integer available;
 	public String getLevel() {
 		return level;
@@ -456,6 +457,14 @@ public class User implements Comparable<User> {
 			reGroupMoney=new BigDecimal(0);
 		}
 		reGroupMoney=reGroupMoney.add(productById.getCost());
+	}
+
+	public Timestamp getOrderSendDate() {
+		return orderSendDate;
+	}
+
+	public void setOrderSendDate(Timestamp orderSendDate) {
+		this.orderSendDate = orderSendDate;
 	}
 
 }

@@ -83,7 +83,7 @@ public class MyselfController extends BaseObject {
 			
 		}else{
 			logger.warn("shoud not go to here");
-			this.userService.updateUser(p);
+//			this.userService.updateUser(p);
 		}
 		return "redirect:/myself";
 	}
@@ -103,6 +103,7 @@ public class MyselfController extends BaseObject {
         model.addAttribute("currentGroup", Group.transform(groupDAO.getAvailableGroup()));
 //		model.addAttribute("listUsers", this.userService.listUsers());
 //		model.addAttribute("listProducts",this.productService.getProductList() );
+        model.addAttribute("withdrawDescription",CostService.withdrawDescription);
         logger.debug("User Name: "+ userName);
         return "myself";
     }
@@ -133,7 +134,7 @@ public class MyselfController extends BaseObject {
         	ra.addFlashAttribute("flashMsg", "额度不够");
         }else if (null == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_disagree
         		||user.getWithdrawStatus()==CostService.withdraw_send){
-        	ra.addFlashAttribute("flashMsg", "提现请求已发送");
+        	ra.addFlashAttribute("flashMsg", "待审核");
         	user.setWithdrawRequest(p.getWithdrawRequest());
         	user.setWithdrawStatus(CostService.withdraw_init);
           	userDAO.updateUser(user);

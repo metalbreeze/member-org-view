@@ -15,4 +15,5 @@ public interface ReportCenterDAO {
 	public void removeReportCenter(int id);
 	public ReportCenter getReportCenterByOwnerId(int id);
 	public BigDecimal getReportCenterCost();
+	public List<ReportCenter>  listWithdrawStatus(int withdraw_agree);
 }

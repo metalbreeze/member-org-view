@@ -29,6 +29,7 @@
          float: left;
          margin-right: 50px;
      }
+     .div_default {style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;"}
 </style>
 <script
   src="https://code.jquery.com/jquery-3.1.1.min.js"
@@ -49,7 +50,7 @@
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myself">个人信息</a> 
 	</sec:authorize>
-	<sec:authorize access="hasRole('ROLE_SENDER')">
+	<sec:authorize access="hasAnyRole('ROLE_SENDER','ROLE_SENDER_VIEW')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/orders">快递单</a>
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/oldOrders">已发送快递单</a>
 	</sec:authorize>
@@ -57,8 +58,8 @@
 		|&nbsp;<a href="${pageContext.request.contextPath}/myReport">我的报单</a> 
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_FINANCE')">
-		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users">提现管理</a> 
-		|&nbsp;<a href="${pageContext.request.contextPath}/finance/users/already">已经提现</a>
+		|&nbsp;<a href="${pageContext.request.contextPath}/financeWithdraw">提现管理</a> 
+		|&nbsp;<a href="${pageContext.request.contextPath}/financeWithdraw/already">已经提现</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/saleMoneyList">排行榜</a>

@@ -2,6 +2,7 @@ package com.shop.service;
 
 import java.math.BigDecimal;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.Hashtable;
 import java.util.List;
 
@@ -46,4 +47,18 @@ public class CostService extends BaseObject{
 	public static int withdraw_send=2;
 	public static int withdraw_agree=3;
 	public static int withdraw_disagree=4;
+	public static String withdraw_init_string="等待审核";
+	public static String withdraw_send_string="上次已提现";
+	public static String withdraw_agree_string="审核通过,等待财务";
+	public static String withdraw_disagree_string="审核未通过";
+	public static HashMap<Integer,String> withdrawDescription = new HashMap<Integer,String>();
+	static {
+		withdrawDescription.put(withdraw_init, withdraw_init_string);
+		withdrawDescription.put(withdraw_send,withdraw_send_string);
+		withdrawDescription.put(withdraw_agree,withdraw_agree_string);
+		withdrawDescription.put(withdraw_disagree,withdraw_disagree_string);
+		withdrawDescription.put(null,"");
+		withdrawDescription.put(0,"");
+	}
+	
 }

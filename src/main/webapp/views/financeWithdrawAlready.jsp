@@ -7,7 +7,7 @@
 <%@ taglib uri="http://www.springframework.org/security/tags" prefix="sec" %>
 <html>
 <head>
-	<title>会员账务</title>
+	<title>已经提现账务</title>
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
@@ -38,7 +38,7 @@
 		<th width="60">应发奖金</th>
 		<th width="60">已经提现</th>
 		<th width="60">资金余额</th>
-		<th width="60">提现请求</th>
+		<th width="60">上次提现时间</th>
 		<th width="60">提现状态</th>
 	</tr>
 	<c:forEach items="${userList}" var="user">
@@ -80,19 +80,20 @@
 			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw}" />
 		</td>
 		<td align="right">
-			${user.withdrawRequest}
+			<fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.withdrawDate}" />
 		</td>
 		<td align="right">
 			<c:choose>
 				<c:when test="${user.withdrawStatus == 1 }">
-						<a href="<c:url value='/platformWithdraw/agree/${user.id}' />" >通过</a>
-						<a href="<c:url value='/platformWithdraw/disagree/${user.id}' />" >未通过</a>
+							提现等待批准
 				</c:when>
 				<c:when test="${user.withdrawStatus == 2 }">
 							已经提现
 				</c:when>
 				<c:when test="${user.withdrawStatus == 3 }">
-							等待财务人员操作
+							<a href="<c:url value='/finance/withdraw/${user.id}' />" >
+							提现
+							</a>
 				</c:when>
 				<c:when test="${user.withdrawStatus == 4 }">
 							不同意提现
@@ -103,5 +104,52 @@
 	</c:forEach>
 </table>
 </div>
+<br/>
+<div class="div_default">
+<table class="tg">
+	<tr>
+		<th width="40">ID</th>
+		<th width="60">销售中心</th>
+		<th width="60">费用1</th>
+		<th width="60">费用2</th>
+		<th width="60">总计</th>
+		<th width="60">已提现</th>
+		<th width="60">余额</th>
+		<th width="60">上次提现时间</th>
+		<th width="60">提现状态</th>
+	</tr>
+	<c:forEach items="${listReportCenters}" var="reportCenter">
+		<tr>
+			<td>${reportCenter.id}</td>
+			<td>${reportCenter.name}</td>
+			<td align="right">${reportCenter.money1}</td>
+			<td align="right">${reportCenter.money2}</td>
+			<td align="right">${reportCenter.money2+reportCenter.money1}</td>
+			<td align="right">${reportCenter.withdraw}</td>
+			<td align="right">${reportCenter.money2+reportCenter.money1-reportCenter.withdraw}</td>
+			<td align="right">
+				<fmt:formatDate pattern="yy-MM-dd HH:mm" value="${reportCenter.withdrawDate}" />
+			</td>
+			<td align="right">
+				<c:choose>
+					<c:when test="${reportCenter.withdrawStatus == 1 }">
+								等待管理员批准
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 3 }">
+								<a href="<c:url value='/financeReportCenter/${reportCenter.id}' />" >提现</a>
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 4 }">
+								不同意提现
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 2 }">
+								已提现
+					</c:when>
+				</c:choose>
+			</td>
+		</tr>
+	</c:forEach>
+</table>	
+</div>
+	
 </body>
 </html>

@@ -119,7 +119,7 @@ public class UserSerivceTest extends BaseObject {
 	}
 	public UserSerivceTest(){
 		try {
-			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康-修定后的新数据.xls");
+			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康最新新数据.xls");
 			wb = new HSSFWorkbook(in);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -142,6 +142,7 @@ public class UserSerivceTest extends BaseObject {
 		importWithdraw();
 	}
 
+	final int sheet_3_remain_money = 32;
 	void importWithdraw(){
 			Sheet sheet = wb.getSheetAt(3);
 			for (Row row : sheet) {
@@ -152,10 +153,10 @@ public class UserSerivceTest extends BaseObject {
 				info("==========================\nrowNum"+rowNum);
 				Cell cell = row.getCell(0);
 				if(cell==null||"".equals(cell.toString()))continue;
-				evaluator.evaluateFormulaCell(row.getCell(34));
-				info("cell is"+cell+" id is "+cell+" name is "+row.getCell(3)+" withdraw:"+row.getCell(34).getNumericCellValue());
+				evaluator.evaluateFormulaCell(row.getCell(sheet_3_remain_money));
+				info("cell is"+cell+" id is "+cell+" name is "+row.getCell(3)+" withdraw:"+row.getCell(sheet_3_remain_money).getNumericCellValue());
 				User u = userDAO.getUserById(10000+parseInt(cell));
-				u.setWithdraw(new BigDecimal(row.getCell(34).getNumericCellValue()));
+				u.setWithdraw(new BigDecimal(row.getCell(sheet_3_remain_money).getNumericCellValue()));
 				userDAO.updateUser(u);
 			}
 	}

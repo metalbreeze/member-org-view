@@ -102,20 +102,20 @@
 <c:if test="${!empty listReportCenters}">
 	<table class="tg">
 	<tr>
-		<th width="80">销售中心 ID</th>
-		<th width="120">销售中心名字</th>
-		<th width="120">费用1</th>
-		<th width="120">费用2</th>
-		<th width="120">总计</th>
-		<th width="120">提现</th>
-		<th width="120">余额</th>
-		<th width="120">电子币</th>
-		<th width="120">负责人</th>
+		<th width="20">ID</th>
+		<th width="100">销售中心名字</th>
+		<th width="60">费用1</th>
+		<th width="60">费用2</th>
+		<th width="60">总计</th>
+		<th width="60">提现</th>
+		<th width="60">余额</th>
+		<th width="60">电子币</th>
+		<th width="60">负责人</th>
 		<th width="60">修改</th>
 		<th width="60">删除</th>
 		<th width="60">详细</th>
 		<th >提现请求</th>
-		<th >同意提现</th>
+		<th >审核状态</th>
 	</tr>
 	<c:forEach items="${listReportCenters}" var="reportCenter">
 		<tr>
@@ -137,7 +137,14 @@
 			<td align="right">
 				<c:choose>
 					<c:when test="${reportCenter.withdrawStatus == 1 }">
-								<a href="<c:url value='/platformReportCenterWithDrawRequest/${reportCenter.id}' />" >同意提现</a>
+								<a href="<c:url value='/platformReportCenterWithDrawRequest/agree/${reportCenter.id}' />" >同意</a>
+								<a href="<c:url value='/platformReportCenterWithDrawRequest/disagree/${reportCenter.id}' />" >不同意</a>
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 3 }">
+								同意提现(等待财务)
+					</c:when>
+					<c:when test="${reportCenter.withdrawStatus == 4 }">
+								不同意提现
 					</c:when>
 					<c:when test="${reportCenter.withdrawStatus == 2 }">
 								已提现

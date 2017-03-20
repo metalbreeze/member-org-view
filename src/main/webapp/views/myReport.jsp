@@ -38,6 +38,16 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="electricMoney">
+				<spring:message text="电子币"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="electricMoney" readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
 			<form:label path="money1">
 				<spring:message text="服务费1"/>
 			</form:label>
@@ -58,15 +68,25 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="electricMoney">
-				<spring:message text="电子币"/>
+			<form:label path="">
+				<spring:message text="总计"/>
 			</form:label>
 		</td>
 		<td>
-			<form:input path="electricMoney" readonly="true" />
+			<form:input path="" readonly="true" value="${ reportCenter.money2 + reportCenter.money1 }"/>
 		</td>
 	</tr>
-		<tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="余额"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="" readonly="true" value="${ reportCenter.money2 + reportCenter.money1 - reportCenter.withdraw }"/>
+		</td>
+	</tr>
+	<tr>
 		<td>
 			<form:label path="withdraw">
 				<spring:message text="已经提现"/>
@@ -76,43 +96,21 @@
 			<form:input path="withdraw"  readonly="true" />
 		</td>
 	</tr>
-	<tr>
-		<c:if test="${reportCenter.withdrawStatus == 0}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest"/>
-			</td>
-			<td>
+		<tr>
+		<td>
+			<form:label path="withdrawRequest">
+				<spring:message text="请求提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="withdrawRequest"/>
+		</td>	
+		<td>
+			<c:if test="${reportCenter.withdrawStatus == null || reportCenter.withdrawStatus == 0 || reportCenter.withdrawStatus == 2 || reportCenter.withdrawStatus == 4 }">
 				<input type="submit" value="<spring:message text="提现"/>" />
-			</td>
-		</c:if>
-		<c:if test="${reportCenter.withdrawStatus == 1}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest" readonly="true" />(上次提现请求在等待批准,不能再次申请)
-			</td>
-		</c:if>
-		<c:if test="${reportCenter.withdrawStatus == 2}">
-			<td>
-				<form:label path="withdrawRequest">
-					<spring:message text="请求提现"/>
-				</form:label>
-			</td>
-			<td>
-				<form:input path="withdrawRequest"/>(上次提现已经批准)
-			</td>
-			<td>
-				<input type="submit" value="<spring:message text="提现"/>" />
-			</td>
-		</c:if>
+			</c:if>
+			${withdrawDescription[reportCenter.withdrawStatus]}
+		</td>
 	</tr>
 </table>	
 </form:form>
@@ -138,7 +136,7 @@
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
 			<td>${loop.index+1}</td>
-			<td><fmt:formatDate pattern="yyyy-MM-dd KK:HH:mm" value="${user.registerDate}" /></td>
+			<td><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.registerDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
 			<td>${user.name}</td>
@@ -164,7 +162,14 @@
 			<td>
 			    <c:choose>
 					<c:when test="${user.status == 'new' || user.status == null }">
-						<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
+						<c:choose>
+							<c:when test="${reportCenter.electricMoney >= 999 }">
+								<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
+							</c:when>
+							<c:otherwise>
+								电子币不足
+							</c:otherwise>
+						</c:choose>
 						<a href="<c:url value='/myReport/delete/${user.id}' />" 
 						     onclick="return confirm('删除不可恢复,是否继续?');" >删除</a>
 					</c:when>

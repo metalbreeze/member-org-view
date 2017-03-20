@@ -15,7 +15,7 @@
 </head>
 <body>
 <jsp:include page="_menu.jsp" />
-<%--
+
 <h1>
 	<c:if test="${!empty user.name}">
 	修改用户
@@ -139,7 +139,8 @@
 </table>	
 </form:form>
 <br>
- --%>
+ 
+
 <h3>用户列表</h3>
 <c:if test="${!empty listUsers}">
 	<table class="tg">
@@ -160,7 +161,7 @@
 	</tr>
 	<c:forEach items="${listUsers}" var="user">
 		<tr>
-			<td><fmt:formatDate pattern="yy-MM-dd KK:H:m" value="${user.activeDate}" /></td>
+			<td><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.activeDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
 			<td>${user.name}</td>

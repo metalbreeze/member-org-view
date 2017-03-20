@@ -29,6 +29,7 @@ import com.shop.dao.SiteOptionDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Cost;
 import com.shop.model.Operation;
+import com.shop.model.ReportCenter;
 import com.shop.model.SiteOption;
 import com.shop.model.User;
 import com.shop.service.CostService;
@@ -47,7 +48,7 @@ public class FinanceController extends BaseObject {
 
 	@Autowired(required = true)
 	@Qualifier(value = "reportCenterDAO")
-	private ReportCenterDAO reportCenterDao;
+	private ReportCenterDAO reportCenterDAO;
 	
 	@Autowired(required = true)
 	@Qualifier(value = "siteOptionDAO")
@@ -84,7 +85,7 @@ public class FinanceController extends BaseObject {
 //			withdraw = new BigDecimal(0);
 //		}
 //		model.addAttribute("withdraw", withdraw);
-		BigDecimal reportCenterCost = reportCenterDao.getReportCenterCost();
+		BigDecimal reportCenterCost = reportCenterDAO.getReportCenterCost();
 		if (reportCenterCost == null) {
 			reportCenterCost = new BigDecimal(0);
 		}
@@ -116,7 +117,7 @@ public class FinanceController extends BaseObject {
 	@RequestMapping(value = "/userFinance", method = RequestMethod.GET)
 	@Transactional
 	public String userFinance(Model model) {
-		model.addAttribute("userList", userDAO.listOldUsers());
+		model.addAttribute("userList", userDAO.listOldUsersWithOutUserId(-1));
 		return "userFinance";
 	}
 
@@ -171,7 +172,8 @@ public class FinanceController extends BaseObject {
 			userDAO.updateUser(u);
 		}
 		return "redirect:/userFinance";
-	}	
+	}
+
 	static List<User> getAllChildren(User u) {
 		ArrayList<User> list = new ArrayList<User>();
 		list.add(u);
@@ -204,16 +206,38 @@ public class FinanceController extends BaseObject {
 		operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest));
 		return "userFinance";
 	}
-	@RequestMapping(value = "/finance/users", method = RequestMethod.GET)
+	@RequestMapping(value = "/financeWithdraw", method = RequestMethod.GET)
 	@Transactional
 	public String financeUsers(Model model) {
 		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_agree));
-		return "userFinance";
+		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_agree));
+		return "financeWithdraw";
 	}
-	@RequestMapping(value = "/finance/users/already", method = RequestMethod.GET)
+	@RequestMapping(value = "/financeWithdraw/already", method = RequestMethod.GET)
 	@Transactional
 	public String financeUsersAlready(Model model) {
 		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_send));
-		return "userFinance";
+		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_send));
+		return "financeWithdrawAlready";
+	}
+	@RequestMapping(value = "/financeReportCenter/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String withDrawRequest(
+			@PathVariable int id, Principal principal,RedirectAttributes ra) {
+		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+		if(rep==null){
+			ra.addFlashAttribute("flashMsg", "非法提现请求");
+		}else if (rep.getAccountRemain().compareTo(rep.getWithdrawRequest())<0) {
+			ra.addFlashAttribute("flashMsg", "额度不够");
+		}else{
+			BigDecimal withdrawRequest = rep.getWithdrawRequest();
+			rep.addWithdraw(withdrawRequest);
+			rep.setWithdrawRequest(new BigDecimal(0));
+			rep.setWithdrawStatus(CostService.withdraw_send);
+			rep.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
+			reportCenterDAO.updateReportCenter(rep);
+			operationDAO.addOperation(new Operation(null,rep,"提现",withdrawRequest));
+		}
+		return "redirect:/financeWithdraw";
 	}
 }
