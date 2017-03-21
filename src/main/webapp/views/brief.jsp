@@ -58,9 +58,6 @@ setInterval(function() {
 欢迎融入【归君堂】一起创造辉煌人生！！！ 
 </div>
 <br/>
-<br/>
-
-
 <table border="1" style="BORDER=30;BORDERCOLOR#fff;background-color: #fff">
 <tr>
 <td valign="top">

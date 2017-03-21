@@ -39,11 +39,11 @@
   src="https://code.jquery.com/ui/1.12.1/jquery-ui.min.js"
   integrity="sha256-VazP97ZCwtekAsvgPBSUwPFKdrwD3unUfSGVYrahUqU="
   crossorigin="anonymous"></script>
-<div style="background-color: #fff">
-	<div style="width:40px;">
+<div style="background-color: #fff;">
+	<div style="width:40px;position:relative;left:20px;" >
 	<img alt="" src="${pageContext.request.contextPath}/img/titile.jpg">
 	</div>
-	<div style="position:absolute;top:0px;left:60px;">
+	<div style="position:absolute;top:0px;left:80px;">
 		<div style="border: 4px solid #ccc;background-color: #435fd6;color:#fff">
 			<span style="font-style:italic;font-size:30px;">&nbsp;绿康生物科技&nbsp;&nbsp;&nbsp;</span><br/>
 		</div>
