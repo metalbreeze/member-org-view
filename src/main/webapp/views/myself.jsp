@@ -303,7 +303,7 @@
 <table>
 	<tr>
 		<td colspan="2">
-			修改密码
+			<h3>修改密码</h3>
 		</td> 
 	</tr>
 

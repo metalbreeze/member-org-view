@@ -44,20 +44,7 @@ setInterval(function() {
 <img alt="" src="${pageContext.request.contextPath}/img/1126a2a08941c3443f8820a74dba644.jpg">
 </div>
 
-<table border="1" style="BORDER=30;BORDERCOLOR#fff">
-<tr>
-<td valign="top">
-<img alt="" src="${pageContext.request.contextPath}/img/ke1.jpg">
-<br/>
-<br/>
-<div style="padding: 5px;background-color: #ffffff">
-客服微信&nbsp;&nbsp;&nbsp;17180458767
-<br/>
-客服电话
-</div>
-</td>
-<td>
-<div style="padding: 5px;background-color: #ffffff">
+<div style="padding: 5px;">
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 广西绿康【归君堂】生物科技有限公司是一家 “传承天然健康养生，弘扬原生态滋补”真谛的新兴生物科技型企业，
 致力于打造东南亚纯正原生态草本植物滋补调理第一品牌，公司集【提炼·研发·加工·推广·销售】为一体，
@@ -69,11 +56,24 @@ setInterval(function() {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 【归君堂】这个正在迅速壮大崛起的民族骄子，正满怀信心，一步一个脚印走向全国，走向世界！！！
 欢迎融入【归君堂】一起创造辉煌人生！！！ 
-</div></td>
-</tr>
-</table>
+</div>
 <br/>
 <br/>
+
+
+<table border="1" style="BORDER=30;BORDERCOLOR#fff;background-color: #fff">
+<tr>
+<td valign="top">
+<img alt="" src="${pageContext.request.contextPath}/img/ke1.jpg">
+</td>
+<td width="180px">
+<div style="background-color: #fff">
+客服微信&nbsp;&nbsp;&nbsp;17180458767
+<br/>
+客服电话
+</div>
+</td>
+<td>
 <div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
 		<a href="http://mp.weixin.qq.com/s/-y2TueV6e4tGNEjMasu0jA">香港“健康卫视”报导归君堂"东革阿里”神奇功效</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
@@ -81,8 +81,15 @@ setInterval(function() {
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="${pageContext.request.contextPath}/images">公司证件</a>
 </div>
-<span>中国-马来西亚钦州产业园区简介</span>
+</td>
+</tr>
+</table>
 
+
+
+<div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 20px;margin-top: 20px;background-color: #e4b26a;color: #fff;width:230px;" >
+<span>中国-马来西亚钦州产业园区简介</span>
+</div>
 <div>
 <img alt="" src="${pageContext.request.contextPath}/img/ma1.jpg">
 </div>
@@ -98,8 +105,14 @@ setInterval(function() {
 <br/>
 </div>
 
-
-
+<svg height="20" width="800">
+  <line x1="0" y1="0" x2="800" y2="0" style="stroke:rgb(0,0,0);stroke-width:2" />
+</svg>
+<div align="center">
+广西绿康生物科技有限公司
+<br>
+www.gxlvkangkeji.com
+</div>
 
 
 

@@ -53,7 +53,7 @@
 		</div>
 	</div>
 </div>
-<div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 20px;background-color: #a6e9a8;color: #fff" >
+<div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 20px;background-color: #e4b26a;color: #fff" >
 <%-- testing https://jqueryui.com/menu/ --%>
 	<a href="${pageContext.request.contextPath}/brief">关于我们</a> 
 	<sec:authorize access="!hasRole('ROLE_USER')">
