@@ -75,7 +75,7 @@ public class UserController extends BaseObject {
 			user.setWechat(p.getWechat());
 			user.setAlipay(p.getAlipay());
 			user.setParent(p.getParent());
-			user.setStatus(p.getStatus());
+//			user.setStatus(p.getStatus());
 			this.userService.updateUser(user);
 		}
 		return "redirect:/users";

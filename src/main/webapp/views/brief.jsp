@@ -105,8 +105,8 @@ setInterval(function() {
 <br/>
 </div>
 
-<svg height="20" width="800">
-  <line x1="0" y1="0" x2="800" y2="0" style="stroke:rgb(0,0,0);stroke-width:2" />
+<svg height="20" width="1000">
+  <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(0,0,0);stroke-width:2" />
 </svg>
 <div align="center">
 广西绿康生物科技有限公司
