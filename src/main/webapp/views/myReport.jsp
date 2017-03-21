@@ -117,10 +117,10 @@
 
 <h3>用户列表</h3>
 <c:if test="${!empty listUsers}">
-	<table class="tg">
+	<table class="tg" >
 	<tr>
-		<th>序号</th>
-		<th width="160">注册时间</th>
+		<th width="20">序号</th>
+		<th width="140">注册时间</th>
 		<th width="50">用户 ID</th>
 		<th width="70">推荐人</th>
 		<th width="70">用户姓名</th>
@@ -144,7 +144,8 @@
 			<td>${user.wechat}</td>
 			<td>${user.alipay}</td>
 			<td>${user.accountNumber}</td>
-			<td>${user.address}</td>
+			<td>
+				<input type="text" value="${user.address}" size="12"/></td>
 			<td>
 				<c:choose>
 					<c:when test="${user.status == 'new' }">

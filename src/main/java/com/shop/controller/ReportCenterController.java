@@ -377,9 +377,6 @@ public class ReportCenterController extends BaseObject {
 		}else{
 			ra.addAttribute(flashMsg, "非本销售中心用户");
 		}
-				
 		return "redirect:/myReport";
 	}
-	
-
 }
