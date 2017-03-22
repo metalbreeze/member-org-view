@@ -163,7 +163,6 @@
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
 			<td>${loop.index+1}</td>
-			<td>${user.id}</td>
 			<td><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.activeDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
@@ -174,7 +173,7 @@
 			<td>${user.wechat}</td>
 			<td>${user.alipay}</td>
 			<td>${user.accountNumber}</td>
-			<td>${user.address}</td>
+			<td><input type="text" value="${user.address}" size="12"/></td>
 			<td><c:choose>
 					<c:when test="${user.available == -1 }">
 						暂停会员
