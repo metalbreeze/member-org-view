@@ -193,18 +193,27 @@ public class FinanceController extends BaseObject {
 		}
 		return "saleMoneyList";
 	}
+	static Object userWithdraw = new Object();
 	@RequestMapping(value = "/finance/withdraw/{id}", method = RequestMethod.GET)
 	@Transactional
-	public String platformWithdraw(@PathVariable("id") int id) {
-		User user = userDAO.getUserById(id);
-		final BigDecimal withdrawRequest = user.getWithdrawRequest();
-		user.addWithdraw(withdrawRequest);
-		user.setWithdrawRequest(new BigDecimal(0));
-		user.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
-		user.setWithdrawStatus(CostService.withdraw_send);
-		userDAO.updateUser(user);
-		operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest));
-		return "userFinance";
+	public synchronized String platformWithdraw(@PathVariable("id") int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User user = userDAO.getUserById(id);
+			if(user.getWithdrawStatus()!=CostService.withdraw_agree){
+				ra.addFlashAttribute(flashMsg, "已经提现过或提现状态不对");
+			}else{
+				final BigDecimal withdrawRequest = user.getWithdrawRequest();
+				BigDecimal withdrawBefore = user.getWithdraw();
+				user.addWithdraw(withdrawRequest);
+				user.setWithdrawRequest(new BigDecimal(0));
+				user.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
+				user.setWithdrawStatus(CostService.withdraw_send);
+				userDAO.updateUser(user);
+				BigDecimal withdrawAfter = user.getWithdraw();
+				operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest,withdrawBefore,withdrawAfter,null));
+			}
+		}
+		return "redirect:/financeWithdraw";
 	}
 	@RequestMapping(value = "/financeWithdraw", method = RequestMethod.GET)
 	@Transactional
@@ -220,23 +229,30 @@ public class FinanceController extends BaseObject {
 		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_send));
 		return "financeWithdrawAlready";
 	}
+	static Object reportCenterWithdraw = new Object();
 	@RequestMapping(value = "/financeReportCenter/{id}", method = RequestMethod.GET)
 	@Transactional
 	public String withDrawRequest(
 			@PathVariable int id, Principal principal,RedirectAttributes ra) {
-		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
-		if(rep==null){
-			ra.addFlashAttribute("flashMsg", "非法提现请求");
-		}else if (rep.getAccountRemain().compareTo(rep.getWithdrawRequest())<0) {
-			ra.addFlashAttribute("flashMsg", "额度不够");
-		}else{
-			BigDecimal withdrawRequest = rep.getWithdrawRequest();
-			rep.addWithdraw(withdrawRequest);
-			rep.setWithdrawRequest(new BigDecimal(0));
-			rep.setWithdrawStatus(CostService.withdraw_send);
-			rep.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
-			reportCenterDAO.updateReportCenter(rep);
-			operationDAO.addOperation(new Operation(null,rep,"提现",withdrawRequest));
+		synchronized(reportCenterWithdraw){
+			ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+			if(rep==null){
+				ra.addFlashAttribute("flashMsg", "非法提现请求");
+			}else if (rep.getAccountRemain().compareTo(rep.getWithdrawRequest())<0) {
+				ra.addFlashAttribute("flashMsg", "额度不够");
+			}else{
+				if(rep.getWithdrawStatus()!=CostService.withdraw_agree){
+					ra.addFlashAttribute(flashMsg, "已经提现过或提现状态不对");
+				}else{
+					BigDecimal withdrawRequest = rep.getWithdrawRequest();
+					rep.addWithdraw(withdrawRequest);
+					rep.setWithdrawRequest(new BigDecimal(0));
+					rep.setWithdrawStatus(CostService.withdraw_send);
+					rep.setWithdrawDate(new Timestamp(System.currentTimeMillis()));
+					reportCenterDAO.updateReportCenter(rep);
+					operationDAO.addOperation(new Operation(null,rep,"提现",withdrawRequest));
+				}
+			}
 		}
 		return "redirect:/financeWithdraw";
 	}

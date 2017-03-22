@@ -16,17 +16,17 @@
                  
          </div>
     </c:if>
-     <div class="div_default" style="margin:30px;background-color: #435fd6;width:270px;border: 3px solid #111;">
+     <div class="div_default" style="margin:30px;width:280px;border: 3px solid #fff;">
    <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
-      <table cellpadding="10" >
+      <table cellpadding="10" align="center">
          <tr>
             <td><span style="font-size:20px;">用户名</span></td>
-            <td><input style="font-size:20px;width:120px" type='text' name='username' value=''></td>
+            <td><input style="font-size:20px;width:130px" type='text' name='username' value=''></td>
             
          </tr>
          <tr>
-            <td><span style="font-size:20px;">密码</span></td>
-            <td><input style="font-size:20px;width:120px;" type='password' name='password'/></td>
+            <td><span style="font-size:20px;">密&nbsp;&nbsp;&nbsp;&nbsp;码</span></td>
+            <td><input style="font-size:20px;width:130px;" type='password' name='password'/></td>
             
          </tr>
          <tr>

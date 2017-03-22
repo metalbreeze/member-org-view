@@ -223,7 +223,7 @@ public class ReportCenterController extends BaseObject {
 	static final BigDecimal A_REPORT_COST = new BigDecimal(999);
 	@RequestMapping("/myReport/active/{id}")
 	@Transactional
-	public String activeUser(@PathVariable("id") int id, Principal principal,
+	public synchronized String activeUser(@PathVariable("id") int id, Principal principal,
 			RedirectAttributes ra) {
 		logger.info("activeUser " + id);
 		String userName = principal.getName();

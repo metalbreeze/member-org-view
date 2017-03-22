@@ -143,9 +143,9 @@
 			<td>${user.mobile}</td>
 			<td>${user.wechat}</td>
 			<td>${user.alipay}</td>
-			<td>${user.accountNumber}</td>
+			<td><input type="text" value="${user.accountNumber}" size="10"/></td>
 			<td>
-				<input type="text" value="${user.address}" size="12"/></td>
+				<input type="text" value="${user.address}" size="10"/></td>
 			<td>
 				<c:choose>
 					<c:when test="${user.status == 'new' }">

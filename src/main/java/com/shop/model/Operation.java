@@ -37,6 +37,8 @@ public class Operation {
 	private ReportCenter reportCenter;
 	private String operation;
 	private BigDecimal money;
+	private BigDecimal moneyBefore;
+	private BigDecimal moneyAfter;
 	private Timestamp operationDate = new Timestamp(System.currentTimeMillis());
 	private String remark;
 	
@@ -68,6 +70,24 @@ public class Operation {
 		operation=o;
 		money=new BigDecimal(i);
 		this.remark=remark;
+	}
+	public Operation(User u , ReportCenter r , String o, BigDecimal i,BigDecimal before, BigDecimal after,String remark){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=i;
+		this.remark=remark;
+		moneyBefore=before;
+		moneyAfter=after;
+	}
+	public Operation(User u , ReportCenter r , String o, int i,BigDecimal before, BigDecimal after,String remark){
+		user=u;
+		reportCenter=r;
+		operation=o;
+		money=new BigDecimal(i);
+		this.remark=remark;
+		moneyBefore=before;
+		moneyAfter=after;
 	}	
 	@Override
 	public String toString(){
@@ -131,6 +151,18 @@ public class Operation {
 	}
 	public void setMoney(int i) {
 		this.money = new BigDecimal(i);
+	}
+	public BigDecimal getMoneyBefore() {
+		return moneyBefore;
+	}
+	public void setMoneyBefore(BigDecimal moneyBefore) {
+		this.moneyBefore = moneyBefore;
+	}
+	public BigDecimal getMoneyAfter() {
+		return moneyAfter;
+	}
+	public void setMoneyAfter(BigDecimal moneyAfter) {
+		this.moneyAfter = moneyAfter;
 	}
 
 }
