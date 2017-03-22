@@ -374,8 +374,7 @@ public class User implements Comparable<User> {
 
 	@Override
 	public int compareTo(User o) {
-		if(o==null)return 1;
-		return id-o.getId();
+		return position-o.position; 
 	}
 	public BigDecimal getAccountRemain(){
 		return getAccountTotal().add(this.withdraw.negate());
