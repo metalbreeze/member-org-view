@@ -145,6 +145,7 @@
 <c:if test="${!empty listUsers}">
 	<table class="tg">
 	<tr>
+		<th>序号</th>
 		<th>注册时间</th>
 		<th>用户 ID</th>
 		<th>推荐人</th>
@@ -159,8 +160,10 @@
 		<th>身份</th>
 
 	</tr>
-	<c:forEach items="${listUsers}" var="user">
+	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
+			<td>${loop.index+1}</td>
+			<td>${user.id}</td>
 			<td><fmt:formatDate pattern="yy-MM-dd HH:mm" value="${user.activeDate}" /></td>
 			<td>${user.id}</td>
 			<td>${user.parent.name}</td>
