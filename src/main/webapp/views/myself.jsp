@@ -202,11 +202,8 @@
 		</td>	
 		<td>
 			<c:if test="${user.withdrawStatus == null || user.withdrawStatus == 0 || user.withdrawStatus == 2 || user.withdrawStatus == 4 }">
-				<c:if test="${ (user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw) > 0 } ">
 					<input type="button" onclick=myWithdraw()
 							value="<spring:message text="提现"/>" />
-				</c:if>
-				"${ (user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw) - 0 } "
 			</c:if>
 			${withdrawDescription[user.withdrawStatus]}
 		</td>
