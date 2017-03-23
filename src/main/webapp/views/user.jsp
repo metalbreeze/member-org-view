@@ -170,10 +170,10 @@
 			<td>${user.mobile}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
 		<%--	<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>  --%>
-			<td>${user.wechat}</td>
-			<td>${user.alipay}</td>
-			<td><input type="text" value="${user.accountNumber}" size="10"/></td>
-			<td><input type="text" value="${user.address}" size="10"/></td>
+			<td><input type="text" value="${user.alipay}" size="5"/></td>
+			<td><input type="text" value="${user.alipay}" size="5"/></td>
+			<td><input type="text" value="${user.accountNumber}" size="5"/></td>
+			<td><input type="text" value="${user.address}" size="5"/></td>
 			<td><c:choose>
 					<c:when test="${user.available == -1 }">
 						暂停会员

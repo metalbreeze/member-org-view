@@ -196,7 +196,7 @@ public class FinanceController extends BaseObject {
 	static Object userWithdraw = new Object();
 	@RequestMapping(value = "/finance/withdraw/{id}", method = RequestMethod.GET)
 	@Transactional
-	public synchronized String platformWithdraw(@PathVariable("id") int id,RedirectAttributes ra) {
+	public String platformWithdraw(@PathVariable("id") int id,RedirectAttributes ra) {
 		synchronized(userWithdraw){
 			User user = userDAO.getUserById(id);
 			if(user.getWithdrawStatus()!=CostService.withdraw_agree){

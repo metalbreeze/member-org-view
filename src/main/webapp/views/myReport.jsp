@@ -120,18 +120,18 @@
 	<table class="tg" >
 	<tr>
 		<th width="20">序号</th>
-		<th width="140">注册时间</th>
+		<th>注册时间</th>
 		<th width="50">用户 ID</th>
-		<th width="70">推荐人</th>
-		<th width="70">用户姓名</th>
-		<th width="100">用户手机</th>
-		<th width="100">微信号</th>
-		<th width="100">支付宝号</th>
-		<th width="120">银行帐号</th>
-		<th width="120">地址</th>
-		<th width="30">身份</th>
+		<th width="40">推荐人</th>
+		<th width="40">姓名</th>
+		<th width="60">手机</th>
+		<th>微信号</th>
+		<th>支付宝号</th>
+		<th>银行帐号</th>
+		<th>地址</th>
+		<th width="20">身份</th>
 		<th width="30">激活</th>
-		<th>发货状态</th>
+		<th width="20">发货状态</th>
 	</tr>
 	<c:forEach items="${listUsers}" var="user" varStatus="loop">
 		<tr>
@@ -141,11 +141,11 @@
 			<td>${user.parent.name}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
-			<td>${user.wechat}</td>
-			<td>${user.alipay}</td>
-			<td><input type="text" value="${user.accountNumber}" size="10"/></td>
+			<td><input type="text" value="${user.wechat}" size="5"/></td>
+			<td><input type="text" value="${user.alipay}" size="5"/></td>
+			<td><input type="text" value="${user.accountNumber}" size="5"/></td>
 			<td>
-				<input type="text" value="${user.address}" size="10"/></td>
+				<input type="text" value="${user.address}" size="5"/></td>
 			<td>
 				<c:choose>
 					<c:when test="${user.status == 'new' }">

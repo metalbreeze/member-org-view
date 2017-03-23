@@ -18,23 +18,21 @@
     </c:if>
      <div class="div_default" style="margin:30px;width:280px;border: 3px solid #fff;">
    <form name='f' action="${pageContext.request.contextPath}/j_spring_security_check" method='POST'>
-      <table cellpadding="10" align="center">
+      <table cellpadding="10" align="center" valign="bottom">
          <tr>
-            <td><span style="font-size:20px;">用户名</span></td>
-            <td><input style="font-size:20px;width:130px" type='text' name='username' value=''></td>
-            
+            <td valign="bottom"><span style="font-size:15px;">用户名</span></td>
+            <td valign="bottom"><input style="font-size:15px;width:130px" type='text' name='username' value=''></td>
          </tr>
          <tr>
-            <td><span style="font-size:20px;">密&nbsp;&nbsp;&nbsp;&nbsp;码</span></td>
-            <td><input style="font-size:20px;width:130px;" type='password' name='password'/></td>
-            
+            <td><span style="font-size:15px;">密&nbsp;&nbsp;&nbsp;&nbsp;码</span></td>
+            <td><input style="font-size:15px;width:130px;" type='password' name='password'/></td>
          </tr>
          <tr>
          	<td colspan="2" align="center">
          	&nbsp;&nbsp;&nbsp;&nbsp;
-         	 <input style="font-size:20px;" name="submit" type="submit" onclick=register() value="注册" />
+         	 <input style="font-size:15px;" name="submit" type="submit" onclick=register() value="注册" />
          	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         	 <input style="font-size:20px;" name="submit" type="submit" value="登录" />
+         	 <input style="font-size:15px;" name="submit" type="submit" value="登录" />
          	 </td>
          </tr>
       </table>
