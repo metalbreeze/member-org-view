@@ -158,7 +158,7 @@ public class ReportService extends BaseObject {
 		r.addMoney1(10);
 		reportCenterDAO.updateReportCenter(r);
 		BigDecimal money1after = r.getMoney1();
-		operationDAO.addOperation(new Operation(target,r,"费用1",10,"before"+r.getMoney1()+"after"+r.getMoney1()));
+		operationDAO.addOperation(new Operation(target,r,"费用1",10,"before"+money1before+"after"+money1after));
 		// return "redirect:/myReport";
 	}
 }

@@ -5,7 +5,8 @@
       http://www.springframework.org/schema/security/spring-security-4.0.xsd
       http://www.springframework.org/schema/beans
       http://www.springframework.org/schema/beans/spring-beans-4.1.xsd">
- 
+      
+
      
     <http use-expressions="true">
         <csrf disabled="true"/>
@@ -19,12 +20,18 @@
         <intercept-url pattern="/logout" access="permitAll()" />
  
  		<intercept-url pattern="/myself**" access="hasAnyRole('ROLE_USER')" />
+ 		
  		<intercept-url pattern="/myReport**" access="hasAnyRole('ROLE_REPORT')" />
         
         <intercept-url pattern="/user**" access="hasAnyRole('ROLE_ADMIN')" />
         <intercept-url pattern="/group**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/reportCenter**" access="hasRole('ROLE_ADMIN')" />
         <intercept-url pattern="/platform**" access="hasRole('ROLE_ADMIN')" />
+        
+        <intercept-url pattern="/finance*" access="hasAnyRole('FINANCE')" />
+        
+        <intercept-url pattern="/product/*" access="hasAnyRole('ROLE_SENDER,ROLE_SENDER_VIEW')" />
+        
         
         <intercept-url pattern="/*" access="isAuthenticated()" />
         

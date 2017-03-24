@@ -5,6 +5,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.transaction.annotation.Transactional;
@@ -42,7 +43,6 @@ public class ProductController extends BaseObject {
 	private ReportCenterDAO reportCenterDao;
 	
 	@RequestMapping(value= "/product/edit/{id}", method = RequestMethod.GET)
-	@Transactional
 	public String myselfEdit(@PathVariable("id") int id, Model model) {
 		productService.setOrderSend(id);
 		return "redirect:/product/orders";

@@ -7,6 +7,7 @@ import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,7 +24,7 @@ public class ProductService extends BaseObject{
 	@Qualifier(value = "operationDAOImpl")
 	private OperationDAOImpl operationDAO;
 	
-	static List<Product> productList = new ArrayList();  
+	static List<Product> productList = new ArrayList<Product>();  
 	static {
 		productList.add(new Product(0,"无产品",0,0));
 		productList.add(new Product(1,"茶多酚",999,300));
@@ -58,6 +59,7 @@ public class ProductService extends BaseObject{
 	public List<User> getOldOrderList(int i){
 		return userDAO.getOldOrderList(i);
 	}
+	@PreAuthorize("hasRole('ROLE_SENDER')")
 	@Transactional
 	public void setOrderSend(int user_id){
 		User u  = userDAO.getUserById(user_id);
