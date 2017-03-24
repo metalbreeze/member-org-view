@@ -180,11 +180,6 @@ public class User implements Comparable<User> {
 		this.password = password;
 	}
 
-	@Override
-	public String toString(){
-		return "id="+id+", name="+name;
-	}
-
 	public String getWechat() {
 		return wechat;
 	}
@@ -464,6 +459,11 @@ public class User implements Comparable<User> {
 
 	public void setOrderSendDate(Timestamp orderSendDate) {
 		this.orderSendDate = orderSendDate;
+	}
+
+	@Override
+	public String toString() {
+		return "User [id=" + id + ", name=" + name + "]";
 	}
 
 }

@@ -170,7 +170,7 @@
 			<td>${user.mobile}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
 		<%--	<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>  --%>
-			<td><input type="text" value="${user.alipay}" size="5"/></td>
+			<td><input type="text" value="${user.wechat}" size="5"/></td>
 			<td><input type="text" value="${user.alipay}" size="5"/></td>
 			<td><input type="text" value="${user.accountNumber}" size="5"/></td>
 			<td><input type="text" value="${user.address}" size="5"/></td>

@@ -49,7 +49,7 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		session.update(p);
 		session.flush();
-		logger.info("User updated successfully, User Details="+p);
+		logger.debug("User updated successfully, User Details="+p.toString());
 	}
 
 	@SuppressWarnings("unchecked")
