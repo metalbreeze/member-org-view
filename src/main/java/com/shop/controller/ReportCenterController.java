@@ -113,14 +113,16 @@ public class ReportCenterController extends BaseObject {
 			@ModelAttribute("reportCenter") ReportCenter p, Principal principal,RedirectAttributes ra) {
 		String userName = principal.getName();
 		User owner = userDAO.getUserByName(userName);
-		ReportCenter rep = reportCenterDAO.getReportCenterById(p.getId());
-		if(rep==null||rep.getOwner()==null||rep.getOwner().getId()!=owner.getId()){
-			ra.addFlashAttribute("flashMsg", "非法提现请求");
-		}else if (rep.getAccountRemain().compareTo(p.getWithdrawRequest())<0) {
-			ra.addFlashAttribute("flashMsg", "额度不够");
-		}else{
-			rep.setWithdrawRequest(p.getWithdrawRequest());
-			rep.setWithdrawStatus(CostService.withdraw_init);
+		synchronized(FinanceController.reportCenterWithdraw){
+			ReportCenter rep = reportCenterDAO.getReportCenterById(p.getId());
+			if(rep==null||rep.getOwner()==null||rep.getOwner().getId()!=owner.getId()){
+				ra.addFlashAttribute("flashMsg", "非法提现请求");
+			}else if (rep.getAccountRemain().compareTo(p.getWithdrawRequest())<0) {
+				ra.addFlashAttribute("flashMsg", "额度不够");
+			}else{
+				rep.setWithdrawRequest(p.getWithdrawRequest());
+				rep.setWithdrawStatus(CostService.withdraw_init);
+			}
 		}
 		return "redirect:/myReport";
 	}
@@ -129,12 +131,14 @@ public class ReportCenterController extends BaseObject {
 	@Transactional
 	public String withDrawRequestDisagree(
 			@PathVariable int id, Principal principal,RedirectAttributes ra) {
-		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
-		if(rep==null){
-			ra.addFlashAttribute("flashMsg", "非法提现请求");
-		}else {
-			rep.setWithdrawStatus(CostService.withdraw_disagree);
-			reportCenterDAO.updateReportCenter(rep);
+		synchronized(FinanceController.reportCenterWithdraw){
+			ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+			if(rep==null||rep.getWithdrawStatus()!=CostService.withdraw_init){
+				ra.addFlashAttribute("flashMsg", "非法提现请求或已经不同意");
+			}else {
+				rep.setWithdrawStatus(CostService.withdraw_disagree);
+				reportCenterDAO.updateReportCenter(rep);
+			}
 		}
 		return "redirect:/reportCenters";
 	}
@@ -142,12 +146,14 @@ public class ReportCenterController extends BaseObject {
 	@Transactional
 	public String withDrawRequestAgree(
 			@PathVariable int id, Principal principal,RedirectAttributes ra) {
-		ReportCenter rep = reportCenterDAO.getReportCenterById(id);
-		if(rep==null){
-			ra.addFlashAttribute("flashMsg", "非法提现请求");
-		}else {
-			rep.setWithdrawStatus(CostService.withdraw_agree);
-			reportCenterDAO.updateReportCenter(rep);
+		synchronized(FinanceController.reportCenterWithdraw){
+			ReportCenter rep = reportCenterDAO.getReportCenterById(id);
+			if(rep==null||rep.getWithdrawStatus()!=CostService.withdraw_init){
+				ra.addFlashAttribute("flashMsg", "非法提现请求或已经同意");
+			}else {
+				rep.setWithdrawStatus(CostService.withdraw_agree);
+				reportCenterDAO.updateReportCenter(rep);
+			}
 		}
 		return "redirect:/reportCenters";
 	}

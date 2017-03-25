@@ -154,22 +154,34 @@ public class FinanceController extends BaseObject {
 	
 	@RequestMapping(value = "/platformWithdraw/agree/{id}", method = RequestMethod.GET)
 	@Transactional
-	public String userFinanceAgree(@PathVariable int id) {
-		User u = userDAO.getUserById(id);
-		if (u != null ){
-			u.setWithdrawStatus(CostService.withdraw_agree);
-			userDAO.updateUser(u);
+	public String userFinanceAgree(@PathVariable int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User u = userDAO.getUserById(id);
+			if (u != null ){
+				if(u.getWithdrawStatus()==CostService.withdraw_init){
+					u.setWithdrawStatus(CostService.withdraw_agree);
+					userDAO.updateUser(u);
+				}else{
+					ra.addFlashAttribute(flashMsg, "已经同意提现过或提现状态不对");
+				}
+			}
 		}
 		return "redirect:/userFinance";
 	}
 	
 	@RequestMapping(value = "/platformWithdraw/disagree/{id}", method = RequestMethod.GET)
 	@Transactional
-	public String userFinanceDisagree(@PathVariable int id) {
-		User u = userDAO.getUserById(id);
-		if (u != null ){
-			u.setWithdrawStatus(CostService.withdraw_disagree);
-			userDAO.updateUser(u);
+	public String userFinanceDisagree(@PathVariable int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User u = userDAO.getUserById(id);
+			if (u != null ){
+				if(u.getWithdrawStatus()==CostService.withdraw_init){
+					u.setWithdrawStatus(CostService.withdraw_disagree);
+					userDAO.updateUser(u);
+				}else{
+					ra.addFlashAttribute(flashMsg, "已经不同意提现或提现状态不对");
+				}
+			}
 		}
 		return "redirect:/userFinance";
 	}
@@ -193,7 +205,7 @@ public class FinanceController extends BaseObject {
 		}
 		return "saleMoneyList";
 	}
-	static Object userWithdraw = new Object();
+	public static Object userWithdraw = new Object();
 	@RequestMapping(value = "/finance/withdraw/{id}", method = RequestMethod.GET)
 	@Transactional
 	public String platformWithdraw(@PathVariable("id") int id,RedirectAttributes ra) {
@@ -229,7 +241,7 @@ public class FinanceController extends BaseObject {
 		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_send));
 		return "financeWithdrawAlready";
 	}
-	static Object reportCenterWithdraw = new Object();
+	public static Object reportCenterWithdraw = new Object();
 	@RequestMapping(value = "/financeReportCenter/{id}", method = RequestMethod.GET)
 	@Transactional
 	public String withDrawRequest(

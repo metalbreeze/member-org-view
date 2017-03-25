@@ -107,7 +107,8 @@
 		</td>	
 		<td>
 			<c:if test="${reportCenter.withdrawStatus == null || reportCenter.withdrawStatus == 0 || reportCenter.withdrawStatus == 2 || reportCenter.withdrawStatus == 4 }">
-				<input type="submit" value="<spring:message text="提现"/>" />
+				<input type="button" onclick=myWithdraw()
+							value="<spring:message text="提现"/>" />
 			</c:if>
 			${withdrawDescription[reportCenter.withdrawStatus]}
 		</td>
@@ -193,5 +194,17 @@
 	</c:forEach>
 	</table>
 </c:if>
+<script>
+function myWithdraw()
+{
+	if(isNaN(document.forms[0].withdrawRequest.value) || document.forms[0].withdrawRequest.value <= 0)
+	{
+		alert("提现金额不对");
+		document.forms[0].withdrawRequest.focus();
+		return;
+	}
+	document.forms[0].submit();
+}
+</script>
 </body>
 </html>

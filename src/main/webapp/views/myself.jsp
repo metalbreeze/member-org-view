@@ -364,6 +364,12 @@ function checkAndSubmit()
 }
 function myWithdraw()
 {
+	if(isNaN(document.forms[0].withdrawRequest.value) || document.forms[0].withdrawRequest.value <= 0)
+	{
+		alert("提现金额不对");
+		document.forms[0].withdrawRequest.focus();
+		return;
+	}
 	document.forms[0].action="${withDrawAction}";
 	document.forms[0].submit();
 }

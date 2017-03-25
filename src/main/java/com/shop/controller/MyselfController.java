@@ -17,9 +17,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.base.BaseObject;
 import com.shop.dao.GroupDAO;
+import com.shop.dao.OperationDAOImpl;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Group;
+import com.shop.model.Operation;
 import com.shop.model.User;
 import com.shop.service.CostService;
 import com.shop.service.ProductService;
@@ -35,6 +37,9 @@ public class MyselfController extends BaseObject {
 	@Qualifier(value="userService")
 	private UserService userService;
 
+	@Autowired(required = true)
+	@Qualifier(value = "operationDAOImpl")
+	private OperationDAOImpl operationDAO;
 
 	@Autowired(required=true)
 	@Qualifier(value="productService")
@@ -100,7 +105,8 @@ public class MyselfController extends BaseObject {
 		model.addAttribute("group", g);
         model.addAttribute("user", u);
         model.addAttribute("list", u.getChildren());
-        model.addAttribute("currentGroup", Group.transform(groupDAO.getAvailableGroup()));
+//        不看工作群
+//        model.addAttribute("currentGroup", Group.transform(groupDAO.getAvailableGroup()));
 //		model.addAttribute("listUsers", this.userService.listUsers());
 //		model.addAttribute("listProducts",this.productService.getProductList() );
         model.addAttribute("withdrawDescription",CostService.withdrawDescription);
@@ -127,22 +133,25 @@ public class MyselfController extends BaseObject {
     @Transactional
     public String withDrawRequest(Model model, Principal principal,@ModelAttribute("user") User p,RedirectAttributes ra){
         String userName = principal.getName();
-        User user = userDAO.getUserByName(userName);
-        if (user.getId()!=p.getId()){
-        	ra.addFlashAttribute("flashMsg", "用户不对");
-        }else if (user.getAccountRemain().compareTo(p.getWithdrawRequest())<0){
-        	ra.addFlashAttribute("flashMsg", "额度不够");
-        }else if (null == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_disagree
-        		||user.getWithdrawStatus()==CostService.withdraw_send){
-        	ra.addFlashAttribute("flashMsg", "待审核");
-        	user.setWithdrawRequest(p.getWithdrawRequest());
-        	user.setWithdrawStatus(CostService.withdraw_init);
-          	userDAO.updateUser(user);
-        }else if (CostService.withdraw_init == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_agree){
-        	ra.addFlashAttribute("flashMsg", "上次提现请求在等待批准,不能再次申请");
-        }else {
-        	ra.addFlashAttribute("flashMsg", "有异常,请联系管理员");
-        	logger.info("should not go those code");
+        synchronized(FinanceController.userWithdraw){
+	        User user = userDAO.getUserByName(userName);
+	        if (user.getId()!=p.getId()){
+	        	ra.addFlashAttribute("flashMsg", "用户不对");
+	        }else if (user.getAccountRemain().compareTo(p.getWithdrawRequest())<0){
+	        	ra.addFlashAttribute("flashMsg", "额度不够");
+	        }else if (null == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_disagree
+	        		||user.getWithdrawStatus()==CostService.withdraw_send){
+	        	ra.addFlashAttribute("flashMsg", "待审核");
+	        	user.setWithdrawRequest(p.getWithdrawRequest());
+	        	user.setWithdrawStatus(CostService.withdraw_init);
+	          	userDAO.updateUser(user);
+	          	operationDAO.addOperation(new Operation(user,null,"申请提现",user.getWithdrawRequest(),null));
+	        }else if (CostService.withdraw_init == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_agree){
+	        	ra.addFlashAttribute("flashMsg", "上次提现请求在等待批准,不能再次申请");
+	        }else {
+	        	ra.addFlashAttribute("flashMsg", "有异常,请联系管理员");
+	        	logger.info("should not go those code");
+	        }
         }
         return "redirect:/myself";
     }
