@@ -137,6 +137,8 @@ public class MyselfController extends BaseObject {
 	        User user = userDAO.getUserByName(userName);
 	        if (user.getId()!=p.getId()){
 	        	ra.addFlashAttribute("flashMsg", "用户不对");
+	        }else if (new BigDecimal(0).compareTo(p.getWithdrawRequest())<=0){
+	        	ra.addFlashAttribute("flashMsg", "金额不对");
 	        }else if (user.getAccountRemain().compareTo(p.getWithdrawRequest())<0){
 	        	ra.addFlashAttribute("flashMsg", "额度不够");
 	        }else if (null == user.getWithdrawStatus()||user.getWithdrawStatus()==CostService.withdraw_disagree
