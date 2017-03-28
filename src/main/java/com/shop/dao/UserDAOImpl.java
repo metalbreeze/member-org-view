@@ -265,9 +265,9 @@ public class UserDAOImpl implements UserDAO {
 			x=id;
 			y=order;
 		}
-		
-		List<User> l = session.createQuery("FROM User  where withdrawStatus=:agree order by :id :order")
-				.setInteger("agree", status).setString("id", x).setString("order", y).list();
+//		logger.debug("status:"+status+"orderBy:"+id+"order:"+order);
+		List<User> l = session.createQuery("FROM User  where withdrawStatus= :agree order by "+id+" "+order)
+				.setInteger("agree", status).list();
 		return l;
 	}
 

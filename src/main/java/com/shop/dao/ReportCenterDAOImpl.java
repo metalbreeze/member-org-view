@@ -81,10 +81,10 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 	public List<ReportCenter> listWithdrawStatus(int withdraw_status,String id,String order) {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<ReportCenter> ReportCentersList 
-			= session.createQuery("from ReportCenter where withdrawStatus=:withdraw_status order by :id :order")
+			= session.createQuery("from ReportCenter where withdrawStatus=:withdraw_status order by "+id+" "+order)
 				.setInteger("withdraw_status", withdraw_status)
-				.setString("id",id)
-				.setString("order", order).list();
+//				.setString("id",id)
+				.list();
 		return ReportCentersList;
 	}
 }
