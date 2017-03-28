@@ -29,7 +29,7 @@ public interface UserDAO {
 	public List<User> getOrderList(int i);
 	public List<User> getOldOrderList(int i);
 	User getUserByNameWithChildren(String s);
-	public Object listWithdrawStatusUsers(int status);
+	public Object listWithdrawStatusUsers(int status,String id,String order);
 	public BigDecimal getTotalReGroupMoney();
 	BigDecimal getTotalSpendMoney();
 	public List<User> listAvailableReporterCenterUsersPlusOwner(int i);

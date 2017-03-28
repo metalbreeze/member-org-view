@@ -78,10 +78,13 @@ public class ReportCenterDAOImpl extends BaseObject implements ReportCenterDAO {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public List<ReportCenter> listWithdrawStatus(int withdraw_status) {
+	public List<ReportCenter> listWithdrawStatus(int withdraw_status,String id,String order) {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<ReportCenter> ReportCentersList = session.createQuery("from ReportCenter where withdrawStatus=:withdraw_status")
-				.setInteger("withdraw_status", withdraw_status).list();
+		List<ReportCenter> ReportCentersList 
+			= session.createQuery("from ReportCenter where withdrawStatus=:withdraw_status order by :id :order")
+				.setInteger("withdraw_status", withdraw_status)
+				.setString("id",id)
+				.setString("order", order).list();
 		return ReportCentersList;
 	}
 }

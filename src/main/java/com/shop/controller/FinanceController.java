@@ -230,15 +230,15 @@ public class FinanceController extends BaseObject {
 	@RequestMapping(value = "/financeWithdraw", method = RequestMethod.GET)
 	@Transactional
 	public String financeUsers(Model model) {
-		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_agree));
-		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_agree));
+		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_agree,"id","asc"));
+		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_agree,"id","asc"));
 		return "financeWithdraw";
 	}
 	@RequestMapping(value = "/financeWithdraw/already", method = RequestMethod.GET)
 	@Transactional
 	public String financeUsersAlready(Model model) {
-		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_send));
-		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_send));
+		model.addAttribute("userList", userDAO.listWithdrawStatusUsers(CostService.withdraw_send,"withdrawDate","desc"));
+		model.addAttribute("listReportCenters", reportCenterDAO.listWithdrawStatus(CostService.withdraw_send,"withdrawDate","desc"));
 		return "financeWithdrawAlready";
 	}
 	public static Object reportCenterWithdraw = new Object();

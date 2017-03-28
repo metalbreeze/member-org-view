@@ -254,10 +254,20 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
-	public Object listWithdrawStatusUsers(int status) {
+	public Object listWithdrawStatusUsers(int status,String id,String order) {
 		Session session = this.sessionFactory.getCurrentSession();
-		List<User> l = session.createQuery("FROM User  where withdrawStatus=:agree order by id")
-				.setInteger("agree", status).list();
+		String x=null;
+		String y=null;
+		if(order==null||order.equals("")){
+			x="id";
+			y="asc";
+		}else{
+			x=id;
+			y=order;
+		}
+		
+		List<User> l = session.createQuery("FROM User  where withdrawStatus=:agree order by :id :order")
+				.setInteger("agree", status).setString("id", x).setString("order", y).list();
 		return l;
 	}
 
