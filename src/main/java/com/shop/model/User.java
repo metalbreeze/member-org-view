@@ -7,6 +7,9 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
+
 import javax.persistence.Column;
 import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
@@ -17,6 +20,8 @@ import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Transient;
+
+import org.slf4j.LoggerFactory;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -29,7 +34,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Table(name="user")
 public class User implements Comparable<User> {
-
+	private static final Logger logger = LoggerFactory.getLogger(User.class);
 	@Id
 	@Column(name="id")
 	@GeneratedValue(strategy=GenerationType.IDENTITY)

@@ -69,7 +69,9 @@ public class ReportService extends BaseObject {
 		}
 		target.setActiveDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.updateUser(target);
-		groupDAO.refresh(group);
+		group=groupDAO.getGroupById(group.getId());
+		//i don't know why refresh not works
+		//groupDAO.refresh(group);
 		Group.transform(group);
 		info(ra,target.getName() + " 用户已经激活");
 		if (group.getUsers().size() == 63) {
