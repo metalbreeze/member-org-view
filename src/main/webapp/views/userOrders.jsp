@@ -61,7 +61,9 @@
 		<th width="120">用户手机</th>
 		<th width="120">地址</th>
 		<th width="120">产品</th>
+		<sec:authorize access="hasAnyRole('ROLE_SENDER')">
 		<th width="120">送出快递单</th>
+		</sec:authorize>
 	</tr>
 	<c:forEach items="${list3}" var="user">
 		<tr>
@@ -79,7 +81,9 @@
 				</c:otherwise>				
 			</c:choose>
 			</td>
+			<sec:authorize access="hasAnyRole('ROLE_SENDER')">
 			<td><a href="<c:url value='/product/edit/${user.id}' />" >发送</a></td>
+			</sec:authorize>
 		</tr>
 	</c:forEach>
 	</table>
