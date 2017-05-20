@@ -266,7 +266,7 @@ public class UserDAOImpl implements UserDAO {
 			y=order;
 		}
 //		logger.debug("status:"+status+"orderBy:"+id+"order:"+order);
-		List<User> l = session.createQuery("FROM User  where withdrawStatus= :agree order by "+id+" "+order)
+		List<User> l = session.createQuery("FROM User  where withdrawStatus= :agree or portalBsiteWithdrawStatus= :agree order by "+id+" "+order)
 				.setInteger("agree", status).list();
 		return l;
 	}

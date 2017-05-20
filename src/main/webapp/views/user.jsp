@@ -152,6 +152,7 @@
 		<th>用户姓名</th>
 		<th>用户手机</th>
 		<th>修改</th>
+		<th>内/外网</th>
 		<%--<th width="60">删除</th>--%>
 		<th>微信号</th>
 		<th>支付宝号</th>
@@ -169,6 +170,22 @@
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
+			<td>
+			<c:choose>
+				<c:when test="${user.siteStatus == 1 }">
+					外网
+				</c:when>
+				<c:when test="${user.siteStatus == 2 }">
+					内网
+				</c:when>
+				<c:when test="${user.siteStatus == 3 }">
+					内/外网
+				</c:when>
+				<c:otherwise>
+					状态不明
+				</c:otherwise>
+				</c:choose>
+			</td>
 		<%--	<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>  --%>
 			<td><input type="text" value="${user.wechat}" size="5"/></td>
 			<td><input type="text" value="${user.alipay}" size="5"/></td>

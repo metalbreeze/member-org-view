@@ -1,5 +1,6 @@
 package com.shop.dao;
 
+import java.math.BigDecimal;
 import java.sql.Timestamp;
 import java.util.List;
 
@@ -12,6 +13,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.shop.base.BaseObject;
 import com.shop.model.Operation;
+import com.shop.model.ReportCenter;
 import com.shop.model.User;
 
 @Repository
@@ -27,10 +29,19 @@ public class OperationDAOImpl extends BaseObject {
 		Session session = this.sessionFactory.getCurrentSession();
 		p.setOperationDate(new Timestamp(System.currentTimeMillis()));
 		session.persist(p);
-		logger.info("User saved successfully, User Details="+p);
+		logger.debug("Operation saved successfully, Operation Details="+p);
 	}
-
-
+	public void addOperation (ReportCenter r, int bd,User u,String s) {
+		Session session = this.sessionFactory.getCurrentSession();
+		Operation op = new Operation();
+		op.setMoney(bd);
+		op.setOperation(s);
+		op.setReportCenter(r);
+		op.setUser(u);
+		op.setOperationDate(new Timestamp(System.currentTimeMillis()));
+		session.persist(op);
+		logger.debug("Operation saved successfully, Operation Details="+op);
+	}
 	@SuppressWarnings("unchecked")
 	public List<Operation> listOperations() {
 		Session session = this.sessionFactory.getCurrentSession();
@@ -40,7 +51,7 @@ public class OperationDAOImpl extends BaseObject {
 	public Operation getOperationById(int id) {
 		Session session = this.sessionFactory.getCurrentSession();		
 		Operation p = (Operation) session.load(Operation.class, new Integer(id));
-		logger.info("User loaded successfully, Operation details="+p);
+		logger.debug("Operation loaded successfully, Operation details="+p);
 		return p;
 	}
 }

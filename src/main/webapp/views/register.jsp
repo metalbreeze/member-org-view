@@ -109,6 +109,18 @@
 	</tr>
 	<tr>
 		<td>
+			<form:label path="siteStatus">
+				<spring:message text="网络"/>
+			</form:label>
+		</td>
+		<td>
+		   <form:radiobutton path="siteStatus" value="1" onclick="siteSelect()" checked="checked"/>外网
+		   <form:radiobutton path="siteStatus" value="2" onclick="siteSelect()"/> 内网
+		</td>
+	</tr>
+	
+	<tr>
+		<td>
 			<form:label path="reportCenter.id">
 				<spring:message text="销售中心"/>
 			</form:label>
@@ -163,6 +175,23 @@ function checkAndSubmit()
 		{
 			document.forms[0].submit();
 		}
+}
+function siteSelect()
+{
+	if($("input[type='radio'][name='siteStatus']:checked").val()==1)
+	{
+		$("#product_id").empty();
+		<c:forEach items="${listProducts}" var="p1">
+			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
+		</c:forEach>
+	}
+	if($("input[type='radio'][name='siteStatus']:checked").val()==2)
+	{
+		$("#product_id").empty();
+		<c:forEach items="${listSiteBProducts}" var="p1">
+			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
+		</c:forEach>
+	}
 }
 </script>
 </body>

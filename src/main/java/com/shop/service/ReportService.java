@@ -11,6 +11,7 @@ import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.stereotype.Service;
 import org.springframework.test.annotation.Rollback;
 import org.springframework.transaction.annotation.Transactional;
+import org.springframework.web.servlet.mvc.condition.ProducesRequestCondition;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.shop.base.BaseObject;
@@ -33,6 +34,13 @@ public class ReportService extends BaseObject {
 	@Qualifier(value = "operationDAOImpl")
 	private OperationDAOImpl operationDAO;
 	
+	private static int getUpperPos(int pos){
+		if(pos%2==1){
+			return (pos+1)/2;
+		}else{
+			return pos/2;
+		}
+	}
 	@Transactional
 	public void activeUser(User owner, int id, RedirectAttributes ra) {
 		info("activeUser " + id);
@@ -47,7 +55,8 @@ public class ReportService extends BaseObject {
 		if (r.getElectricMoney() == null) {
 			r.setElectricMoney(new BigDecimal(0));
 		}
-		BigDecimal b = r.getElectricMoney().add(new BigDecimal(999).negate());
+		
+		BigDecimal b = r.getElectricMoney().add(ProductService.getProductById(target.getProduct_id()).getPrice().negate());
 		if (b.signum() == -1) {
 			error(ra, "钱不够");
 			return;
@@ -62,17 +71,56 @@ public class ReportService extends BaseObject {
 		target.setPosition(userDAO.getCurrentPosiztionByGroup(group, string) + 1);
 		target.setGroup(group);
 		target.setOrderStatus(ProductService.order_init);
-		if(target.getProduct_id()==null||target.getProduct_id()==1||target.getProduct_id()==0){
-			target.addReGroupMoney(ProductService.getProductById(1));
+		if(target.getProduct_id()==null||target.getProduct_id()<3||target.getProduct_id()>5){
+			target.addReGroupMoney(ProductService.getProductById(4));
 		}else{
 			target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
 		}
 		target.setActiveDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.updateUser(target);
-		group=groupDAO.getGroupById(group.getId());
-		//i don't know why refresh not works
-		//groupDAO.refresh(group);
+//      i don't know why refresh not works
+//		group=groupDAO.getGroupById(group.getId());
+		groupDAO.refresh(group);
 		Group.transform(group);
+		int size = group.getLevelUsers().get("F").size();
+		if(size>0&&size%2==0){
+			int currentPos=getUpperPos(target.getPosition());
+			logger.debug("currentPos"+currentPos);
+			User userE = group.getLevelUsers().get("E").get(currentPos-1);
+			userE.addBonusMoney(90*2);
+			currentPos=getUpperPos(currentPos);
+			logger.debug("currentPos"+currentPos);
+			User userD = group.getLevelUsers().get("D").get(currentPos-1);
+			userD.addBonusMoney(90*2);
+			userD.addPortalBsiteMoney(90*2);
+			userD.addTransferBsiteMoney(90*2);
+			if(userD.getTransferBsiteMoney().compareTo(new BigDecimal(90*2*2))>=0){
+				userD.setSiteStatus(3);
+				userD.setPortalBsiteActiveDate(new Timestamp(System.currentTimeMillis()));
+			}
+			currentPos=getUpperPos(currentPos);
+			logger.debug("currentPos"+currentPos);
+			User userC = group.getLevelUsers().get("C").get(currentPos-1);
+			userC.addBonusMoney(90*2);
+			currentPos=getUpperPos(currentPos);
+			logger.debug("currentPos"+currentPos);
+			User userB = group.getLevelUsers().get("B").get(currentPos-1);
+			userB.addBonusMoney(90*2);
+			currentPos=getUpperPos(currentPos);
+			logger.debug("currentPos"+currentPos);
+			User userA = group.getLevelUsers().get("A").get(currentPos-1);
+			userA.addBonusMoney(90*2);
+			userDAO.updateUser(userA);
+			userDAO.updateUser(userB);
+			userDAO.updateUser(userC);
+			userDAO.updateUser(userD);
+			userDAO.updateUser(userE);
+			operationDAO.addOperation(userA.getReportCenter(),180,userA,target.getId()+"+"+target.getName()+"激活F");
+			operationDAO.addOperation(userB.getReportCenter(),180,userB,target.getId()+"+"+target.getName()+"激活F");
+			operationDAO.addOperation(userC.getReportCenter(),180,userC,target.getId()+"+"+target.getName()+"激活F");
+			operationDAO.addOperation(userD.getReportCenter(),0,userD,target.getId()+"+"+target.getName()+"激活F,用于B站");
+			operationDAO.addOperation(userE.getReportCenter(),180,userE,target.getId()+"+"+target.getName()+"激活F");
+		}
 		info(ra,target.getName() + " 用户已经激活");
 		if (group.getUsers().size() == 63) {
 			logger.info(group.getName() + " group.getUsers().size() =63");
@@ -90,13 +138,13 @@ public class ReportService extends BaseObject {
 							+ user.getLevel() + " to:" + Group.labels[i - 1]);
 					user.setLevel(Group.labels[i - 1]);
 					// 会员分红奖
-					user.addBonusMoney(Group.levelMoney[i]);
-					Operation op = new Operation();
-					op.setMoney(new BigDecimal(Group.levelMoney[i]));
-					op.setOperation(Group.labels[i] + "-" + Group.labels[i - 1]);
-					op.setReportCenter(r);
-					op.setUser(user);
-					operationDAO.addOperation(op);
+					//旧版 user.addBonusMoney(Group.levelMoney[i]);
+					//旧版 Operation op = new Operation();
+					//旧版 op.setMoney(new BigDecimal(Group.levelMoney[i]));
+					//旧版 op.setOperation(Group.labels[i] + "-" + Group.labels[i - 1]);
+					//旧版 op.setReportCenter(r);
+					//旧版 op.setUser(user);
+					//旧版 operationDAO.addOperation(op);
 					if (j >= Group.maxLabels[i] / 2) {
 						user.setGroup(group2);
 						user.setPosition(j - Group.maxLabels[i] / 2 + 1);
@@ -122,22 +170,25 @@ public class ReportService extends BaseObject {
 			userLevealA.setLevel("F");
 			userLevealA.setPosition(1);
 			userLevealA.setGroup(groupDAO.getAvailableGroup());
-			userLevealA.addBonusMoney(4000);
-			userLevealA.addReGroupMoney(ProductService.getProductById(2));
-			if(userLevealA.getProduct_id()==null||userLevealA.getProduct_id()==0||userLevealA.getProduct_id()==1){
-				userLevealA.setProduct_id(2);
+//			userLevealA.addBonusMoney(4000);
+			Integer product_id = userLevealA.getProduct_id();
+			if(product_id==null||product_id<4){
+				product_id=4;
+				userLevealA.setProduct_id(product_id);
 			}
+			userLevealA.addReGroupMoney(ProductService.getProductById(product_id));
 			userLevealA.setOrderStatus(ProductService.order_init);
 			userDAO.updateUser(userLevealA);
 			// 分享回馈奖
-			if (userLevealA.getParent() != null) {
-				userLevealA.getParent().addFeedbackMoney(3000);
+			final User userParent = userLevealA.getParent();
+			if (userParent != null) {
+				userParent.addFeedbackMoney(3000);
 				operationDAO.addOperation(new Operation(target.getParent(), r,
 						"回馈奖", 3000));
-				userDAO.updateUser(userLevealA.getParent());
+				userParent.setChildrenCount(userParent.getChildrenCount()+1);
+				userDAO.updateUser(userParent);
 			}
 			// 出局服务费
-			
 			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));
 //			info("money2"+r.getName()+":"+userLevealA.getName()+":"+r.getMoney2());
 			userLevealA.getReportCenter().addMoney2(90);

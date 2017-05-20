@@ -40,6 +40,10 @@
 		<th width="60">资金余额</th>
 		<th width="60">提现请求</th>
 		<th width="60">提现状态</th>
+		<th width="60">内网奖金</th>
+		<th width="60">内网余额</th>
+		<th width="60">内网提现请求</th>
+		<th width="60">内网提现状态</th>
 	</tr>
 	<c:forEach items="${userList}" var="user">
 	<tr>
@@ -95,6 +99,36 @@
 							等待财务人员操作
 				</c:when>
 				<c:when test="${user.withdrawStatus == 4 }">
+							不同意提现
+				</c:when>		
+			</c:choose>
+		</td>
+		
+		
+		<!-- b site -->
+		<td align="right">
+			${user.portalBsiteMoney}
+		</td>
+		<td align="right">
+			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.portalBsiteMoney - user.portalBsiteWithdraw }" />
+		</td>
+		<td align="right">
+			${user.portalBsiteWithdrawRequest}
+		</td>
+		<td align="right">
+			<c:choose>
+				<c:when test="${user.portalBsiteWithdrawStatus == 1 }">
+						<a href="<c:url value='/platformWithdraw/bSiteAgree/${user.id}' />" >通过</a>
+						<a href="<c:url value='/platformWithdraw/bSiteDisagree/${user.id}' />" >未通过</a>
+				</c:when>
+				<c:when test="${user.portalBsiteWithdrawStatus == 2 }">
+							已经提现
+				</c:when>
+				<c:when test="${user.portalBsiteWithdrawStatus == 3 }">
+							等待财务人员操作
+				</c:when>
+				<c:when test="${user.portalBsiteWithdrawStatus == 4 }">
 							不同意提现
 				</c:when>		
 			</c:choose>

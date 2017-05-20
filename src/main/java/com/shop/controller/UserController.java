@@ -56,10 +56,10 @@ public class UserController extends BaseObject {
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	@Transactional
 	public String addUser(@ModelAttribute("user") User p,RedirectAttributes ra) {
+		User userByName = userDAO.getUserByName(p.getName());
 		if (p.getId() == 0) {
 			// set password = 12345
 			p.setPassword("$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK");
-			User userByName = userDAO.getUserByName(p.getName());
 			if (userByName!=null){
 				ra.addFlashAttribute("flashMsg", "已经有同名用户");
 				logger.debug( "已经有同名用户");
@@ -67,16 +67,21 @@ public class UserController extends BaseObject {
 				this.userService.addUser(p);
 			}
 		} else {
-			User user = userDAO.getUserById(p.getId());
-			user.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
-			user.setAddress(p.getAddress());
-			user.setMobile(p.getMobile());
-			user.setAccountNumber(p.getAccountNumber());
-			user.setWechat(p.getWechat());
-			user.setAlipay(p.getAlipay());
-			user.setParent(p.getParent());
+			if(userByName!=null&&userByName.getId()!=p.getId()){
+				ra.addFlashAttribute("flashMsg", "已经有同名用户");
+				logger.debug( "已经有同名用户");
+			}else{
+				User user = userDAO.getUserById(p.getId());
+				user.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
+				user.setAddress(p.getAddress());
+				user.setMobile(p.getMobile());
+				user.setAccountNumber(p.getAccountNumber());
+				user.setWechat(p.getWechat());
+				user.setAlipay(p.getAlipay());
+				user.setParent(p.getParent());
 //			user.setStatus(p.getStatus());
-			this.userService.updateUser(user);
+				this.userService.updateUser(user);
+			}
 		}
 		return "redirect:/users";
 	}

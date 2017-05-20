@@ -16,6 +16,7 @@
 --%>
 <c:url var="changePasswd" value="/myself/changePasswd" ></c:url>
 <c:url var="withDrawAction" value="/myself/withDrawRequest" ></c:url>
+<c:url var="BsiteWithDrawAction" value="/myself/BsiteWithDrawRequest" ></c:url>
 <form:form action="" modelAttribute="user">
 <table>
 	<c:if test="${!empty user.name}">
@@ -194,7 +195,7 @@
 	<tr>
 		<td>
 			<form:label path="withdrawRequest">
-				<spring:message text="请求提现"/>
+				<spring:message text="外网请求提现"/>
 			</form:label>
 		</td>
 		<td>
@@ -208,6 +209,56 @@
 			${withdrawDescription[user.withdrawStatus]}
 		</td>
 	</tr>
+
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="内网金额"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteMoney"  readonly="true" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="内网已经提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteWithdraw"  readonly="true" />
+		</td>
+	</tr>
+		<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="内网余额"/>
+			</form:label>
+		</td>
+		<td>
+			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.portalBsiteMoney - user.portalBsiteWithdraw}" />
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="portalBsiteWithdrawRequest">
+				<spring:message text="内网请求提现"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteWithdrawRequest"/>
+		</td>	
+		<td>
+			<c:if test="${user.portalBsiteWithdrawRequestStatus == null || user.portalBsiteWithdrawRequestStatus == 0 || user.portalBsiteWithdrawRequestStatus == 2 || user.portalBsiteWithdrawRequestStatus == 4 }">
+					<input type="button" onclick=myWithdrawBSite()
+							value="<spring:message text="提现"/>" />
+			</c:if>
+			${withdrawDescription[user.portalBsiteWithdrawRequestStatus]}
+		</td>
+	</tr>
+	
 </table>	
 </form:form>
 <br />
@@ -371,6 +422,17 @@ function myWithdraw()
 		return;
 	}
 	document.forms[0].action="${withDrawAction}";
+	document.forms[0].submit();
+}
+function myWithdrawBSite()
+{
+	if(isNaN(document.forms[0].portalBsiteWithdrawRequest.value) || document.forms[0].portalBsiteWithdrawRequest.value <= 0)
+	{
+		alert("提现金额不对");
+		document.forms[0].portalBsiteWithdrawRequest.focus();
+		return;
+	}
+	document.forms[0].action="${BsiteWithDrawAction}";
 	document.forms[0].submit();
 }
 </script>

@@ -186,6 +186,40 @@ public class FinanceController extends BaseObject {
 		return "redirect:/userFinance";
 	}
 
+	@RequestMapping(value = "/platformWithdraw/bSiteAgree/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String bSiteAgree(@PathVariable int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User u = userDAO.getUserById(id);
+			if (u != null ){
+				if(u.getPortalBsiteWithdrawStatus()==CostService.withdraw_init){
+					u.setPortalBsiteWithdrawStatus(CostService.withdraw_agree);
+					userDAO.updateUser(u);
+				}else{
+					ra.addFlashAttribute(flashMsg, "已经同意提现过或提现状态不对");
+				}
+			}
+		}
+		return "redirect:/userFinance";
+	}
+	
+	@RequestMapping(value = "/platformWithdraw/bSiteDisagree/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String bSiteDisagree(@PathVariable int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User u = userDAO.getUserById(id);
+			if (u != null ){
+				if(u.getPortalBsiteWithdrawStatus()==CostService.withdraw_init){
+					u.setPortalBsiteWithdrawStatus(CostService.withdraw_disagree);
+					userDAO.updateUser(u);
+				}else{
+					ra.addFlashAttribute(flashMsg, "已经不同意提现或提现状态不对");
+				}
+			}
+		}
+		return "redirect:/userFinance";
+	}
+
 	static List<User> getAllChildren(User u) {
 		ArrayList<User> list = new ArrayList<User>();
 		list.add(u);
@@ -222,6 +256,27 @@ public class FinanceController extends BaseObject {
 				user.setWithdrawStatus(CostService.withdraw_send);
 				userDAO.updateUser(user);
 				BigDecimal withdrawAfter = user.getWithdraw();
+				operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest,withdrawBefore,withdrawAfter,null));
+			}
+		}
+		return "redirect:/financeWithdraw";
+	}
+	@RequestMapping(value = "/finance/bSiteWithdraw/{id}", method = RequestMethod.GET)
+	@Transactional
+	public String bSiteWithdraw(@PathVariable("id") int id,RedirectAttributes ra) {
+		synchronized(userWithdraw){
+			User user = userDAO.getUserById(id);
+			if(user.getPortalBsiteWithdrawStatus()!=CostService.withdraw_agree){
+				ra.addFlashAttribute(flashMsg, "已经提现过或提现状态不对");
+			}else{
+				final BigDecimal withdrawRequest = user.getPortalBsiteWithdrawRequest();
+				BigDecimal withdrawBefore = user.getPortalBsiteWithdraw();
+				user.addPortalBsiteWithdraw(withdrawRequest);
+				user.setPortalBsiteWithdrawRequest(new BigDecimal(0));
+				user.setPortalBsiteWithdrawDate(new Timestamp(System.currentTimeMillis()));
+				user.setPortalBsiteWithdrawStatus(CostService.withdraw_send);
+				userDAO.updateUser(user);
+				BigDecimal withdrawAfter = user.getPortalBsiteWithdraw();
 				operationDAO.addOperation(new Operation(user,null,"发放提现",withdrawRequest,withdrawBefore,withdrawAfter,null));
 			}
 		}

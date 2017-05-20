@@ -21,18 +21,18 @@
       <table cellpadding="10" align="center" valign="bottom">
          <tr>
             <td valign="bottom"><span style="font-size:15px;">用户名</span></td>
-            <td valign="bottom"><input style="font-size:15px;width:130px" type='text' name='username' value=''></td>
+            <td valign="bottom"><input tabindex="1" style="font-size:15px;width:130px" type='text' name='username' value=''></td>
          </tr>
          <tr>
             <td><span style="font-size:15px;">密&nbsp;&nbsp;&nbsp;&nbsp;码</span></td>
-            <td><input style="font-size:15px;width:130px;" type='password' name='password'/></td>
+            <td><input tabindex="2" style="font-size:15px;width:130px;" type='password' name='password'/></td>
          </tr>
          <tr>
          	<td colspan="2" align="center">
          	&nbsp;&nbsp;&nbsp;&nbsp;
-         	 <input style="font-size:15px;" name="submit" type="submit" onclick=register() value="注册" />
+         	 <input tabindex="4" style="font-size:15px;" name="submit" type="submit" onclick=register() value="注册" />
          	 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
-         	 <input style="font-size:15px;" name="submit" type="submit" value="登录" />
+         	 <input tabindex="3" style="font-size:15px;" name="submit" type="submit" value="登录" />
          	 </td>
          </tr>
       </table>

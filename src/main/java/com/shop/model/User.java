@@ -78,10 +78,23 @@ public class User implements Comparable<User> {
 	private BigDecimal groupScore=new BigDecimal(0);
 	private BigDecimal personalScore=new BigDecimal(0);
 	private BigDecimal directScore=new BigDecimal(0);
+	private int siteStatus=0;
+	//Transfer to B site money
+	private BigDecimal portalBsiteMoney=new BigDecimal(0);
+	private BigDecimal transferBsiteMoney=new BigDecimal(0);
+	
+	private BigDecimal portalBsiteWithdraw=new BigDecimal(0);
+	private BigDecimal portalBsiteWithdrawRequest=new BigDecimal(0);
+	private Integer portalBsiteWithdrawStatus;
+	private Timestamp portalBsiteWithdrawDate;
+	private Timestamp portalBsiteActiveDate;
+	
+	//end B site 
 	private String withdrawReason;
 	private int orderStatus = 0 ;
 	private Timestamp orderSendDate;
 	private Integer available;
+	private Integer childrenCount;
 	public String getLevel() {
 		return level;
 	}
@@ -379,6 +392,9 @@ public class User implements Comparable<User> {
 	public BigDecimal getAccountRemain(){
 		return getAccountTotal().add(this.withdraw.negate());
 	}
+	public BigDecimal getBsiteAccountRemain(){
+		return getPortalBsiteMoney().add(this.withdrawRequest.negate());
+	}
 	public BigDecimal getAccountTotal(){
 		return this.saleMoney .add ( this.bonusMoney .add(this.feedbackMoney ) .multiply(new BigDecimal( 0.8)));
 	}
@@ -469,6 +485,104 @@ public class User implements Comparable<User> {
 	@Override
 	public String toString() {
 		return "User [id=" + id + ", name=" + name + "]";
+	}
+
+	public Integer getChildrenCount() {
+		if (childrenCount==null)return 0;
+		return childrenCount;
+	}
+
+	public void userParent(Integer childrenCount) {
+		this.childrenCount = childrenCount;
+	}
+
+	public void setChildrenCount(Integer childrenCount) {
+		this.childrenCount = childrenCount;
+	}
+
+	public void addPortalBsiteMoney(int i) {
+		this.portalBsiteMoney=this.portalBsiteMoney.add(new BigDecimal(i));
+	}
+	
+	public BigDecimal getPortalBsiteMoney() {
+		return portalBsiteMoney;
+	}
+
+	public void setPortalBsiteMoney(BigDecimal portalBsiteMoney) {
+		this.portalBsiteMoney = portalBsiteMoney;
+	}
+
+	public void addTransferBsiteMoney(int i) {
+		this.transferBsiteMoney = this.transferBsiteMoney.add(new BigDecimal(i));
+	}
+	
+	public BigDecimal getTransferBsiteMoney() {
+		return transferBsiteMoney;
+	}
+
+	public void setTransferBsiteMoney(BigDecimal transferBsiteMoney) {
+		this.transferBsiteMoney = transferBsiteMoney;
+	}
+
+	public BigDecimal getPortalBsiteWithdraw() {
+		return portalBsiteWithdraw;
+	}
+
+	public void setPortalBsiteWithdraw(BigDecimal portalBsiteWithdraw) {
+		this.portalBsiteWithdraw = portalBsiteWithdraw;
+	}
+
+	public int getSiteStatus() {
+		return siteStatus;
+	}
+
+	public void setSiteStatus(int siteStatus) {
+		this.siteStatus = siteStatus;
+	}
+
+	public Timestamp getPortalBsiteActiveDate() {
+		return portalBsiteActiveDate;
+	}
+
+	public void setPortalBsiteActiveDate(Timestamp portalBsiteActiveDate) {
+		this.portalBsiteActiveDate = portalBsiteActiveDate;
+	}
+
+	public Integer getPortalBsiteWithdrawRequestStatus() {
+		return portalBsiteWithdrawStatus;
+	}
+
+	public void setPortalBsiteWithdrawRequestStatus(
+			Integer portalBsiteWithdrawRequestStatus) {
+		this.portalBsiteWithdrawStatus = portalBsiteWithdrawRequestStatus;
+	}
+
+	public BigDecimal getPortalBsiteWithdrawRequest() {
+		return portalBsiteWithdrawRequest;
+	}
+
+	public void setPortalBsiteWithdrawRequest(BigDecimal portalBsiteWithdrawRequest) {
+		this.portalBsiteWithdrawRequest = portalBsiteWithdrawRequest;
+	}
+
+	public Integer getPortalBsiteWithdrawStatus() {
+		return portalBsiteWithdrawStatus;
+	}
+
+	public void setPortalBsiteWithdrawStatus(Integer portalBsiteWithdrawStatus) {
+		this.portalBsiteWithdrawStatus = portalBsiteWithdrawStatus;
+	}
+
+	public void addPortalBsiteWithdraw(BigDecimal withdrawRequest2) {
+		portalBsiteWithdraw=portalBsiteWithdraw.add(withdrawRequest2);
+	}
+
+	public Timestamp getPortalBsiteWithdrawDate() {
+		return portalBsiteWithdrawDate;
+	}
+
+	public void setPortalBsiteWithdrawDate(Timestamp portalBsiteWithdrawDate) {
+		this.portalBsiteWithdrawDate = portalBsiteWithdrawDate;
 	}
 
 }

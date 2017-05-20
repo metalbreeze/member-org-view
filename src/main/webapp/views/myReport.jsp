@@ -131,6 +131,7 @@
 		<th>银行帐号</th>
 		<th>地址</th>
 		<th width="20">身份</th>
+		<th width="20">内/外网</th>
 		<th width="30">激活</th>
 		<th width="20">发货状态</th>
 	</tr>
@@ -147,6 +148,22 @@
 			<td><input type="text" value="${user.accountNumber}" size="5"/></td>
 			<td>
 				<input type="text" value="${user.address}" size="5"/></td>
+			<td>
+			<c:choose>
+				<c:when test="${user.siteStatus == 1 }">
+					外网
+				</c:when>
+				<c:when test="${user.siteStatus == 2 }">
+					内网
+				</c:when>
+				<c:when test="${user.siteStatus == 3 }">
+					内/外网
+				</c:when>
+				<c:otherwise>
+					状态不明
+				</c:otherwise>
+				</c:choose>
+			</td>
 			<td>
 				<c:choose>
 					<c:when test="${user.status == 'new' }">

@@ -1,5 +1,7 @@
-update user set password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK';
+update user set password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK',product_id =4 ,siteStatus=1 ;
 
+
+/**
 update user set available = -1 , password ='$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pq11'
 where name in ('胡洪涛',
 '莫兴冰',
@@ -133,3 +135,4 @@ where name in ('胡洪涛',
 '胡萍',
 '廖连贵',
 '罗敏')
+**/

@@ -65,17 +65,17 @@ public class UserSerivceTest extends BaseObject {
 	// @TransactionConfiguration(transactionManager = "transactionManager",
 	// defaultRollback = true)
 
-	private static final int sheet_1_reportCenter = 6;
+	private static final int sheet_1_reportCenter = 5;
 
-	private static final int sheet_1_mobile = 5;
+	private static final int sheet_1_mobile = 4;
 
-	private static final int sheet_1_name = 4;
+	private static final int sheet_1_name = 3;
 
-	private static final int sheet_1_parent = 3;
+	private static final int sheet_1_parent = 2;
 
 	private static final int sheet_1_date = 2;
 
-	private static final int sheet_1_id = 1;
+	private static final int sheet_1_id = 0;
 
 	// ------------
 	@Autowired(required = true)
@@ -119,7 +119,7 @@ public class UserSerivceTest extends BaseObject {
 	}
 	public UserSerivceTest(){
 		try {
-			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康最新新数据.xls");
+			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康新网人员名单.222.xls");
 			wb = new HSSFWorkbook(in);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -134,12 +134,12 @@ public class UserSerivceTest extends BaseObject {
 	Workbook wb =null;
 	FormulaEvaluator evaluator =null; 
 	@Test
-	@Transactional
-	@Rollback(false)
+//	@Transactional
+//	@Rollback(false)
 	public void importExcel() {
 //		importUser();
-//		importGroup();
-		importWithdraw();
+		importGroup();
+//旧		importWithdraw();
 	}
 
 	final int sheet_3_remain_money = 32;
@@ -147,7 +147,7 @@ public class UserSerivceTest extends BaseObject {
 			Sheet sheet = wb.getSheetAt(3);
 			for (Row row : sheet) {
 				final int rowNum = row.getRowNum();
-				if (rowNum < 7||rowNum>497) {
+				if (rowNum < 2||rowNum>94) {
 					continue;
 				}
 				info("==========================\nrowNum"+rowNum);
@@ -160,11 +160,13 @@ public class UserSerivceTest extends BaseObject {
 				userDAO.updateUser(u);
 			}
 	}
+	static int row_begin=5;
+	static int row_end=99;
 	void importUser(){
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
 			final int rowNum = row.getRowNum();
-			if (rowNum < 1||rowNum>491) {
+			if (rowNum<row_begin ||rowNum>row_end) {
 				continue;
 			}
 			info("==========================\nrowNum"+rowNum);
@@ -172,15 +174,15 @@ public class UserSerivceTest extends BaseObject {
 			if(cell==null||"".equals(cell.toString()))continue;
 			User u = new User();
 			u.setId(10000+parseInt(cell));
-			u.setRegisterDate(parseDate(row.getCell(sheet_1_date)));
+			u.setRegisterDate(new Timestamp(System.currentTimeMillis()));
+			u.setName(row.getCell(sheet_1_name).getStringCellValue());
+			info("name"+u.getName()+"id:"+u.getId());
 			String parentName= parseString(row.getCell(sheet_1_parent));
 			if (parentName!=null&&!parentName.equals("")){
 				info("parent:"+parentName);
 				User p = userDAO.getUserByName(parentName);
 				u.setParent(p);
 			}
-			u.setName(row.getCell(sheet_1_name).getStringCellValue());
-			info("name"+u.getName()+"id:"+u.getId());
 			u.setMobile(parseString(row.getCell(sheet_1_mobile)));
 //			u.setWechat(parseString(row.getCell(6)));
 			ReportCenter rc = new ReportCenter();
@@ -196,7 +198,7 @@ public class UserSerivceTest extends BaseObject {
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
 			final int rowNum = row.getRowNum();
-			if (rowNum < 1||rowNum>491) {
+			if (rowNum<row_begin ||rowNum>row_end) {
 				continue;
 			}
 			info("==========================\nrowNum"+rowNum);
