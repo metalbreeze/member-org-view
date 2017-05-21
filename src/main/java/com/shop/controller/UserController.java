@@ -1,5 +1,6 @@
 package com.shop.controller;
 
+import java.sql.Timestamp;
 import java.util.Iterator;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,11 +18,13 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.fasterxml.jackson.annotation.JsonView;
 import com.shop.base.BaseObject;
+import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Group;
 import com.shop.model.User;
 import com.shop.model.View;
 import com.shop.service.GroupService;
+import com.shop.service.ProductService;
 import com.shop.service.UserService;
 
 @Controller
@@ -39,6 +42,10 @@ public class UserController extends BaseObject {
 	@Qualifier(value = "groupService")
 	private GroupService groupService;
 	
+	@Autowired(required=true)
+	@Qualifier(value="reportCenterDAO")
+	private ReportCenterDAO reportCenterDao;
+	
 	public void setUserService(UserService ps) {
 		this.userService = ps;
 	}
@@ -48,6 +55,8 @@ public class UserController extends BaseObject {
 	public String listUsers(Model model) {
 		model.addAttribute("user", new User());
 		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(-1));
+		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
+		model.addAttribute("listProducts",ProductService.getProductList());
 		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}
@@ -79,7 +88,18 @@ public class UserController extends BaseObject {
 				user.setWechat(p.getWechat());
 				user.setAlipay(p.getAlipay());
 				user.setParent(p.getParent());
+				user.setSiteStatus(p.getSiteStatus());
+				if(p.getSiteStatus()==2){
+					user.setStatus("old");
+					final Timestamp activeDate = new Timestamp(System.currentTimeMillis());
+					user.setActiveDate(activeDate);
+					user.setPortalBsiteActiveDate(activeDate);
+				}
+				user.setProduct_id(p.getProduct_id());
+				user.setReportCenter(p.getReportCenter());
+				user.setPortalBsiteCode(p.getPortalBsiteCode());
 //			user.setStatus(p.getStatus());
+				user.addPortalBsiteMoney(p.getPortalBsiteMoney2());
 				this.userService.updateUser(user);
 			}
 		}
@@ -97,6 +117,8 @@ public class UserController extends BaseObject {
 	public String editUser(@PathVariable("id") int id, Model model,RedirectAttributes ra) {
 		model.addAttribute("user", this.userService.getUserById(id));
 		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(id));
+		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
+		model.addAttribute("listProducts",ProductService.getProductList());
 		model.addAttribute("userStatus", User.statusMap);
 		return "user";
 	}

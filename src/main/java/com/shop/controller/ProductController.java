@@ -50,14 +50,8 @@ public class ProductController extends BaseObject {
 	@RequestMapping(value= "/product/orders", method = RequestMethod.GET)
 	@Transactional
 	public String myselfEdit(Model model) {
-		List<User> list2 = productService.getOrderList(2);
+		List<User> list2 = productService.getOrderList();
 		model.addAttribute("list2", list2);
-		model.addAttribute("product2", ProductService.getProductById(2));
-		
-		List<User> list3 = productService.getOrderList(3);
-		model.addAttribute("list3", list3);
-		model.addAttribute("product3", ProductService.getProductById(3));
-		
 		model.addAttribute("productList", ProductService.getProductList());
 		return "userOrders";
 	}
@@ -65,14 +59,8 @@ public class ProductController extends BaseObject {
 	@Transactional
 	public String oldOrders(Model model) {
 		
-		List<User> list2 = productService.getOldOrderList(2);
-		model.addAttribute("product2", ProductService.getProductById(2));
+		List<User> list2 = productService.getOldOrderList();
 		model.addAttribute("list2", list2);
-
-		List<User> list3 = productService.getOldOrderList(3);
-		model.addAttribute("product3", ProductService.getProductById(3));
-		model.addAttribute("list3", list3);
-		
 		model.addAttribute("productList", ProductService.getProductList());
 		return "userOldOrders";
 	}

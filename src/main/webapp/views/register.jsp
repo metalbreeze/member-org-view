@@ -99,16 +99,6 @@
 	</tr>
 	<tr>
 		<td>
-			<form:label path="product_id">
-				<spring:message text="产品"/>
-			</form:label>
-		</td>
-		<td>
-			<form:select path="product_id" items="${listProducts}" itemLabel="name" itemValue="id" value=""/>
-		</td>
-	</tr>
-	<tr>
-		<td>
 			<form:label path="siteStatus">
 				<spring:message text="网络"/>
 			</form:label>
@@ -118,7 +108,16 @@
 		   <form:radiobutton path="siteStatus" value="2" onclick="siteSelect()"/> 内网
 		</td>
 	</tr>
-	
+	<tr>
+		<td>
+			<form:label path="product_id">
+				<spring:message text="产品"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="product_id" items="${listProducts}" itemLabel="name" itemValue="id" value=""/>
+		</td>
+	</tr>
 	<tr>
 		<td>
 			<form:label path="reportCenter.id">

@@ -16,7 +16,7 @@
 <body>
 <jsp:include page="_menu.jsp" />
 
-<h3>订单列表-${product2.name}</h3>
+<h3>订单列表</h3>
 <c:if test="${!empty list2}">
 	<table class="tg">
 	<tr>
@@ -37,8 +37,8 @@
 			<td>${user.address}</td>
 			<td>
 			<c:choose>
-				<c:when test="${user.product_id == null || user.product_id==0 || user.product_id==1}">
-					${productList[2].name}
+				<c:when test="${user.product_id == null || user.product_id==0}">
+					没有选择产品
 				</c:when>
 				<c:otherwise>
 					${productList[user.product_id].name}
@@ -47,42 +47,6 @@
 			</td>
 			<sec:authorize access="hasRole('ROLE_SENDER')">
 				<td><a href="<c:url value='/product/edit/${user.id}' />" >发送</a></td>
-			</sec:authorize>
-		</tr>
-	</c:forEach>
-	</table>
-</c:if>
-<h3>订单列表-${product3.name}</h3>
-<c:if test="${!empty list3}">
-	<table class="tg">
-	<tr>
-		<th width="80">用户 ID</th>
-		<th width="120">用户姓名</th>
-		<th width="120">用户手机</th>
-		<th width="120">地址</th>
-		<th width="120">产品</th>
-		<sec:authorize access="hasAnyRole('ROLE_SENDER')">
-		<th width="120">送出快递单</th>
-		</sec:authorize>
-	</tr>
-	<c:forEach items="${list3}" var="user">
-		<tr>
-			<td>${user.id}</td>
-			<td>${user.name}</td>
-			<td>${user.mobile}</td>
-			<td>${user.address}</td>
-			<td>
-			<c:choose>
-				<c:when test="${user.product_id == null || user.product_id==0 || user.product_id==1}">
-					${productList[2].name}
-				</c:when>
-				<c:otherwise>
-					${productList[user.product_id].name}
-				</c:otherwise>				
-			</c:choose>
-			</td>
-			<sec:authorize access="hasAnyRole('ROLE_SENDER')">
-			<td><a href="<c:url value='/product/edit/${user.id}' />" >发送</a></td>
 			</sec:authorize>
 		</tr>
 	</c:forEach>

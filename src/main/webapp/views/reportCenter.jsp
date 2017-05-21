@@ -70,7 +70,18 @@
 			</form:label>
 		</td>
 		<td>
-			<form:input path="electricMoney" />
+			<form:input path="electricMoney" readonly="true"/>
+		</td> 
+	</tr>
+	</tr>
+		<tr>
+		<td>
+			<form:label path="electricMoney2">
+				<spring:message text="增加电子币"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="electricMoney2" />
 		</td> 
 	</tr>
 	<tr>

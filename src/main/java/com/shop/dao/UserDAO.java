@@ -28,6 +28,8 @@ public interface UserDAO {
 	public List<User> getAvailableUserList();
 	public List<User> getOrderList(int i);
 	public List<User> getOldOrderList(int i);
+	public List<User> getOrderList();
+	public List<User> getOldOrderList();
 	User getUserByNameWithChildren(String s);
 	public Object listWithdrawStatusUsers(int status,String id,String order);
 	public BigDecimal getTotalReGroupMoney();

@@ -52,7 +52,9 @@
 	<beans:bean id="operationDAOImpl" class="com.shop.dao.OperationDAOImpl">
 		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
 	</beans:bean>
-
+	<beans:bean id="profileDAO" class="com.shop.dao.ProfileDAO">
+		<beans:property name="sessionFactory" ref="hibernate4AnnotatedSessionFactory" />
+	</beans:bean>
 	<beans:bean id="groupService" class="com.shop.service.GroupServiceImpl">
 		<beans:property name="groupDAO" ref="groupDAO"></beans:property>
 	</beans:bean>

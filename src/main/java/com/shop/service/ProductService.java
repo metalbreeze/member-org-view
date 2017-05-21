@@ -64,6 +64,14 @@ public class ProductService extends BaseObject{
 		return userDAO.getOrderList(i);
 	}
 	@Transactional
+	public List<User> getOrderList(){
+		return userDAO.getOrderList();
+	}
+	@Transactional
+	public List<User> getOldOrderList(){
+		return userDAO.getOldOrderList();
+	}
+	@Transactional
 	public List<User> getOldOrderList(int i){
 		return userDAO.getOldOrderList(i);
 	}

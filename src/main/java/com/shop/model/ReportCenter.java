@@ -17,6 +17,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
+import javax.persistence.Transient;
 
 import com.fasterxml.jackson.annotation.JsonView;
 
@@ -42,6 +43,8 @@ public class ReportCenter {
 	private BigDecimal money2=new BigDecimal(0);	
 	
 	private BigDecimal electricMoney=new BigDecimal(0);
+	@Transient
+	private BigDecimal electricMoney2=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
 	private BigDecimal withdrawRequest=new BigDecimal(0);
 	private Integer withdrawStatus;
@@ -171,6 +174,17 @@ public class ReportCenter {
 	}
 	public BigDecimal getAccountRemain(){
 		return money1.add(money2).add(withdraw.negate());
+	}
+
+	public BigDecimal getElectricMoney2() {
+		return electricMoney2;
+	}
+
+	public void setElectricMoney2(BigDecimal electricMoney2) {
+		this.electricMoney2 = electricMoney2;
+	}
+	public void addElectricMoney(BigDecimal b){
+		electricMoney=electricMoney.add(b);
 	}
 	
 }

@@ -247,6 +247,23 @@ public class UserDAOImpl implements UserDAO {
 	}
 	@SuppressWarnings("unchecked")
 	@Override
+	public List<User> getOrderList() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> l = session.createQuery("FROM User  where product_id>0 and orderStatus=:send order by id ")
+				.setInteger("send", ProductService.order_init).list();
+		logger.info("order list size is "+l.size());
+		return l;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
+	public List<User> getOldOrderList() {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> l = session.createQuery("FROM User  where product_id>0 and orderStatus=:send order by id ")
+				.setInteger("send", ProductService.order_send).list();
+		return l;
+	}
+	@SuppressWarnings("unchecked")
+	@Override
 	public List<User> getAvailableUserList() {
 		Session session = this.sessionFactory.getCurrentSession();
 		List<User> UsersList = session.createQuery("from User where status='old' ").list();

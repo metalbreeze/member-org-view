@@ -41,6 +41,17 @@ public class ReportService extends BaseObject {
 			return pos/2;
 		}
 	}
+	public void activeUserSiteB(User target,RedirectAttributes ra) {
+		target.setPortalBsiteActiveDate(new Timestamp(System.currentTimeMillis()));
+		if(null!=target.getParent()){
+			target.getParent().addSaleMoney(100);
+			// 有空测试下直推/推荐
+			userDAO.updateUser(target.getParent());
+			operationDAO.addOperation(new Operation(target.getParent(), target.getReportCenter(),
+					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"
+							+ target.getId() + "直推"));
+		}
+	}
 	@Transactional
 	public void activeUser(User owner, int id, RedirectAttributes ra) {
 		info("activeUser " + id);
@@ -62,6 +73,25 @@ public class ReportService extends BaseObject {
 			return;
 		}
 		r.setElectricMoney(b);
+		// 每报一单 10
+		BigDecimal money1before = r.getMoney1();
+		int addMoney1=0;
+		if (ProductService.getProductById(target.getProduct_id()==0?1:target.getProduct_id()).getPrice().compareTo(new BigDecimal(1000))>0){
+			addMoney1=20;
+		}else{
+			addMoney1=10;
+		}
+		r.addMoney1(addMoney1);
+		reportCenterDAO.updateReportCenter(r);
+		BigDecimal money1after = r.getMoney1();
+		operationDAO.addOperation(new Operation(target,r,"费用1",addMoney1,"before"+money1before+"after"+money1after));
+		if (target.getSiteStatus()==2){
+			//
+			activeUserSiteB(target,ra);
+			return;
+		}
+		
+		
 		Group group = groupDAO.getAvailableGroup();
 		Group.transform(group);
 		String string = group.getAvailbleLabes().get(0);
@@ -79,8 +109,8 @@ public class ReportService extends BaseObject {
 		target.setActiveDate(new Timestamp(System.currentTimeMillis()));
 		userDAO.updateUser(target);
 //      i don't know why refresh not works
-//		group=groupDAO.getGroupById(group.getId());
-		groupDAO.refresh(group);
+//		groupDAO.refresh(group);
+		group=groupDAO.getGroupById(group.getId());
 		Group.transform(group);
 		int size = group.getLevelUsers().get("F").size();
 		if(size>0&&size%2==0){
@@ -189,29 +219,24 @@ public class ReportService extends BaseObject {
 				userDAO.updateUser(userParent);
 			}
 			// 出局服务费
-			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));
+			//取消出局服务费
+//			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));
 //			info("money2"+r.getName()+":"+userLevealA.getName()+":"+r.getMoney2());
-			userLevealA.getReportCenter().addMoney2(90);
+//			userLevealA.getReportCenter().addMoney2(90);
 //			info("money2_after"+r.getName()+":"+userLevealA.getName()+":"+r.getMoney2());
 		}
 		if (target.getParent() != null) {
-			target.getParent().addSaleMoney(100);
+			target.getParent().addSaleMoney(500);
 			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
 			operationDAO.addOperation(new Operation(target.getParent(), r,
-					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"
+					"直推奖", 500, target.getParent().getSaleMoney() + "xx 直推"
 							+ target.getId() + "直推"));
 		} else {
-			operationDAO.addOperation(new Operation(target, r, "无直推人", 100));
+			operationDAO.addOperation(new Operation(target, r, "无直推人", 500));
 		}
 		info(owner + "active a user " + target.toString()
 				+ " with money");
-		// 每报一单 10
-		BigDecimal money1before = r.getMoney1();
-		r.addMoney1(10);
-		reportCenterDAO.updateReportCenter(r);
-		BigDecimal money1after = r.getMoney1();
-		operationDAO.addOperation(new Operation(target,r,"费用1",10,"before"+money1before+"after"+money1after));
 		// return "redirect:/myReport";
 	}
 }

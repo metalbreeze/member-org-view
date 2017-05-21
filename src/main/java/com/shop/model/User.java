@@ -81,6 +81,8 @@ public class User implements Comparable<User> {
 	private int siteStatus=0;
 	//Transfer to B site money
 	private BigDecimal portalBsiteMoney=new BigDecimal(0);
+	@Transient
+	private BigDecimal portalBsiteMoney2=new BigDecimal(0);
 	private BigDecimal transferBsiteMoney=new BigDecimal(0);
 	
 	private BigDecimal portalBsiteWithdraw=new BigDecimal(0);
@@ -89,6 +91,7 @@ public class User implements Comparable<User> {
 	private Timestamp portalBsiteWithdrawDate;
 	private Timestamp portalBsiteActiveDate;
 	
+	private String portalBsiteCode;
 	//end B site 
 	private String withdrawReason;
 	private int orderStatus = 0 ;
@@ -387,6 +390,12 @@ public class User implements Comparable<User> {
 
 	@Override
 	public int compareTo(User o) {
+		if(o==null)
+			return -1;
+		if(o.position==null){
+			logger.debug("postion is null"+o.getId()+"/"+o.getName());
+			return -1;
+		}
 		return position-o.position; 
 	}
 	public BigDecimal getAccountRemain(){
@@ -503,7 +512,9 @@ public class User implements Comparable<User> {
 	public void addPortalBsiteMoney(int i) {
 		this.portalBsiteMoney=this.portalBsiteMoney.add(new BigDecimal(i));
 	}
-	
+	public void addPortalBsiteMoney(BigDecimal i) {
+		this.portalBsiteMoney=this.portalBsiteMoney.add(i);
+	}
 	public BigDecimal getPortalBsiteMoney() {
 		return portalBsiteMoney;
 	}
@@ -583,6 +594,22 @@ public class User implements Comparable<User> {
 
 	public void setPortalBsiteWithdrawDate(Timestamp portalBsiteWithdrawDate) {
 		this.portalBsiteWithdrawDate = portalBsiteWithdrawDate;
+	}
+
+	public BigDecimal getPortalBsiteMoney2() {
+		return portalBsiteMoney2;
+	}
+
+	public void setPortalBsiteMoney2(BigDecimal portalBsiteMoney2) {
+		this.portalBsiteMoney2 = portalBsiteMoney2;
+	}
+
+	public String getPortalBsiteCode() {
+		return portalBsiteCode;
+	}
+
+	public void setPortalBsiteCode(String portalBsiteCode) {
+		this.portalBsiteCode = portalBsiteCode;
 	}
 
 }

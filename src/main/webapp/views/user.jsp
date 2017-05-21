@@ -112,6 +112,73 @@
 			<form:input path="address" />
 		</td>
 	</tr>
+	<tr>
+		<td>
+			<form:label path="siteStatus">
+				<spring:message text="网络"/>
+			</form:label>
+		</td>
+		<td>
+			<c:if test="${!empty user.name}">
+			   <form:radiobutton path="siteStatus" value="1" />外网
+			   <form:radiobutton path="siteStatus" value="2" /> 内网
+			</c:if>
+			<c:if test="${empty user.name}">
+			   <form:radiobutton path="siteStatus" value="1" disabled="true"/>外网
+			   <form:radiobutton path="siteStatus" value="2" checked="checked"/> 内网
+			</c:if>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="product_id">
+				<spring:message text="产品"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="product_id" items="${listProducts}" itemLabel="name" itemValue="id" value=""/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="reportCenter.id">
+				<spring:message text="销售中心"/>
+			</form:label>
+		</td>
+		<td>
+			<form:select path="reportCenter.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="portalBsiteMoney">
+				<spring:message text="内网资金"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteMoney" readonly="true"/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="portalBsiteMoney2">
+				<spring:message text="添加内网资金"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteMoney2"/>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="portalBsiteCode">
+				<spring:message text="内网编号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteCode"/>
+		</td>
+	</tr>
 <!--
 	<tr>
 		<td>
@@ -184,7 +251,7 @@
 				<c:otherwise>
 					状态不明
 				</c:otherwise>
-				</c:choose>
+			</c:choose>
 			</td>
 		<%--	<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>  --%>
 			<td><input type="text" value="${user.wechat}" size="5"/></td>

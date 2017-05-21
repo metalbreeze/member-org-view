@@ -3,6 +3,7 @@ package com.shop.controller;
 import java.math.BigDecimal;
 import java.security.Principal;
 import java.sql.Timestamp;
+import java.util.Iterator;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -23,10 +24,12 @@ import com.fasterxml.jackson.annotation.JsonView;
 import com.shop.base.BaseObject;
 import com.shop.dao.GroupDAO;
 import com.shop.dao.OperationDAOImpl;
+import com.shop.dao.ProfileDAO;
 import com.shop.dao.ReportCenterDAO;
 import com.shop.dao.UserDAO;
 import com.shop.model.Group;
 import com.shop.model.Operation;
+import com.shop.model.Profile;
 import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.model.View;
@@ -47,7 +50,9 @@ public class ReportCenterController extends BaseObject {
 	@Autowired(required = true)
 	@Qualifier(value = "operationDAOImpl")
 	private OperationDAOImpl operationDAO;
-
+	@Autowired(required = true)
+	@Qualifier(value = "profileDAO")
+	private ProfileDAO profileDAO;
 	@Autowired(required = true)
 	@Qualifier(value = "reportService")
 	private ReportService reportService;
@@ -70,7 +75,8 @@ public class ReportCenterController extends BaseObject {
 	public String addReportCenter(
 			@ModelAttribute("reportCenter") ReportCenter p, Principal principal) {
 		String userName = principal.getName();
-		User owner = userDAO.getUserByName(userName);
+		User admin = userDAO.getUserByName(userName);
+		User owner = userDAO.getUserById(p.getOwner().getId());
 		if (p.getName() == null || p.getName().equals("")) {
 			int userid = p.getOwner().getId();
 			User name = userDAO.getUserById(userid);
@@ -82,10 +88,16 @@ public class ReportCenterController extends BaseObject {
 //				User name = userDAO.getUserById(userid);
 //				p.setName(name.getName() + "销售中心");
 //			}
+			p.addElectricMoney(p.getElectricMoney2());
 			this.reportCenterDAO.addReportCenter(p);
-			operationDAO.addOperation(new Operation(owner, p, "添加销售中心", p
+			Profile profile = new Profile();
+			profile.setName(ROLE_REPORT);
+			profile.setUser(owner);
+			profileDAO.persistProfile(profile);
+			operationDAO.addOperation(new Operation(admin, p, "添加销售中心", p
 					.getElectricMoney(), "1:" + p.getMoney1() + "2:"
 					+ p.getMoney2()));
+			
 		} else {
 //			if (p.getName() == null || p.getName().equals("")) {
 //				int userid = p.getOwner().getId();
@@ -93,14 +105,30 @@ public class ReportCenterController extends BaseObject {
 //				p.setName(name.getName() + "销售中心");
 //			}
 			ReportCenter x = reportCenterDAO.getReportCenterById(p.getId());
-			x.setOwner(p.getOwner());
+			User oldOwner = x.getOwner();
+			if(p.getOwner().getId()!=oldOwner.getId()){
+				x.setOwner(p.getOwner());
+				logger.debug("old owner"+oldOwner.getName()+"new owner"+p.getOwner().getId()+"oldOwner.profile.size"+oldOwner.getProfiles().size());
+				for (int i =0 ;i <  oldOwner.getProfiles().size();i++){
+					Profile profile=oldOwner.getProfiles().get(i);
+					if(ROLE_REPORT.equalsIgnoreCase(profile.getName())){
+//						oldOwner.getProfiles().remove(profile);
+//						userDAO.updateUser(oldOwner);
+						User newOwner = userDAO.getUserById(p.getOwner().getId());
+						profile.setUser(newOwner);
+						profileDAO.persistProfile(profile);
+						break;
+					}
+				}
+				
+			}
 //			x.setMoney1(p.getMoney1());
 //			x.setMoney2(p.getMoney2());
-			x.setElectricMoney(p.getElectricMoney());
+			x.addElectricMoney(p.getElectricMoney2());
 			x.setName(p.getName());
 			this.reportCenterDAO.updateReportCenter(x);
 			operationDAO.addOperation(new Operation(owner, x, "修改电子币", x
-					.getElectricMoney(), "1:" + x.getMoney1() + "2:"
+					.getElectricMoney(), "Money1:" + x.getMoney1() + "Money2:"
 					+ x.getMoney2()));
 		}
 		return "redirect:/reportCenters";
@@ -171,11 +199,18 @@ public class ReportCenterController extends BaseObject {
 				this.userDAO.listAvailableReporterCenterUsersPlusOwner(id));
 		return "reportCenter";
 	}
-
+	private static String ROLE_REPORT="REPORT";
 	@RequestMapping("/reportCenter/remove/{id}")
 	@Transactional
 	public String removeReportCenter(@PathVariable("id") int id) {
-
+		ReportCenter r = reportCenterDAO.getReportCenterById(id);
+		for (int i = 0; i < r.getOwner().getProfiles().size(); i++) {
+			Profile profile = r.getOwner().getProfiles().get(i);
+			if(ROLE_REPORT.equals(profile.getName())){
+				profileDAO.removeProfile(profile);
+				break;
+			}
+		}
 		this.reportCenterDAO.removeReportCenter(id);
 		return "redirect:/reportCenters";
 	}
