@@ -34,6 +34,7 @@ import com.shop.model.ReportCenter;
 import com.shop.model.User;
 import com.shop.model.View;
 import com.shop.service.CostService;
+import com.shop.service.ProductService;
 import com.shop.service.ReportService;
 
 @Controller
@@ -257,7 +258,8 @@ public class ReportCenterController extends BaseObject {
 			model.addAttribute("listUsers", ul);
 		}
 		model.addAttribute("reportCenter", r);
-		 model.addAttribute("withdrawDescription",CostService.withdrawDescription);
+		model.addAttribute("withdrawDescription",CostService.withdrawDescription);
+		model.addAttribute("productList",ProductService.getProductList());
 		return "myReport";
 	}
 

@@ -49,13 +49,14 @@
 	<tr>
 		<td>
 			<form:label path="money1">
-				<spring:message text="服务费1"/>
+				<spring:message text="服务费"/>
 			</form:label>
 		</td>
 		<td>
 			<form:input path="money1" readonly="true" />
 		</td>
 	</tr>
+	<!-- 
 	<tr>
 		<td>
 			<form:label path="money2">
@@ -65,7 +66,7 @@
 		<td>
 			<form:input path="money2" readonly="true" />
 		</td>
-	</tr>
+	</tr> -->
 	<tr>
 		<td>
 			<form:label path="">
@@ -182,7 +183,7 @@
 			    <c:choose>
 					<c:when test="${user.status == 'new' || user.status == null }">
 						<c:choose>
-							<c:when test="${reportCenter.electricMoney >= 999 }">
+							<c:when test="${reportCenter.electricMoney >= productList[user.product_id].price }">
 								<a href="<c:url value='/myReport/active/${user.id}' />" >激活</a>
 							</c:when>
 							<c:otherwise>

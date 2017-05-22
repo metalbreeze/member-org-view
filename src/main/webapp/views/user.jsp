@@ -220,6 +220,7 @@
 		<th>用户手机</th>
 		<th>修改</th>
 		<th>内/外网</th>
+		<th>内网编号</th>
 		<%--<th width="60">删除</th>--%>
 		<th>微信号</th>
 		<th>支付宝号</th>
@@ -253,6 +254,7 @@
 				</c:otherwise>
 			</c:choose>
 			</td>
+			<td>${user.portalBsiteCode}</td>
 		<%--	<td><a href="<c:url value='/user/remove/${user.id}' />" >删除</a></td>  --%>
 			<td><input type="text" value="${user.wechat}" size="5"/></td>
 			<td><input type="text" value="${user.alipay}" size="5"/></td>

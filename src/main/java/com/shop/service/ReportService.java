@@ -43,6 +43,7 @@ public class ReportService extends BaseObject {
 	}
 	public void activeUserSiteB(User target,RedirectAttributes ra) {
 		target.setPortalBsiteActiveDate(new Timestamp(System.currentTimeMillis()));
+		target.setStatus("old");
 		if(null!=target.getParent()){
 			target.getParent().addSaleMoney(100);
 			// 有空测试下直推/推荐
@@ -76,9 +77,9 @@ public class ReportService extends BaseObject {
 		// 每报一单 10
 		BigDecimal money1before = r.getMoney1();
 		int addMoney1=0;
-		if (ProductService.getProductById(target.getProduct_id()==0?1:target.getProduct_id()).getPrice().compareTo(new BigDecimal(1000))>0){
+		if (ProductService.getProductById(target.getProduct_id()).getPrice().compareTo(new BigDecimal(1000))>0){
 			addMoney1=20;
-		}else{
+		}else if (ProductService.getProductById(target.getProduct_id()).getPrice().compareTo(new BigDecimal(500))>0) {
 			addMoney1=10;
 		}
 		r.addMoney1(addMoney1);

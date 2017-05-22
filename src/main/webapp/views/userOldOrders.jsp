@@ -14,6 +14,7 @@
 <c:if test="${!empty list2}">
 	<table class="tg">
 	<tr>
+		<th>序号</th>
 		<th width="80">用户 ID</th>
 		<th width="120">用户姓名</th>
 		<th width="120">用户手机</th>
@@ -21,8 +22,9 @@
 		<th width="120">产品</th>
 		<th width="120">发送日期</th>
 	</tr>
-	<c:forEach items="${list2}" var="user">
+	<c:forEach items="${list2}" var="user"  varStatus="loop">
 		<tr>
+			<td>${loop.index+1}</td>
 			<td>${user.id}</td>
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>

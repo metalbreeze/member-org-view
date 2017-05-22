@@ -27,6 +27,7 @@
  <div class="div_default">
 <table class="tg">
 	<tr>
+		<th>序号</th>
 		<th width="40">ID</th>
 		<th width="60">姓名</th>
 		<th width="60">销售奖励</th>
@@ -45,8 +46,9 @@
 		<th width="60">内网提现请求</th>
 		<th width="60">内网提现状态</th>
 	</tr>
-	<c:forEach items="${userList}" var="user">
+	<c:forEach items="${userList}" var="user"  varStatus="loop">
 	<tr>
+		<td>${loop.index+1}</td>
 		<td align="center">
 			${user.id}
 		</td>
