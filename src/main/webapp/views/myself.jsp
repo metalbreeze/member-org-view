@@ -105,7 +105,7 @@
 	<tr>
 		<td>
 			<form:label path="saleMoney">
-				<spring:message text="销售奖励"/>
+				<spring:message text="外网销售奖励"/>
 			</form:label>
 		</td>
 		<td>
@@ -115,7 +115,7 @@
 	<tr>
 		<td>
 			<form:label path="bonusMoney">
-				<spring:message text="分红"/>
+				<spring:message text="外网分红"/>
 			</form:label>
 		</td>
 		<td>
@@ -125,7 +125,7 @@
 	<tr>
 		<td>
 			<form:label path="feedbackMoney">
-				<spring:message text="回馈"/>
+				<spring:message text="外网回馈"/>
 			</form:label>
 		</td>
 		<td>
@@ -135,7 +135,7 @@
 	<tr>
 		<td>
 			<form:label path="">
-				<spring:message text="总计"/>
+				<spring:message text="外网总计"/>
 			</form:label>
 		</td>
 		<td>
@@ -145,7 +145,7 @@
 	<tr>
 		<td>
 			<form:label path="">
-				<spring:message text="应发奖金"/>
+				<spring:message text="外网奖金"/>
 			</form:label>
 		</td>
 		<td>
@@ -156,7 +156,7 @@
 	<tr>
 		<td>
 			<form:label path="">
-				<spring:message text="已经提现"/>
+				<spring:message text="外网已提现"/>
 			</form:label>
 		</td>
 		<td>
@@ -166,7 +166,7 @@
 	<tr>
 		<td>
 			<form:label path="">
-				<spring:message text="资金余额"/>
+				<spring:message text="外网余额"/>
 			</form:label>
 		</td>
 		<td>
@@ -190,6 +190,19 @@
 			<c:if test="${user.orderStatus == 2}">
 				已发货
 			</c:if>
+		</td>
+	</tr>
+	<tr>
+	<td><br/></td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="内网编号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteCode"  readonly="true" />
 		</td>
 	</tr>
 	<tr>
