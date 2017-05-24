@@ -73,6 +73,12 @@ public class ReportService extends BaseObject {
 			error(ra, "钱不够");
 			return;
 		}
+		if(null!=target.getParent()){
+			if(!"old".equals(target.getParent().getStatus())){
+				error(ra,"推荐人没有激活");
+				return;
+			}
+		}
 		r.setElectricMoney(b);
 		// 每报一单 10
 		BigDecimal money1before = r.getMoney1();

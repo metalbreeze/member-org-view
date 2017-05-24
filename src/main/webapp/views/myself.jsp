@@ -192,19 +192,7 @@
 			</c:if>
 		</td>
 	</tr>
-	<tr>
-	<td><br/></td>
-	</tr>
-	<tr>
-		<td>
-			<form:label path="">
-				<spring:message text="内网编号"/>
-			</form:label>
-		</td>
-		<td>
-			<form:input path="portalBsiteCode"  readonly="true" />
-		</td>
-	</tr>
+
 	<tr>
 		<td>
 			<form:label path="withdrawRequest">
@@ -222,6 +210,22 @@
 			${withdrawDescription[user.withdrawStatus]}
 		</td>
 	</tr>
+
+
+	<tr>
+	<td><br/></td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="">
+				<spring:message text="内网编号"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="portalBsiteCode"  readonly="true" />
+		</td>
+	</tr>
+
 
 	<tr>
 		<td>

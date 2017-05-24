@@ -116,14 +116,13 @@
 		<th width="20">ID</th>
 		<th width="100">销售中心名字</th>
 		<th width="60">费用1</th>
-		<th width="60">费用2</th>
+		<!-- 		<th width="60">费用2</th> -->
 		<th width="60">总计</th>
 		<th width="60">提现</th>
 		<th width="60">余额</th>
 		<th width="60">电子币</th>
 		<th width="60">负责人</th>
 		<th width="60">修改</th>
-		<th width="60">删除</th>
 		<th width="60">详细</th>
 		<th >提现请求</th>
 		<th >审核状态</th>
@@ -133,14 +132,16 @@
 			<td>${reportCenter.id}</td>
 			<td>${reportCenter.name}</td>
 			<td align="right">${reportCenter.money1}</td>
-			<td align="right">${reportCenter.money2}</td>
+			<!-- <td align="right">${reportCenter.money2}</td> -->
 			<td align="right">${reportCenter.money2+reportCenter.money1}</td>
 			<td align="right">${reportCenter.withdraw}</td>
 			<td align="right">${reportCenter.money2+reportCenter.money1-reportCenter.withdraw}</td>
 			<td align="right">${reportCenter.electricMoney}</td>
 			<td align="right">${reportCenter.owner.name}</td>
 			<td><a href="<c:url value='/reportCenter/edit/${reportCenter.id}' />" >修改</a></td>
+			<!-- 
 			<td><a href="<c:url value='/reportCenter/remove/${reportCenter.id}' />" onclick="return confirm('删除不可恢复,是否继续?');" >删除</a></td>
+			 -->
 			<td><a href="<c:url value='/reportCenter/${reportCenter.id}' />" >详细</a></td>
 			<td align="right">
 				${reportCenter.withdrawRequest}
