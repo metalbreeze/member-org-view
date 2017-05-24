@@ -44,12 +44,15 @@
 	</c:if>
 	<tr>
 		<td>
-			<form:label path="parent.id">
+			<form:label path="parent.name">
 				<spring:message text="推荐人"/>
 			</form:label>
 		</td>
 		<td>
-			<form:select path="parent.id" items="${listUsers}" itemLabel="name" itemValue="id" value=""/>
+			<form:input path="parent.name" />
+			<%-- 
+			 <form:select path="parent.id" items="${listUsers}" itemLabel="name" itemValue="id" value=""/>
+			--%>
 		</td>
 	</tr>
 	<tr>
@@ -121,7 +124,8 @@
 		<td>
 			<c:if test="${!empty user.name}">
 			   <form:radiobutton path="siteStatus" value="1" />外网
-			   <form:radiobutton path="siteStatus" value="2" /> 内网
+			   <form:radiobutton path="siteStatus" value="2" />内网
+			   <form:radiobutton path="siteStatus" value="3" /> 内/外网
 			</c:if>
 			<c:if test="${empty user.name}">
 			   <form:radiobutton path="siteStatus" value="1" disabled="true"/>外网
@@ -194,11 +198,11 @@
 	<tr>
 		<td colspan="2">
 			<c:if test="${!empty user.name}">
-				<input type="submit"
+				<input type="button" onclick=checkAndSubmit()
 					value="<spring:message text="修改"/>" />
 			</c:if>
 			<c:if test="${empty user.name}">
-				<input type="submit"
+				<input type="button" onclick=checkAndSubmit()
 					value="<spring:message text="添加"/>" />
 			</c:if>
 		</td>
@@ -282,5 +286,39 @@
 	</c:forEach>
 	</table>
 </c:if>
+<script type="text/javascript" >
+function checkAndSubmit()
+{
+	
+	if($("#reportCenter\\.id").val()==0){
+		alert("报单中心不能为空");	
+		return;
+	};
+	if ( document.forms[0].name.value == "" )
+	{
+		alert("姓名不能为空");
+		document.forms[0].name.focus();
+		return;
+	}
+	document.forms[0].submit();
+}
+function siteSelect()
+{
+	if($("input[type='radio'][name='siteStatus']:checked").val()==1)
+	{
+		$("#product_id").empty();
+		<c:forEach items="${listProducts}" var="p1">
+			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
+		</c:forEach>
+	}
+	if($("input[type='radio'][name='siteStatus']:checked").val()==2)
+	{
+		$("#product_id").empty();
+		<c:forEach items="${listSiteBProducts}" var="p1">
+			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
+		</c:forEach>
+	}
+}
+</script>
 </body>
 </html>

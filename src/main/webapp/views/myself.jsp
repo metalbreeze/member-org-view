@@ -101,7 +101,9 @@
 			<form:input path="" readonly="true" value="${user.parent.name}"/>
 		</td>
 	</tr>
-
+	<c:if test="${!empty levelUsers}">
+		
+	</c:if>
 	<tr>
 		<td>
 			<form:label path="saleMoney">

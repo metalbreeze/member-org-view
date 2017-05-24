@@ -47,7 +47,7 @@ public class UserDAOImpl implements UserDAO {
 	@Override
 	public void updateUser(User p) {
 		Session session = this.sessionFactory.getCurrentSession();
-		session.update(p);
+		session.persist(p);
 		session.flush();
 		logger.debug("User updated successfully, User Details="+p.toString());
 	}

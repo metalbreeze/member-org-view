@@ -65,10 +65,26 @@ public class UserController extends BaseObject {
 	@RequestMapping(value = "/user/add", method = RequestMethod.POST)
 	@Transactional
 	public String addUser(@ModelAttribute("user") User p,RedirectAttributes ra) {
+		final String parentName = p.getParent().getName();
+		User parentUser=null;
+		if(null!=parentName&&!"".endsWith(parentName)){
+			if(p.getName().equalsIgnoreCase(parentName)){
+				ra.addFlashAttribute("flashMsg", "推荐人和用户同1个人");
+				logger.debug( "推荐人和用户同1个人");
+				return "redirect:/users";				
+			}
+			parentUser = userDAO.getUserByName(parentName);
+			if(parentUser==null){
+				ra.addFlashAttribute("flashMsg", "推荐人不正确");
+				logger.debug( "推荐人不正确");
+				return "redirect:/users";
+			}
+		}
 		User userByName = userDAO.getUserByName(p.getName());
 		if (p.getId() == 0) {
 			// set password = 12345
 			p.setPassword("$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK");
+			p.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
 			if (userByName!=null){
 				ra.addFlashAttribute("flashMsg", "已经有同名用户");
 				logger.debug( "已经有同名用户");
@@ -80,14 +96,17 @@ public class UserController extends BaseObject {
 				ra.addFlashAttribute("flashMsg", "已经有同名用户");
 				logger.debug( "已经有同名用户");
 			}else{
-				User user = userDAO.getUserById(p.getId());
+//				User user = userDAO.getUserById(p.getId());
+				User user= userByName;
 				user.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
 				user.setAddress(p.getAddress());
 				user.setMobile(p.getMobile());
 				user.setAccountNumber(p.getAccountNumber());
 				user.setWechat(p.getWechat());
 				user.setAlipay(p.getAlipay());
-				user.setParent(p.getParent());
+				if(parentUser!=null){
+					user.setParent(parentUser);
+				}
 				user.setSiteStatus(p.getSiteStatus());
 				if(p.getSiteStatus()==2){
 					user.setStatus("old");

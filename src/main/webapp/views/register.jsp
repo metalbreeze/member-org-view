@@ -125,7 +125,36 @@
 			</form:label>
 		</td>
 		<td>
-			<form:select path="reportCenter.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
+			<form:select path="reportCenter.id">
+				<form:option value="0" label="--- 请选择 ---"/>
+				<form:options items="${listReportCenters}" itemLabel="name" itemValue="id" />
+			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">
+		<div style="text-align:center">
+			<h3><spring:message text="注册协议"/></h3>
+		</div>
+			<textarea rows="35" cols="40">
+一、总则
+1.1 www.gxlvkangkeji.com所有权和运营权归广西绿康生物科技有限公司所有；
+1.2 凡持有中华人民共和国居民身份证并年满十八周岁的(除受国家政策限制经商的人员除外)公民均可注册成为本公司的会员．
+1.3 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与公司之间自动形成协议关系，即默认用户自愿接受本协议的约束。用户在使用服务或产品时，应当同意接受相关协议后方能使用。 
+1.4 本协议可由公司随时更新，用户应当及时关注并同意本公司不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
+二、使用规则
+2.1 本公司不对外公开或向第三方提供单个用户的注册资料及用户在使用网络服务时存储在本站的非公开内容，但下列情况除外：
+(1) 事先获得用户的明确授权； 
+(2) 根据有关的法律法规要求；
+2.2 本公司网站是销售服务系统，本系统由公司免费提供给会员使用，客户购买产品注册前均应详细了解该公司产品功能和销售模式，本产品是正规保健商品，客户购买产品后，不得退换，销售人员或广告代言人不得利用该网站进行夸大宣传，或者承诺式宣传，否则造成的一切后果由销售人员负责；
+2.3 用户对本公司的服务有异议时，按本协议之规定处理；
+2.4 本协议解释权和修订权属广西绿康科技有限公司所有．
+			</textarea>
+		</td>
+	</tr>
+	<tr>
+		<td colspan="2">是否同意:
+		 <input type="checkbox" name="isAgree" id="isAgree">(同意协议,请勾选完成注册)
 		</td>
 	</tr>
 	<tr>
@@ -159,21 +188,28 @@
 <script type="text/javascript" >
 function checkAndSubmit()
 {
-	if ( document.forms[0].name == "" )
+	
+	if($("#reportCenter\\.id").val()==0){
+		alert("报单中心不能为空");	
+		return;
+	};
+	if ( document.forms[0].name.value == "" )
 	{
 		alert("姓名不能为空");
 		document.forms[0].name.focus();
 		return;
 	}
 	if ( document.forms[0].password.value != document.forms[0].password_2.value )
-		{
+	{
 			alert("2次密码不一样");
-			document.forms[0].password.focus();   
-		}
-	else
-		{
-			document.forms[0].submit();
-		}
+			document.forms[0].password.focus();
+			return;
+	}
+	if(!$("#isAgree").is(":checked")){
+		alert("没用同意注册协议");
+		return;
+	}
+	document.forms[0].submit();
 }
 function siteSelect()
 {

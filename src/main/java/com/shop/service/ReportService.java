@@ -48,9 +48,10 @@ public class ReportService extends BaseObject {
 			target.getParent().addSaleMoney(100);
 			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
+			target.setOrderStatus(ProductService.order_init);
 			operationDAO.addOperation(new Operation(target.getParent(), target.getReportCenter(),
-					"直推奖", 100, target.getParent().getSaleMoney() + "xx 直推"
-							+ target.getId() + "直推"));
+					"直推奖", 100, "内网直推奖余额"+target.getParent().getSaleMoney() + " 直推目标:"
+							+ target.getId()));
 		}
 	}
 	@Transactional
@@ -59,6 +60,9 @@ public class ReportService extends BaseObject {
 		User target = userDAO.getUserById(id);
 		ReportCenter r = target.getReportCenter(); 
 		if(owner==null){
+			owner=new User();
+			owner.setName("admintest or junit");
+			owner.setId(0);
 			info("test for admin");
 		}else if (r.getId()!=reportCenterDAO.getReportCenterByOwnerId(owner.getId()).getId()) {
 			error(ra, "不是你的用户不能激活");
@@ -97,13 +101,11 @@ public class ReportService extends BaseObject {
 			activeUserSiteB(target,ra);
 			return;
 		}
-		
-		
 		Group group = groupDAO.getAvailableGroup();
 		Group.transform(group);
 		String string = group.getAvailbleLabes().get(0);
 		target.setLevel(string);
-		target.addBonusBeforeMoneyByLevel(string);
+//		target.addBonusBeforeMoneyByLevel(string);
 		target.setStatus(old_status);
 		target.setPosition(userDAO.getCurrentPosiztionByGroup(group, string) + 1);
 		target.setGroup(group);
@@ -114,13 +116,17 @@ public class ReportService extends BaseObject {
 			target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
 		}
 		target.setActiveDate(new Timestamp(System.currentTimeMillis()));
+		//TODO 
 		userDAO.updateUser(target);
 //      i don't know why refresh not works
 //		groupDAO.refresh(group);
-		group=groupDAO.getGroupById(group.getId());
-		Group.transform(group);
+//		group=groupDAO.getGroupById(group.getId());
+		group.getUsers().add(target);
+		group.transform();
 		int size = group.getLevelUsers().get("F").size();
+		logger.debug("group.getUsers()"+group.getUsers());
 		if(size>0&&size%2==0){
+			logger.debug("group.getLevelUsers().get(F)"+group.getLevelUsers().get("F").toString());
 			int currentPos=getUpperPos(target.getPosition());
 			logger.debug("currentPos"+currentPos);
 			User userE = group.getLevelUsers().get("E").get(currentPos-1);
@@ -152,11 +158,11 @@ public class ReportService extends BaseObject {
 			userDAO.updateUser(userC);
 			userDAO.updateUser(userD);
 			userDAO.updateUser(userE);
-			operationDAO.addOperation(userA.getReportCenter(),180,userA,target.getId()+"+"+target.getName()+"激活F");
-			operationDAO.addOperation(userB.getReportCenter(),180,userB,target.getId()+"+"+target.getName()+"激活F");
-			operationDAO.addOperation(userC.getReportCenter(),180,userC,target.getId()+"+"+target.getName()+"激活F");
-			operationDAO.addOperation(userD.getReportCenter(),0,userD,target.getId()+"+"+target.getName()+"激活F,用于B站");
-			operationDAO.addOperation(userE.getReportCenter(),180,userE,target.getId()+"+"+target.getName()+"激活F");
+			operationDAO.addOperation(userA.getReportCenter(),180,userA,"分红余额"+userA.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userB.getReportCenter(),180,userB,"分红余额"+userB.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userC.getReportCenter(),180,userC,"分红余额"+userC.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userD.getReportCenter(),0,userD,"分红余额"+userD.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F,用于B站");
+			operationDAO.addOperation(userE.getReportCenter(),180,userE,"分红余额"+userE.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
 		}
 		info(ra,target.getName() + " 用户已经激活");
 		if (group.getUsers().size() == 63) {
@@ -237,8 +243,8 @@ public class ReportService extends BaseObject {
 			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
 			operationDAO.addOperation(new Operation(target.getParent(), r,
-					"直推奖", 500, target.getParent().getSaleMoney() + "xx 直推"
-							+ target.getId() + "直推"));
+					"直推奖", 500, "外网直推奖余额"+target.getParent().getSaleMoney() + "  :"
+							+ target.getId() ));
 		} else {
 			operationDAO.addOperation(new Operation(target, r, "无直推人", 500));
 		}

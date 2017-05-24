@@ -119,7 +119,7 @@ public class UserSerivceTest extends BaseObject {
 	}
 	public UserSerivceTest(){
 		try {
-			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康新网人员名单.222.xls");
+			in = new FileInputStream("C:\\Users\\niesh\\Desktop\\茶多酚\\绿康新网人员名单-333.xls");
 			wb = new HSSFWorkbook(in);
 		} catch (FileNotFoundException e) {
 			e.printStackTrace();
@@ -161,7 +161,7 @@ public class UserSerivceTest extends BaseObject {
 			}
 	}
 	static int row_begin=5;
-	static int row_end=99;
+	static int row_end=101;
 	void importUser(){
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
@@ -188,6 +188,8 @@ public class UserSerivceTest extends BaseObject {
 			ReportCenter rc = new ReportCenter();
 			rc.setId(Integer.parseInt(parseString(row.getCell(sheet_1_reportCenter))));
 			u.setReportCenter(rc);
+			u.setSiteStatus(1);
+			u.setProduct_id(3);
 			userDAO.saveWithId(u,u.getId());
 
 //			reportService.activeUser(null,u.getId(),null);
@@ -209,143 +211,143 @@ public class UserSerivceTest extends BaseObject {
 			reportService.activeUser(null,u.getId(),null);
 		}
 	}
-	public void active(int id) {
-		logger.info("activeUser " + id);
-		User target = userDAO.getUserById(id);
-
-		ReportCenter r = target.getReportCenter();
-		if (target.getReportCenter().getId() != r.getId()) {
-			logger.error("activeUser 非法激活 " + id);
-		} else {
-			if (r.getElectricMoney() == null) {
-				r.setElectricMoney(new BigDecimal(0));
-			}
-			BigDecimal b = r.getElectricMoney().add(
-					new BigDecimal(999).negate());
-			if (b.signum() == -1) {
-				logger.error("activeUser 钱不够 " + id);
-			} else {
-				r.setElectricMoney(b);
-				Group group = groupDAO.getAvailableGroup();
-				List<User> users = group.getUsers();
-				logger.info(group.getName() + " group.getUsers().size() "
-						+ users.size());
-				if (users.size() == 62) {
-					target.setLevel("F");
-					target.setStatus(old_status);
-					users.add(target);
-					group.setEndDate(new Timestamp(System.currentTimeMillis()));
-					Group group1 = new Group();
-					Group group2 = new Group();
-					group1.setName(group.getId() + "-A");
-					group2.setName(group.getId() + "-B");
-					Group.transform(group);
-					for (int i = 1; i < Group.labels.length; i++) {
-						List<User> ulist = group.getLevelUsers().get(
-								Group.labels[i]);
-						for (int j = 0; j < ulist.size(); j++) {
-							User user = (User) ulist.get(j);
-							logger.debug("upgrade level:" + user.getId()
-									+ " level:" + user.getLevel() + " to:"
-									+ Group.labels[i - 1]);
-							user.setLevel(Group.labels[i - 1]);
-							// 会员分红奖
-							user.addBonusMoney(Group.levelMoney[i - 1]);
-							Operation op = new Operation();
-							op.setMoney(new BigDecimal(Group.levelMoney[i - 1]));
-							op.setOperation(Group.labels[i] + "-"
-									+ Group.labels[i - 1]);
-							op.setReportCenter(r);
-							op.setUser(user);
-							operationDAO.addOperation(op);
-							if (j >= Group.maxLabels[i] / 2) {
-								user.setGroup(group2);
-								user.setPosition(j - Group.maxLabels[i] / 2 + 1);
-							} else {
-								user.setGroup(group1);
-								user.setPosition(j + 1);
-							}
-						}
-					}
-					final User userLevealA = group.getLevelUsers()
-							.get(Group.labels[0]).get(0);
-					group.getUsers().clear();
-					groupDAO.addGroup(group1);
-					groupDAO.addGroup(group2);
-					groupDAO.updateGroup(group);
-					// target.setLevel("E");
-					// target.setGroup(group2);
-					// target.setStatus(old_status);
-					// userDAO.updateUser(target);
-					logger.debug(target.getName() + " 用户已经激活" + "\r\n 分群成功:id"
-							+ group1.getId() + "和" + group2.getId());
-					userLevealA.setLevel("F");
-					userLevealA.setPosition(1);
-					userLevealA.setGroup(group1);
-					userDAO.updateUser(userLevealA);
-					// 分享回馈奖
-					if (userLevealA.getParent() != null) {
-						userLevealA.getParent().addFeedbackMoney(3000);
-						operationDAO.addOperation(new Operation(target
-								.getParent(), r, "回馈奖", 3000));
-					}
-					Operation op = new Operation();
-					op.setMoney(90);
-					op.setOperation("费用2");
-					op.setReportCenter(r);
-					op.setUser(userLevealA);
-					operationDAO.addOperation(op);
-					// 有空测试下.
-					if (userLevealA.getParent() != null) {
-						userDAO.updateUser(userLevealA.getParent());
-					}
-					// 出局服务费
-					Operation op1 = new Operation();
-					op1.setMoney(90);
-					op1.setOperation("出局");
-					op1.setReportCenter(r);
-					op1.setUser(userLevealA);
-					operationDAO.addOperation(op1);
-					r.addMoney1(90);
-				} else {
-					groupDAO.refresh(group);
-					Group.transform(group);
-					String string = group.getAvailbleLabes().get(0);
-					logger.debug(" getAvailbleLabes  " + string);
-					target.setLevel(string);
-					target.setGroup(group);
-					target.setStatus(old_status);
-					int i = userDAO.getCurrentPosiztionByGroup(group, "F");
-					target.setPosition(i + 1);
-					userDAO.updateUser(target);
-					logger.debug(flashMsg + target.getName() + " 用户已经激活");
-				}
-				if (target.getParent() != null) {
-					target.getParent().addSaleMoney(100);
-					// 有空测试下.直推奖
-					userDAO.updateUser(target.getParent());
-					operationDAO.addOperation(new Operation(target.getParent(),
-							r, "直推奖", 100, target.getParent().getSaleMoney()
-									+ "xx 直推" + target.getId() + "直推"));
-				} else {
-					operationDAO.addOperation(new Operation(target, r,
-							"无直推人", 100));
-				}
-
-				logger.info("active a user " + target.toString()
-						+ " with money");
-				// 每报一单 10
-				Operation op = new Operation();
-				op.setMoney(10);
-				op.setOperation("费用1");
-				op.setReportCenter(r);
-				op.setUser(target);
-				operationDAO.addOperation(op);
-				r.addMoney1(10);
-				reportCenterDAO.updateReportCenter(r);
-			}
-		}
-	}
+//	public void active(int id) {
+//		logger.info("activeUser " + id);
+//		User target = userDAO.getUserById(id);
+//
+//		ReportCenter r = target.getReportCenter();
+//		if (target.getReportCenter().getId() != r.getId()) {
+//			logger.error("activeUser 非法激活 " + id);
+//		} else {
+//			if (r.getElectricMoney() == null) {
+//				r.setElectricMoney(new BigDecimal(0));
+//			}
+//			BigDecimal b = r.getElectricMoney().add(
+//					new BigDecimal(999).negate());
+//			if (b.signum() == -1) {
+//				logger.error("activeUser 钱不够 " + id);
+//			} else {
+//				r.setElectricMoney(b);
+//				Group group = groupDAO.getAvailableGroup();
+//				List<User> users = group.getUsers();
+//				logger.info(group.getName() + " group.getUsers().size() "
+//						+ users.size());
+//				if (users.size() == 62) {
+//					target.setLevel("F");
+//					target.setStatus(old_status);
+//					users.add(target);
+//					group.setEndDate(new Timestamp(System.currentTimeMillis()));
+//					Group group1 = new Group();
+//					Group group2 = new Group();
+//					group1.setName(group.getId() + "-A");
+//					group2.setName(group.getId() + "-B");
+//					Group.transform(group);
+//					for (int i = 1; i < Group.labels.length; i++) {
+//						List<User> ulist = group.getLevelUsers().get(
+//								Group.labels[i]);
+//						for (int j = 0; j < ulist.size(); j++) {
+//							User user = (User) ulist.get(j);
+//							logger.debug("upgrade level:" + user.getId()
+//									+ " level:" + user.getLevel() + " to:"
+//									+ Group.labels[i - 1]);
+//							user.setLevel(Group.labels[i - 1]);
+//							// 会员分红奖
+//							user.addBonusMoney(Group.levelMoney[i - 1]);
+//							Operation op = new Operation();
+//							op.setMoney(new BigDecimal(Group.levelMoney[i - 1]));
+//							op.setOperation(Group.labels[i] + "-"
+//									+ Group.labels[i - 1]);
+//							op.setReportCenter(r);
+//							op.setUser(user);
+//							operationDAO.addOperation(op);
+//							if (j >= Group.maxLabels[i] / 2) {
+//								user.setGroup(group2);
+//								user.setPosition(j - Group.maxLabels[i] / 2 + 1);
+//							} else {
+//								user.setGroup(group1);
+//								user.setPosition(j + 1);
+//							}
+//						}
+//					}
+//					final User userLevealA = group.getLevelUsers()
+//							.get(Group.labels[0]).get(0);
+//					group.getUsers().clear();
+//					groupDAO.addGroup(group1);
+//					groupDAO.addGroup(group2);
+//					groupDAO.updateGroup(group);
+//					// target.setLevel("E");
+//					// target.setGroup(group2);
+//					// target.setStatus(old_status);
+//					// userDAO.updateUser(target);
+//					logger.debug(target.getName() + " 用户已经激活" + "\r\n 分群成功:id"
+//							+ group1.getId() + "和" + group2.getId());
+//					userLevealA.setLevel("F");
+//					userLevealA.setPosition(1);
+//					userLevealA.setGroup(group1);
+//					userDAO.updateUser(userLevealA);
+//					// 分享回馈奖
+//					if (userLevealA.getParent() != null) {
+//						userLevealA.getParent().addFeedbackMoney(3000);
+//						operationDAO.addOperation(new Operation(target
+//								.getParent(), r, "回馈奖", 3000));
+//					}
+//					Operation op = new Operation();
+//					op.setMoney(90);
+//					op.setOperation("费用2");
+//					op.setReportCenter(r);
+//					op.setUser(userLevealA);
+//					operationDAO.addOperation(op);
+//					// 有空测试下.
+//					if (userLevealA.getParent() != null) {
+//						userDAO.updateUser(userLevealA.getParent());
+//					}
+//					// 出局服务费
+//					Operation op1 = new Operation();
+//					op1.setMoney(90);
+//					op1.setOperation("出局");
+//					op1.setReportCenter(r);
+//					op1.setUser(userLevealA);
+//					operationDAO.addOperation(op1);
+//					r.addMoney1(90);
+//				} else {
+//					groupDAO.refresh(group);
+//					Group.transform(group);
+//					String string = group.getAvailbleLabes().get(0);
+//					logger.debug(" getAvailbleLabes  " + string);
+//					target.setLevel(string);
+//					target.setGroup(group);
+//					target.setStatus(old_status);
+//					int i = userDAO.getCurrentPosiztionByGroup(group, "F");
+//					target.setPosition(i + 1);
+//					userDAO.updateUser(target);
+//					logger.debug(flashMsg + target.getName() + " 用户已经激活");
+//				}
+//				if (target.getParent() != null) {
+//					target.getParent().addSaleMoney(100);
+//					// 有空测试下.直推奖
+//					userDAO.updateUser(target.getParent());
+//					operationDAO.addOperation(new Operation(target.getParent(),
+//							r, "直推奖", 100, target.getParent().getSaleMoney()
+//									+ "xx 直推" + target.getId() + "直推"));
+//				} else {
+//					operationDAO.addOperation(new Operation(target, r,
+//							"无直推人", 100));
+//				}
+//
+//				logger.info("active a user " + target.toString()
+//						+ " with money");
+//				// 每报一单 10
+//				Operation op = new Operation();
+//				op.setMoney(10);
+//				op.setOperation("费用1");
+//				op.setReportCenter(r);
+//				op.setUser(target);
+//				operationDAO.addOperation(op);
+//				r.addMoney1(10);
+//				reportCenterDAO.updateReportCenter(r);
+//			}
+//		}
+//	}
 	
 	
 	

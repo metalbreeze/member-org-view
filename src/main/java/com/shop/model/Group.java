@@ -139,6 +139,9 @@ public class Group {
 		logger.debug("transform: available label "+al);
 		return g;
 	}
+	public void transform(){
+		transform(this);
+	}
 	public static String upgradeLevel (String level){
 		for (int i =0; i<labels.length;i++){
 			if(level.equals(labels[i])){
