@@ -132,6 +132,26 @@
 		</td>
 	</tr>
 	<tr>
+		<td>
+			<form:label path="password">
+				<spring:message text="密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password" />
+		</td> 
+	</tr>
+	<tr>
+		<td>
+			<form:label path="password_2">
+				<spring:message text="重复密码"/>
+			</form:label>
+		</td>
+		<td>
+			<form:password path="password_2" />
+		</td> 
+	</tr>
+	<tr>
 		<td colspan="2">
 		<div style="text-align:center">
 			<h3><spring:message text="注册协议"/></h3>
@@ -157,26 +177,7 @@
 		 <input type="checkbox" name="isAgree" id="isAgree">(同意协议,请勾选完成注册)
 		</td>
 	</tr>
-	<tr>
-		<td>
-			<form:label path="password">
-				<spring:message text="密码"/>
-			</form:label>
-		</td>
-		<td>
-			<form:password path="password" />
-		</td> 
-	</tr>
-	<tr>
-		<td>
-			<form:label path="password_2">
-				<spring:message text="重复密码"/>
-			</form:label>
-		</td>
-		<td>
-			<form:password path="password_2" />
-		</td> 
-	</tr>
+
 	<tr>
 		<td colspan="2">
 				<input type="button" onclick=checkAndSubmit()
