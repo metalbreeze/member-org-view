@@ -70,7 +70,7 @@ public class FinanceController extends BaseObject {
 	@Transactional
 	public String finance(Model model) {
 
-		final int sum = userDAO.getOldUser() * 999;
+		final BigDecimal sum = userDAO.getSaleMoneyCount();
 		model.addAttribute("sellTotal", sum);
 		final BigDecimal userCostMoney = costService.getTotalReGroupMoney();
 		model.addAttribute("userCostMoney", userCostMoney);
@@ -93,7 +93,7 @@ public class FinanceController extends BaseObject {
 		final BigDecimal totalCost = userCostMoney.add(userAward).add(platformCost1).add(platformCost2)
 				.add(reportCenterCost);
 		model.addAttribute("totalCost", totalCost);
-		BigDecimal remain = new BigDecimal(sum).add(totalCost.negate());
+		BigDecimal remain = sum.add(totalCost.negate());
 		model.addAttribute("remain", remain);
 		return "platformFinance";
 	}

@@ -131,8 +131,8 @@
 		<th>支付宝号</th>
 		<th>银行帐号</th>
 		<th>地址</th>
-		<th width="20">身份</th>
 		<th width="20">内/外网</th>
+		<th width="20">身份</th>
 		<th width="30">激活</th>
 		<th width="20">发货状态</th>
 	</tr>

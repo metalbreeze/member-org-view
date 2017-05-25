@@ -150,7 +150,10 @@
 			</form:label>
 		</td>
 		<td>
-			<form:select path="reportCenter.id" items="${listReportCenters}" itemLabel="name" itemValue="id" value=""/>
+			<form:select path="reportCenter.id">
+				<form:option value="0" label="--- 请选择 ---"/>
+				<form:options items="${listReportCenters}" itemLabel="name" itemValue="id" />
+			</form:select>
 		</td>
 	</tr>
 	<tr>

@@ -1,6 +1,7 @@
 package com.shop.dao;
 
 import java.math.BigDecimal;
+import java.math.BigInteger;
 import java.util.ArrayList;
 import java.util.Hashtable;
 import java.util.Iterator;
@@ -201,6 +202,16 @@ public class UserDAOImpl implements UserDAO {
 		Session session = this.sessionFactory.getCurrentSession();
 		Long i = (Long) session.createQuery("SELECT count(*) FROM User t1 where t1.status='old'").uniqueResult();
 		return i.intValue();
+	}
+	@Override
+	public BigDecimal getSaleMoneyCount(){
+		Session session = this.sessionFactory.getCurrentSession();
+		BigInteger  i = (BigInteger) session.createSQLQuery(
+				"select (SELECT count(*)*1998 FROM User t1 where t1.status='old' and product_id in (4,5,6))"
++"+(SELECT count(*)*360 FROM User t1 where t1.status='old' and product_id in (0))"
++"+(SELECT count(*)*999 FROM User t1 where t1.status='old' and product_id in (1,2,3))"
++" from dual").uniqueResult();
+		return new BigDecimal(i.intValue());
 	}
 	@Override
 	public BigDecimal getWithdraw(){

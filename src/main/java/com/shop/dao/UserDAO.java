@@ -21,6 +21,7 @@ public interface UserDAO {
 	public List<User> getNoParenetUsers();
 	public BigDecimal getChildrenGroupScore(User u);
 	public int getOldUser();
+	public BigDecimal getSaleMoneyCount();
 	public BigDecimal getWithdraw();
 	List<User> listUserOrderBySaleMoney(int count);
 	void saveWithId(User p, int i);

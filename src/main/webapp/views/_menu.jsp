@@ -63,8 +63,10 @@
 	<sec:authorize access="hasRole('ROLE_USER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/myself">个人信息</a> 
 	</sec:authorize>
-	<sec:authorize access="hasAnyRole('ROLE_SENDER','ROLE_SENDER_VIEW')">
+	<sec:authorize access="hasAnyRole('ROLE_SENDER')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/orders">快递单</a>
+	</sec:authorize>
+	<sec:authorize access="hasAnyRole('ROLE_SENDER','ROLE_SENDER_VIEW')">
 		|&nbsp;<a href="${pageContext.request.contextPath}/product/oldOrders">已发送快递单</a>
 	</sec:authorize>
 	<sec:authorize access="hasRole('ROLE_REPORT')">

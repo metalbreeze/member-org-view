@@ -55,6 +55,9 @@ public class ReportService extends BaseObject {
 					"直推奖", 100, "内网直推奖余额"+target.getParent().getSaleMoney() + " 直推目标:"
 							+ target.getId()));
 		}
+		ProductService.getProductById(target.getProduct_id()).getCost();
+		target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
+		target.addSaleMoney(ProductService.getProductById(target.getProduct_id()).getPrice().intValue());
 	}
 	@Transactional
 	public void activeUser(User owner, int id, RedirectAttributes ra) {
@@ -216,13 +219,14 @@ public class ReportService extends BaseObject {
 			userLevealA.setPosition(1);
 			userLevealA.setGroup(groupDAO.getAvailableGroup());
 //			userLevealA.addBonusMoney(4000);
-			Integer product_id = userLevealA.getProduct_id();
-			if(product_id==null||product_id<4){
-				product_id=4;
-				userLevealA.setProduct_id(product_id);
-			}
-			userLevealA.addReGroupMoney(ProductService.getProductById(product_id));
-			userLevealA.setOrderStatus(ProductService.order_init);
+//复投不产生订单			
+//			Integer product_id = userLevealA.getProduct_id();
+//			if(product_id==null||product_id<4){
+//				product_id=4;
+//				userLevealA.setProduct_id(product_id);
+//			}
+//			userLevealA.addReGroupMoney(ProductService.getProductById(product_id));
+//			userLevealA.setOrderStatus(ProductService.order_init);
 			userDAO.updateUser(userLevealA);
 			// 分享回馈奖
 			final User userParent = userLevealA.getParent();

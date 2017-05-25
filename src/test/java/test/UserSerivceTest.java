@@ -137,7 +137,7 @@ public class UserSerivceTest extends BaseObject {
 //	@Transactional
 //	@Rollback(false)
 	public void importExcel() {
-//		importUser();
+		importUser();
 		importGroup();
 //旧		importWithdraw();
 	}
@@ -166,7 +166,7 @@ public class UserSerivceTest extends BaseObject {
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
 			final int rowNum = row.getRowNum();
-			if (rowNum<row_begin ||rowNum>row_end) {
+			if (rowNum<row_begin || rowNum>=row_end) {
 				continue;
 			}
 			info("==========================\nrowNum"+rowNum);
@@ -189,7 +189,7 @@ public class UserSerivceTest extends BaseObject {
 			rc.setId(Integer.parseInt(parseString(row.getCell(sheet_1_reportCenter))));
 			u.setReportCenter(rc);
 			u.setSiteStatus(1);
-			u.setProduct_id(3);
+			u.setProduct_id(4);
 			userDAO.saveWithId(u,u.getId());
 
 //			reportService.activeUser(null,u.getId(),null);
