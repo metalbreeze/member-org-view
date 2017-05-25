@@ -101,9 +101,21 @@
 			<form:input path="" readonly="true" value="${user.parent.name}"/>
 		</td>
 	</tr>
-	<c:if test="${!empty levelUsers}">
+	<tr>
+	<td>会员等级</td>
+	<td>
 		
-	</c:if>
+		<c:choose>
+		  <c:when test="${list.size() >= 2}">
+			<input id="isGold" name="isGold" type="text" value="1"/>
+		  </c:when>
+		  <c:otherwise>
+		    <input id="isGold" name="isGold" type="text" value="0"/>
+		  </c:otherwise>
+	    </c:choose>
+		</td>
+	</tr>
+
 	<tr>
 		<td>
 			<form:label path="saleMoney">
@@ -438,6 +450,10 @@ function myWithdraw()
 	{
 		alert("提现金额不对");
 		document.forms[0].withdrawRequest.focus();
+		return;
+	}
+	if(+document.forms[0].withdrawRequest.value + +document.forms[0].withdraw.value >= 1800 && $("#isGold").val()==0 ){
+		alert("银牌会员不能提现超过1800");
 		return;
 	}
 	document.forms[0].action="${withDrawAction}";

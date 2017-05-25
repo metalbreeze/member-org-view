@@ -139,8 +139,8 @@ public class ReportService extends BaseObject {
 			currentPos=getUpperPos(currentPos);
 			logger.debug("currentPos"+currentPos);
 			User userD = group.getLevelUsers().get("D").get(currentPos-1);
-			userD.addBonusMoney(90*2);
-			userD.addPortalBsiteMoney(90*2);
+//			userD.addBonusMoney(90*2);
+//			userD.addPortalBsiteMoney(90*2);
 			userD.addTransferBsiteMoney(90*2);
 			if(userD.getTransferBsiteMoney().compareTo(new BigDecimal(90*2*2))>=0){
 				userD.setSiteStatus(3);
