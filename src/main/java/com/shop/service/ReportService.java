@@ -42,13 +42,15 @@ public class ReportService extends BaseObject {
 		}
 	}
 	public void activeUserSiteB(User target,RedirectAttributes ra) {
-		target.setPortalBsiteActiveDate(new Timestamp(System.currentTimeMillis()));
+		final Timestamp portalBsiteActiveDate = new Timestamp(System.currentTimeMillis());
+		target.setPortalBsiteActiveDate(portalBsiteActiveDate);
 		target.setStatus("old");
+		target.setOrderStatus(ProductService.order_init);
+		target.setActiveDate(portalBsiteActiveDate);
 		if(null!=target.getParent()){
 			target.getParent().addSaleMoney(100);
 			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
-			target.setOrderStatus(ProductService.order_init);
 			operationDAO.addOperation(new Operation(target.getParent(), target.getReportCenter(),
 					"直推奖", 100, "内网直推奖余额"+target.getParent().getSaleMoney() + " 直推目标:"
 							+ target.getId()));
