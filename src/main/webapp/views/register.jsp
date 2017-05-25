@@ -205,6 +205,12 @@ function checkAndSubmit()
 			document.forms[0].password.focus();
 			return;
 	}
+	if ( document.forms[0].password.value == "" )
+	{
+			alert("没有设置密码");
+			document.forms[0].password.focus();
+			return;
+	}
 	if(!$("#isAgree").is(":checked")){
 		alert("没用同意注册协议");
 		return;
