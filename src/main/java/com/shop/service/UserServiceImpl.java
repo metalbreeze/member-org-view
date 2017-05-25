@@ -36,6 +36,11 @@ public class UserServiceImpl extends BaseObject implements UserService{
 
 	@Override
 	@Transactional
+	public void persist(User p) {
+		this.userDAO.persist(p);
+	}
+	@Override
+	@Transactional
 	public void updateUser(User p) {
 		this.userDAO.updateUser(p);
 	}

@@ -79,6 +79,7 @@ public class UserController extends BaseObject {
 				logger.debug( "推荐人不正确");
 				return "redirect:/users";
 			}
+			p.setParent(parentUser);
 		}
 		User userByName = userDAO.getUserByName(p.getName());
 		if (p.getId() == 0) {
@@ -89,7 +90,8 @@ public class UserController extends BaseObject {
 				ra.addFlashAttribute("flashMsg", "已经有同名用户");
 				logger.debug( "已经有同名用户");
 			}else{
-				this.userService.addUser(p);
+				logger.debug( "persist"+p);
+				this.userService.persist(p);
 			}
 		} else {
 			if(userByName!=null&&userByName.getId()!=p.getId()){

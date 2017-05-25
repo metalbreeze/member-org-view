@@ -14,5 +14,6 @@ public interface UserService {
 	public User getUserById(int id);
 	public void removeUser(int id);
 	public List<User> listAvailableUsers();
+	void persist(User p);
 	
 }

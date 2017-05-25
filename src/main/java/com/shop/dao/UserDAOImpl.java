@@ -52,7 +52,14 @@ public class UserDAOImpl implements UserDAO {
 		session.flush();
 		logger.debug("User updated successfully, User Details="+p.toString());
 	}
-
+	@Override
+	@Transactional
+	public void persist(User p) {
+		Session session = this.sessionFactory.getCurrentSession();
+		session.persist(p);
+		session.persist(p);
+		logger.debug("User persist successfully, User Details="+p.toString());
+	}
 	@SuppressWarnings("unchecked")
 	@Override
 	public List<User> listUsers() {

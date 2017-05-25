@@ -107,10 +107,12 @@
 		
 		<c:choose>
 		  <c:when test="${list.size() >= 2}">
-			<input id="isGold" name="isGold" type="text" value="1"/>
+			<input id="isGold" name="isGold" type="text" value="1" hidden="true"/>
+			金牌会员
 		  </c:when>
 		  <c:otherwise>
-		    <input id="isGold" name="isGold" type="text" value="0"/>
+		    <input id="isGold" name="isGold" type="text" value="0" hidden="true"/>
+		       银牌会员
 		  </c:otherwise>
 	    </c:choose>
 		</td>
@@ -432,7 +434,6 @@
 <script type="text/javascript" >
 function checkAndSubmit()
 {
-	
 	if ( document.forms[1].password_3.value != document.forms[1].password_2.value )
 		{
 			alert("密码不一样");

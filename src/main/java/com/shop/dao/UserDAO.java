@@ -37,4 +37,5 @@ public interface UserDAO {
 	BigDecimal getTotalSpendMoney();
 	public List<User> listAvailableReporterCenterUsersPlusOwner(int i);
 	List<User> listOldUsersWithOutUserId(int i);
+	void persist(User p);
 }
