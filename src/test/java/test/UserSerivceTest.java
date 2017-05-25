@@ -166,8 +166,11 @@ public class UserSerivceTest extends BaseObject {
 		Sheet sheet = wb.getSheetAt(0);
 		for (Row row : sheet) {
 			final int rowNum = row.getRowNum();
-			if (rowNum<row_begin || rowNum>=row_end) {
+			if (rowNum<row_begin){
 				continue;
+			}
+			if(rowNum>=row_end) {
+				break;
 			}
 			info("==========================\nrowNum"+rowNum);
 			Cell cell = row.getCell(sheet_1_id);

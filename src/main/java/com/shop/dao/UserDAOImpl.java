@@ -207,9 +207,9 @@ public class UserDAOImpl implements UserDAO {
 	public BigDecimal getSaleMoneyCount(){
 		Session session = this.sessionFactory.getCurrentSession();
 		BigInteger  i = (BigInteger) session.createSQLQuery(
-				"select (SELECT count(*)*1998 FROM User t1 where t1.status='old' and product_id in (4,5,6))"
-+"+(SELECT count(*)*360 FROM User t1 where t1.status='old' and product_id in (0))"
-+"+(SELECT count(*)*999 FROM User t1 where t1.status='old' and product_id in (1,2,3))"
+				"select (SELECT count(*)*1998 FROM `user` t1 where t1.status='old' and product_id in (4,5,6))"
++"+(SELECT count(*)*360 FROM `user` t1 where t1.status='old' and product_id in (0))"
++"+(SELECT count(*)*999 FROM `user` t1 where t1.status='old' and product_id in (1,2,3))"
 +" from dual").uniqueResult();
 		return new BigDecimal(i.intValue());
 	}
