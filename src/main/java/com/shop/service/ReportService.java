@@ -58,7 +58,6 @@ public class ReportService extends BaseObject {
 		}
 		ProductService.getProductById(target.getProduct_id()).getCost();
 		target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
-		target.addSaleMoney(ProductService.getProductById(target.getProduct_id()).getPrice().intValue());
 	}
 	@Transactional
 	public void activeUser(User owner, int id, RedirectAttributes ra) {
