@@ -48,7 +48,7 @@ public class ReportService extends BaseObject {
 		target.setStatus("old");
 		target.setOrderStatus(ProductService.order_init);
 		target.setActiveDate(portalBsiteActiveDate);
-		if(null!=target.getParent()){
+		if(null!=target.getParent()&&null!=target.getProduct_id()&&0!=target.getProduct_id()){
 			target.getParent().addSaleMoney(100);
 			// 有空测试下直推/推荐
 			userDAO.updateUser(target.getParent());
