@@ -325,4 +325,14 @@ public class UserDAOImpl implements UserDAO {
 		List<User> UsersList = session.createQuery("from User where id not in (select owner from ReportCenter  where id !=:id)  and status='old' ").setInteger("id", i).list();
 		return UsersList;
 	}
+
+	@Override
+	public Object listOldUsersWithOutUserIdWithChildren(int id) {
+		Session session = this.sessionFactory.getCurrentSession();
+		List<User> UsersList = session.createQuery("from User where status='old' and id !=:id").setInteger("id", id).list();
+		for(int i =0 ; i < UsersList.size();i++){
+			Hibernate.initialize(UsersList.get(i).getChildren());
+		}
+		return UsersList;
+	}
 }

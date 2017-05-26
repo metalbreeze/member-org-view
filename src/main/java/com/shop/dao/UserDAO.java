@@ -38,4 +38,5 @@ public interface UserDAO {
 	public List<User> listAvailableReporterCenterUsersPlusOwner(int i);
 	List<User> listOldUsersWithOutUserId(int i);
 	void persist(User p);
+	public Object listOldUsersWithOutUserIdWithChildren(int id);
 }

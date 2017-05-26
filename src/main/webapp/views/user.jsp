@@ -226,6 +226,7 @@
 		<th>用户姓名</th>
 		<th>用户手机</th>
 		<th>修改</th>
+		<th>金/银牌</th>
 		<th>内/外网</th>
 		<th>内网编号</th>
 		<%--<th width="60">删除</th>--%>
@@ -245,6 +246,16 @@
 			<td>${user.name}</td>
 			<td>${user.mobile}</td>
 			<td><a href="<c:url value='/user/edit/${user.id}' />" >修改</a></td>
+			<td>
+			<c:choose>
+			  <c:when test="${user.children.size() >= 2}">
+				金牌会员
+			  </c:when>
+			  <c:otherwise>
+			       银牌会员
+			  </c:otherwise>
+		    </c:choose>
+			</td>
 			<td>
 			<c:choose>
 				<c:when test="${user.siteStatus == 1 }">

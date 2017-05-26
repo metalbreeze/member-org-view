@@ -54,7 +54,7 @@ public class UserController extends BaseObject {
 	@Transactional
 	public String listUsers(Model model) {
 		model.addAttribute("user", new User());
-		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(-1));
+		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserIdWithChildren(-1));
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
 		model.addAttribute("listProducts",ProductService.getProductList());
 		model.addAttribute("userStatus", User.statusMap);
@@ -137,7 +137,7 @@ public class UserController extends BaseObject {
 	@Transactional
 	public String editUser(@PathVariable("id") int id, Model model,RedirectAttributes ra) {
 		model.addAttribute("user", this.userService.getUserById(id));
-		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserId(id));
+		model.addAttribute("listUsers", userDAO.listOldUsersWithOutUserIdWithChildren(id));
 		model.addAttribute("listReportCenters", reportCenterDao.listReportCenters());
 		model.addAttribute("listProducts",ProductService.getProductList());
 		model.addAttribute("userStatus", User.statusMap);
