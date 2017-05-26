@@ -268,8 +268,16 @@ public class ReportCenterController extends BaseObject {
 	@Transactional
 	public synchronized String activeUser(@PathVariable("id") int id, Principal principal,
 			RedirectAttributes ra) {
-		logger.info("activeUser " + id);
+		logger.info("pre activeUser " + id);
+//		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+//		String userName = auth.getName(); //get logged in username
+//      User user = (User)SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+//		String userName = user.getUsername(); //get logged in username
 		String userName = principal.getName();
+		if(null==userName||"".equals(userName)){
+			error(ra, "当前操作人员姓名为空");
+			return "redirect:/myReport";
+		}
 		User owner = userDAO.getUserByName(userName);
 		reportService.activeUser(owner, id, ra);
 //		if (target.getReportCenter().getId() != r.getId()) {

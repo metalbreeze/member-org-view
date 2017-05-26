@@ -42,6 +42,7 @@ public class ReportService extends BaseObject {
 		}
 	}
 	public void activeUserSiteB(User target,RedirectAttributes ra) {
+		info("active site B"+ target.getId());
 		final Timestamp portalBsiteActiveDate = new Timestamp(System.currentTimeMillis());
 		target.setPortalBsiteActiveDate(portalBsiteActiveDate);
 		target.setStatus("old");
@@ -71,6 +72,10 @@ public class ReportService extends BaseObject {
 			info("test for admin");
 		}else if (r.getId()!=reportCenterDAO.getReportCenterByOwnerId(owner.getId()).getId()) {
 			error(ra, "不是你的用户不能激活");
+			return;
+		}
+		if("old".equals(target.getStatus())){
+			error(ra, "用户已经激活");
 			return;
 		}
 		if (r.getElectricMoney() == null) {
