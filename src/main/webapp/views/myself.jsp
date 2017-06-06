@@ -457,6 +457,10 @@ function myWithdraw()
 		alert("银牌会员不能提现超过1800");
 		return;
 	}
+	if (+document.forms[0].withdrawRequest.value < 100){
+		alert("最小提现100");
+		return;
+	}
 	document.forms[0].action="${withDrawAction}";
 	document.forms[0].submit();
 }
@@ -466,6 +470,10 @@ function myWithdrawBSite()
 	{
 		alert("提现金额不对");
 		document.forms[0].portalBsiteWithdrawRequest.focus();
+		return;
+	}
+	if (+document.forms[0].portalBsiteWithdrawRequest.value < 100){
+		alert("最小提现100");
 		return;
 	}
 	document.forms[0].action="${BsiteWithDrawAction}";

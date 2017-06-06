@@ -134,7 +134,7 @@ public class ReportService extends BaseObject {
 		group.transform();
 		int size = group.getLevelUsers().get("F").size();
 		logger.debug("group.getUsers()"+group.getUsers());
-		if(size>0&&size%2==0){
+		if(size>0){//&&size%2==0
 			logger.debug("group.getLevelUsers().get(F)"+group.getLevelUsers().get("F").toString());
 			int currentPos=getUpperPos(target.getPosition());
 			logger.debug("currentPos"+currentPos);
