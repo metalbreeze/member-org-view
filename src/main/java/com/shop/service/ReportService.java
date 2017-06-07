@@ -59,6 +59,7 @@ public class ReportService extends BaseObject {
 		ProductService.getProductById(target.getProduct_id()).getCost();
 		target.addReGroupMoney(ProductService.getProductById(target.getProduct_id()));
 	}
+	static int BonusPerTick=90;
 	@Transactional
 	public void activeUser(User owner, int id, RedirectAttributes ra) {
 		info("activeUser " + id);
@@ -134,44 +135,44 @@ public class ReportService extends BaseObject {
 		group.transform();
 		int size = group.getLevelUsers().get("F").size();
 		logger.debug("group.getUsers()"+group.getUsers());
-		if(size>0){//&&size%2==0
+		if(size>=0){//&&size%2==0
 			logger.debug("group.getLevelUsers().get(F)"+group.getLevelUsers().get("F").toString());
 			int currentPos=getUpperPos(target.getPosition());
 			logger.debug("currentPos"+currentPos);
 			User userE = group.getLevelUsers().get("E").get(currentPos-1);
-			userE.addBonusMoney(90*2);
+			userE.addBonusMoney(BonusPerTick);
 			currentPos=getUpperPos(currentPos);
 			logger.debug("currentPos"+currentPos);
 			User userD = group.getLevelUsers().get("D").get(currentPos-1);
-//			userD.addBonusMoney(90*2);
-//			userD.addPortalBsiteMoney(90*2);
-			userD.addTransferBsiteMoney(90*2);
-			if(userD.getTransferBsiteMoney().compareTo(new BigDecimal(90*2*2))>=0){
+//			userD.addBonusMoney(BonusPerTick);
+//			userD.addPortalBsiteMoney(BonusPerTick);
+			userD.addTransferBsiteMoney(BonusPerTick);
+			if(userD.getTransferBsiteMoney().compareTo(new BigDecimal(90*4))>=0){
 				userD.setSiteStatus(3);
 				userD.setPortalBsiteActiveDate(new Timestamp(System.currentTimeMillis()));
 			}
 			currentPos=getUpperPos(currentPos);
 			logger.debug("currentPos"+currentPos);
 			User userC = group.getLevelUsers().get("C").get(currentPos-1);
-			userC.addBonusMoney(90*2);
+			userC.addBonusMoney(BonusPerTick);
 			currentPos=getUpperPos(currentPos);
 			logger.debug("currentPos"+currentPos);
 			User userB = group.getLevelUsers().get("B").get(currentPos-1);
-			userB.addBonusMoney(90*2);
+			userB.addBonusMoney(BonusPerTick);
 			currentPos=getUpperPos(currentPos);
 			logger.debug("currentPos"+currentPos);
 			User userA = group.getLevelUsers().get("A").get(currentPos-1);
-			userA.addBonusMoney(90*2);
+			userA.addBonusMoney(BonusPerTick);
 			userDAO.updateUser(userA);
 			userDAO.updateUser(userB);
 			userDAO.updateUser(userC);
 			userDAO.updateUser(userD);
 			userDAO.updateUser(userE);
-			operationDAO.addOperation(userA.getReportCenter(),180,userA,"分红余额"+userA.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
-			operationDAO.addOperation(userB.getReportCenter(),180,userB,"分红余额"+userB.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
-			operationDAO.addOperation(userC.getReportCenter(),180,userC,"分红余额"+userC.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userA.getReportCenter(),BonusPerTick,userA,"分红余额"+userA.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userB.getReportCenter(),BonusPerTick,userB,"分红余额"+userB.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userC.getReportCenter(),BonusPerTick,userC,"分红余额"+userC.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
 			operationDAO.addOperation(userD.getReportCenter(),0,userD,"分红余额"+userD.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F,用于B站");
-			operationDAO.addOperation(userE.getReportCenter(),180,userE,"分红余额"+userE.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
+			operationDAO.addOperation(userE.getReportCenter(),BonusPerTick,userE,"分红余额"+userE.getBonusMoney()+"-"+target.getId()+"/"+target.getName()+":激活F");
 		}
 		info(ra,target.getName() + " 用户已经激活");
 		if (group.getUsers().size() == 63) {
