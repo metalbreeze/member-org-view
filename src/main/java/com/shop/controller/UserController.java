@@ -81,8 +81,8 @@ public class UserController extends BaseObject {
 			}
 			p.setParent(parentUser);
 		}
-		User userByName = userDAO.getUserByName(p.getName());
 		if (p.getId() == 0) {
+			User userByName = userDAO.getUserByName(p.getName());
 			// set password = 12345
 			p.setPassword("$2a$11$7FDrc3dWL2JRt/GH89gpR.mBz.31T8x7YeTJ0IRzVD.UaUKn2pqjK");
 			p.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
@@ -94,12 +94,13 @@ public class UserController extends BaseObject {
 				this.userService.persist(p);
 			}
 		} else {
-			if(userByName!=null&&userByName.getId()!=p.getId()){
+			User userById = userDAO.getUserById(p.getId());
+			if(userById!=null&&userById.getId()!=p.getId()){
 				ra.addFlashAttribute("flashMsg", "已经有同名用户");
 				logger.debug( "已经有同名用户");
 			}else{
 //				User user = userDAO.getUserById(p.getId());
-				User user= userByName;
+				User user= userById;
 				user.setName(p.getName().replaceAll(" ", "").replaceAll("　",""));
 				user.setAddress(p.getAddress());
 				user.setMobile(p.getMobile());
