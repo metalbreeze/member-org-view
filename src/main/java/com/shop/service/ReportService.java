@@ -24,6 +24,9 @@ public class ReportService extends BaseObject {
 	@Autowired(required = true)
 	@Qualifier(value = "reportCenterDAO")
 	private ReportCenterDAO reportCenterDAO;
+	/**
+	 * 
+	 */
 	@Autowired(required = true)
 	@Qualifier(value = "userDAO")
 	private UserDAO userDAO;
@@ -234,14 +237,14 @@ public class ReportService extends BaseObject {
 //			userLevealA.setOrderStatus(ProductService.order_init);
 			userDAO.updateUser(userLevealA);
 			// 分享回馈奖
-			final User userParent = userLevealA.getParent();
-			if (userParent != null) {
-				userParent.addFeedbackMoney(3000);
-				operationDAO.addOperation(new Operation(target.getParent(), r,
-						"回馈奖", 3000));
-				userParent.setChildrenCount(userParent.getChildrenCount()+1);
-				userDAO.updateUser(userParent);
-			}
+//			final User userParent = userLevealA.getParent();
+//			if (userParent != null) {
+//				userParent.addFeedbackMoney(3000);
+//				operationDAO.addOperation(new Operation(target.getParent(), r,
+//						"回馈奖", 3000));
+//				userParent.setChildrenCount(userParent.getChildrenCount()+1);
+//				userDAO.updateUser(userParent);
+//			}
 			// 出局服务费
 			//取消出局服务费
 //			operationDAO.addOperation(new Operation(userLevealA, userLevealA.getReportCenter(), "费用2/出局", 90));

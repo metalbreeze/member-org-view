@@ -3,8 +3,8 @@
 	xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/maven-v4_0_0.xsd">
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.journaldev.spring</groupId>
-	<artifactId>SpringW2</artifactId>
-	<name>SpringW2</name>
+	<artifactId>springb3</artifactId>
+	<name>springb3</name>
 	<packaging>war</packaging>
 	<version>1.0.0-BUILD-SNAPSHOT</version>
 	<properties>
@@ -202,8 +202,6 @@
 					<additionalBuildcommands>
 						<buildcommand>org.springframework.ide.eclipse.core.springbuilder</buildcommand>
 					</additionalBuildcommands>
-					<downloadSources>true</downloadSources>
-					<downloadJavadocs>true</downloadJavadocs>
 				</configuration>
 			</plugin>
 			<plugin>
@@ -250,7 +248,7 @@
 				<version>9.2.11.v20150529</version>
 					<configuration>
 			        <httpConnector>
-			          <port>80</port>
+			          <port>8330</port>
 			          <idleTimeout>300000</idleTimeout>
 			        </httpConnector>
 			      </configuration>

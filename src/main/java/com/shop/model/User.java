@@ -34,6 +34,7 @@ import com.fasterxml.jackson.annotation.JsonView;
 @Entity
 @Table(name="user")
 public class User implements Comparable<User> {
+
 	private static final Logger logger = LoggerFactory.getLogger(User.class);
 	@Id
 	@Column(name="id")
@@ -98,6 +99,13 @@ public class User implements Comparable<User> {
 	private Timestamp orderSendDate;
 	private Integer available;
 	private Integer childrenCount;
+	
+	
+	//shop order
+	@OneToMany
+	private List<ShopOrder> shopOrders;
+	
+	
 	public String getLevel() {
 		return level;
 	}
