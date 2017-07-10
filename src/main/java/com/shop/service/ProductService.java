@@ -33,20 +33,19 @@ public class ProductService extends BaseObject{
 		productList.add(new Product(4,"2盒东革阿里",1998,400));
 		productList.add(new Product(5,"2盒卡琪花",1998,400));
 		productList.add(new Product(6,"1盒东革阿里 1盒卡琪花",1998,400));
+		productList.add(new Product(7,"VIP会员套盒",1680,100));
+		productList.add(new Product(8,"银牌会员套盒",1680,400));
 	}
 	static List<Product> currentProductList = new ArrayList<Product>();  
 	static {
-		currentProductList.add(productList.get(4));
-		currentProductList.add(productList.get(5));
-		currentProductList.add(productList.get(6));
+		currentProductList.add(productList.get(8));
 	}
-	static List<Product> currentSiteBProductList = new ArrayList<Product>();  
+	static List<Product> currentVipProductList = new ArrayList<Product>();  
 	static {
-		currentSiteBProductList.add(productList.get(2));
-		currentSiteBProductList.add(productList.get(3));
+		currentVipProductList.add(productList.get(7));
 	}
 	public static Product getProductById(int i){
-		if(i<0||i>6){
+		if(i<7||i>9){
 			return productList.get(0);
 		}
 		return productList.get(i);
@@ -87,8 +86,8 @@ public class ProductService extends BaseObject{
 		userDAO.updateUser(u);
 		operationDAO.addOperation(new Operation(u, null, "发快递单", 0));
 	}
-	public static List<Product> getCurrentSiteBProductList() {
-		return currentSiteBProductList;
+	public static List<Product> getCurrentVipProductList() {
+		return currentVipProductList;
 	}
 	
 }

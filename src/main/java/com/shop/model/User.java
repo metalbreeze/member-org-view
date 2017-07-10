@@ -63,7 +63,8 @@ public class User implements Comparable<User> {
 	private String accountNumber;
 	
 	private String alipay;
-
+//1==site
+//3==vip
 	private String status;
 	
 	private Integer product_id;

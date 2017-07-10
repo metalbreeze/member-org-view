@@ -11,7 +11,8 @@ public class GrammarTest{
 	 * @param ss
 	 */
 	public  static void main(String [] ss){
-		getRelativedPosition(90,1);
+		String string = getRelativedPosition(900,11);
+		System.out.println(string);
 	}
 	static int[] arrangement_count={
 		1,
@@ -56,33 +57,44 @@ public class GrammarTest{
 		}else{
 			position=1;
 		}
-		System.out.println("level:"+level+" position:"+position);
+
+if(isDebug)System.out.println("level:"+level+" position:"+position);
 		return new int[]{level,position};
 	}
-	static int[] getRelativedPosition(int number,int node){
+	/**
+	 * @param number 所有的会员计数
+	 * @param node 计算当前node
+	 */
+	static boolean isDebug=false;
+	static String getRelativedPosition(int number,int node){
+		String result="";
 		int current[] = getCurrentPosition(number);
 		int nnn[] = getCurrentPosition(node);
+		int relativedLevel=0;
 		for(int i = nnn[0];i<=current[0];i++){
-			System.out.print("level:"+i+" | ");
+			if(isDebug)System.out.print("level:"+i+" | ");
+			result=result+"L:"+(++relativedLevel)+" | ";
+			int relativedCount=0;
 			for(int j=0; j < (int)Math.pow(3,i-nnn[0]) ;j++){
 				if(i==0){
-					System.out.print(node+j+" ");
+					if(isDebug)System.out.print(node+j+" ");
+					relativedCount++;
 				}else{
 					int position=arrangement_count[i-1]+
 							(int)Math.pow(3,i-nnn[0])*(nnn[1]-1)+
 							+j+1;
 					if ((int)Math.pow(3,i-nnn[0])*(nnn[1]-1)+j+1<=current[1]){
-						System.out.print(position+" ");
+						if(isDebug)System.out.print(position+" ");
+						relativedCount++;
 					}else{
-						System.out.print(position+"(still empty)");
+						if(isDebug)System.out.print(position+"(still empty)");
 					}
 				}
 			}
-			System.out.println(" <<" );
-			
+			if(isDebug)System.out.println(" <<" );
+			result+=relativedCount+"\n";
 		}
-		return null;
-		
+		return result;
 	}
 
 }

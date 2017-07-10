@@ -44,8 +44,8 @@ public class ReportService extends BaseObject {
 			return pos/2;
 		}
 	}
-	public void activeUserSiteB(User target,RedirectAttributes ra) {
-		info("active site B"+ target.getId());
+	public void activeVipUser(User target,RedirectAttributes ra) {
+		info("active Vip"+ target.getId());
 		final Timestamp portalBsiteActiveDate = new Timestamp(System.currentTimeMillis());
 		target.setPortalBsiteActiveDate(portalBsiteActiveDate);
 		target.setStatus("old");
@@ -90,11 +90,17 @@ public class ReportService extends BaseObject {
 			error(ra, "钱不够");
 			return;
 		}
-		if(null!=target.getParent()){
-			if(!"old".equals(target.getParent().getStatus())){
+		User parent = target.getParent();
+		if(null!=parent){
+			if(!"old".equals(parent.getStatus())){
 				error(ra,"推荐人没有激活");
 				return;
 			}
+			if(parent.getSiteStatus()==3&&target.getSiteStatus()==1){
+				error(ra,"VIP推荐人不能激活银牌会员");
+				return;
+			}
+			
 		}
 		r.setElectricMoney(b);
 		// 每报一单 10
@@ -109,9 +115,9 @@ public class ReportService extends BaseObject {
 		reportCenterDAO.updateReportCenter(r);
 		BigDecimal money1after = r.getMoney1();
 		operationDAO.addOperation(new Operation(target,r,"费用1",addMoney1,"before"+money1before+"after"+money1after));
-		if (target.getSiteStatus()==2){
+		if (target.getSiteStatus()==3){
 			//
-			activeUserSiteB(target,ra);
+			activeVipUser(target,ra);
 			return;
 		}
 		Group group = groupDAO.getAvailableGroup();

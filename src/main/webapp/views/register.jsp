@@ -104,8 +104,8 @@
 			</form:label>
 		</td>
 		<td>
-		   <form:radiobutton path="siteStatus" value="3" onclick="siteSelect()" checked="checked"/>VIP
-		   <form:radiobutton path="siteStatus" value="1" onclick="siteSelect()"/> 银牌
+		   <form:radiobutton path="siteStatus" value="3" onclick="siteSelect()" checked="checked"/>VIP(398)
+		   <form:radiobutton path="siteStatus" value="1" onclick="siteSelect()"/> 银牌(1680)
 		</td>
 	</tr>
 	<tr>
@@ -115,7 +115,7 @@
 			</form:label>
 		</td>
 		<td>
-			<form:select path="product_id" items="${listProducts}" itemLabel="name" itemValue="id" value=""/>
+			<form:select path="product_id" items="${listVipProducts}" itemLabel="name" itemValue="id" value=""/>
 		</td>
 	</tr>
 	<tr>
@@ -230,7 +230,7 @@ function siteSelect()
 	if($("input[type='radio'][name='siteStatus']:checked").val()==3)
 	{
 		$("#product_id").empty();
-		<c:forEach items="${listSiteBProducts}" var="p1">
+		<c:forEach items="${listVipProducts}" var="p1">
 			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
 		</c:forEach>
 	}
