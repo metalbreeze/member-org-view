@@ -138,6 +138,7 @@
 			<form:input path="bonusMoney"  readonly="true" />
 		</td>
 	</tr>
+	<%--
 	<tr>
 		<td>
 			<form:label path="feedbackMoney">
@@ -148,14 +149,15 @@
 			<form:input path="feedbackMoney"  readonly="true" />
 		</td>
 	</tr>
+	--%>
 	<tr>
 		<td>
 			<form:label path="">
 				<spring:message text="外网总计"/>
 			</form:label>
 		</td>
-		<td>
-			<form:input path="" readonly="true" value="${user.saleMoney +  user.bonusMoney + user.feedbackMoney }"/>
+		<td><%-- <form:input path="" readonly="true" value="${user.saleMoney +  user.bonusMoney + user.feedbackMoney }"/> --%>
+			<form:input path="" readonly="true" value="${user.saleMoney +  user.bonusMoney }"/>
 		</td>
 	</tr>
 	<tr>
@@ -165,8 +167,10 @@
 			</form:label>
 		</td>
 		<td>
+		<%-- <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 }" /> --%>
 		<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
-			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 }" />
+			value="${ user.saleMoney + ( user.bonusMoney ) * 0.8 }" />
 		</td>
 	</tr>
 	<tr>
@@ -186,8 +190,10 @@
 			</form:label>
 		</td>
 		<td>
+		<%-- <fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
+			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw}" /> --%>
 			<fmt:formatNumber type="number" minFractionDigits="2" maxFractionDigits="2" 
-			value="${ user.saleMoney + ( user.bonusMoney + user.feedbackMoney ) * 0.8 - user.withdraw}" />
+			value="${ user.saleMoney + ( user.bonusMoney ) * 0.8 - user.withdraw}" />
 		</td>
 	</tr>
 	<tr>

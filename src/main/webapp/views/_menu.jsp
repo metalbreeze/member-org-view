@@ -45,7 +45,7 @@
 	</div>
 	<div style="position:absolute;top:0px;left:80px;">
 		<div style="border: 4px solid #ccc;background-color: #435fd6;color:#fff">
-			<span style="font-style:italic;font-size:30px;">&nbsp;一路发生态科技&nbsp;&nbsp;&nbsp;</span><br/>
+			<span style="font-style:italic;font-size:30px;">&nbsp;龙竹康科技有限公司&nbsp;&nbsp;&nbsp;</span><br/>
 		</div>
 		<div style="align:center;">
 			<span style="align:center;font-style:italic;font-size:10px">&nbsp;&nbsp;&nbsp;

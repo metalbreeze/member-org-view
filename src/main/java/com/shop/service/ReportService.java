@@ -24,9 +24,6 @@ public class ReportService extends BaseObject {
 	@Autowired(required = true)
 	@Qualifier(value = "reportCenterDAO")
 	private ReportCenterDAO reportCenterDAO;
-	/**
-	 * 
-	 */
 	@Autowired(required = true)
 	@Qualifier(value = "userDAO")
 	private UserDAO userDAO;
@@ -115,9 +112,12 @@ public class ReportService extends BaseObject {
 		reportCenterDAO.updateReportCenter(r);
 		BigDecimal money1after = r.getMoney1();
 		operationDAO.addOperation(new Operation(target,r,"费用1",addMoney1,"before"+money1before+"after"+money1after));
-		if (target.getSiteStatus()==3){
-			//
+		if (target.getSiteStatus()==5){
 			activeVipUser(target,ra);
+			return;
+		}
+		if (target.getSiteStatus()!=1){
+			error(ra, "内网不能激活");
 			return;
 		}
 		Group group = groupDAO.getAvailableGroup();

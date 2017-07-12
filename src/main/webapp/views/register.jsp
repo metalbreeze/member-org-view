@@ -104,7 +104,7 @@
 			</form:label>
 		</td>
 		<td>
-		   <form:radiobutton path="siteStatus" value="3" onclick="siteSelect()" checked="checked"/>VIP(398)
+		   <form:radiobutton path="siteStatus" value="5" onclick="siteSelect()" checked="checked"/>VIP(398)
 		   <form:radiobutton path="siteStatus" value="1" onclick="siteSelect()"/> 银牌(1680)
 		</td>
 	</tr>
@@ -158,7 +158,7 @@
 		</div>
 			<textarea rows="35" cols="40">
 一、总则
-1.1 www.gxlvkangkeji.com所有权和运营权归广西一路发生态科技有限公司所有；
+1.1 www.gxlvkangkeji.com所有权和运营权归广西龙竹康科技有限公司所有；
 1.2 凡持有中华人民共和国居民身份证并年满十八周岁的(除受国家政策限制经商的人员除外)公民均可注册成为本公司的会员．
 1.3 用户在注册之前，应当仔细阅读本协议，并同意遵守本协议后方可成为注册用户。一旦注册成功，则用户与公司之间自动形成协议关系，即默认用户自愿接受本协议的约束。用户在使用服务或产品时，应当同意接受相关协议后方能使用。 
 1.4 本协议可由公司随时更新，用户应当及时关注并同意本公司不承担通知义务。本站的通知、公告、声明或其它类似内容是本协议的一部分。
@@ -172,7 +172,7 @@
 本条内的，销售人员或广告代言人不得利用该网站进行夸大宣传，改成销售人员不得利用该网站进行夸大宣传。
 
 2.3 用户对本公司的服务有异议时，按本协议之规定处理；
-2.4 本协议解释权和修订权属广西一路发生态科技有限公司所有．
+2.4 本协议解释权和修订权属广西龙竹康科技有限公司所有．
 			</textarea>
 		</td>
 	</tr>
@@ -231,7 +231,7 @@ function siteSelect()
 			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
 		</c:forEach>
 	}
-	if($("input[type='radio'][name='siteStatus']:checked").val()==3)
+	if($("input[type='radio'][name='siteStatus']:checked").val()==5)
 	{
 		$("#product_id").empty();
 		<c:forEach items="${listVipProducts}" var="p1">

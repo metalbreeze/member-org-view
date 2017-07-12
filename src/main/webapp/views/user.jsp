@@ -123,13 +123,12 @@
 		</td>
 		<td>
 			<c:if test="${!empty user.name}">
-			   <form:radiobutton path="siteStatus" value="1" />外网
-			   <form:radiobutton path="siteStatus" value="2" />内网
-			   <form:radiobutton path="siteStatus" value="3" /> 内/外网
+			   <form:radiobutton path="siteStatus" value="1" />银牌
+			   <form:radiobutton path="siteStatus" value="3" /> VIP
 			</c:if>
 			<c:if test="${empty user.name}">
-			   <form:radiobutton path="siteStatus" value="1" disabled="true"/>外网
-			   <form:radiobutton path="siteStatus" value="2" checked="checked"/> 内网
+			   <form:radiobutton path="siteStatus" value="1" disabled="true"/>银牌
+			   <form:radiobutton path="siteStatus" value="3" checked="checked"/> VIP
 			</c:if>
 		</td>
 	</tr>
@@ -154,6 +153,16 @@
 				<form:option value="0" label="--- 请选择 ---"/>
 				<form:options items="${listReportCenters}" itemLabel="name" itemValue="id" />
 			</form:select>
+		</td>
+	</tr>
+	<tr>
+		<td>
+			<form:label path="eletricMoney">
+				<spring:message text="电子币"/>
+			</form:label>
+		</td>
+		<td>
+			<form:input path="eletricMoney" />
 		</td>
 	</tr>
 	<tr>
@@ -259,13 +268,16 @@
 			<td>
 			<c:choose>
 				<c:when test="${user.siteStatus == 1 }">
-					外网
+					银牌
 				</c:when>
 				<c:when test="${user.siteStatus == 2 }">
 					内网
 				</c:when>
 				<c:when test="${user.siteStatus == 3 }">
 					内/外网
+				</c:when>
+				<c:when test="${user.siteStatus == 5 }">
+					VIP
 				</c:when>
 				<c:otherwise>
 					状态不明
@@ -325,7 +337,7 @@ function siteSelect()
 			$("#product_id").append('<option value="${p1.id}">${p1.name}</option>');
 		</c:forEach>
 	}
-	if($("input[type='radio'][name='siteStatus']:checked").val()==2)
+	if($("input[type='radio'][name='siteStatus']:checked").val()==5)
 	{
 		$("#product_id").empty();
 		<c:forEach items="${listSiteBProducts}" var="p1">

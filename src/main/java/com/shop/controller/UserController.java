@@ -107,6 +107,7 @@ public class UserController extends BaseObject {
 				user.setAccountNumber(p.getAccountNumber());
 				user.setWechat(p.getWechat());
 				user.setAlipay(p.getAlipay());
+				user.setEletricMoney(p.getEletricMoney());
 				if(parentUser!=null){
 					user.setParent(parentUser);
 				}

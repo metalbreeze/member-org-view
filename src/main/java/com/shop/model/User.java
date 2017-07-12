@@ -64,11 +64,13 @@ public class User implements Comparable<User> {
 	
 	private String alipay;
 //1==site
-//3==vip
+//2=siteb
+//3=内/外网
+//5==vip	
 	private String status;
 	
 	private Integer product_id;
-	
+	private BigDecimal eletricMoney=new BigDecimal(0);
 	private BigDecimal bonusMoney=new BigDecimal(0);
 	private BigDecimal feedbackMoney=new BigDecimal(0);
 	private BigDecimal withdraw=new BigDecimal(0);
@@ -619,6 +621,22 @@ public class User implements Comparable<User> {
 
 	public void setPortalBsiteCode(String portalBsiteCode) {
 		this.portalBsiteCode = portalBsiteCode;
+	}
+
+	public BigDecimal getEletricMoney() {
+		return eletricMoney;
+	}
+
+	public void setEletricMoney(BigDecimal eletricMoney) {
+		this.eletricMoney = eletricMoney;
+	}
+
+	public List<ShopOrder> getShopOrders() {
+		return shopOrders;
+	}
+
+	public void setShopOrders(List<ShopOrder> shopOrders) {
+		this.shopOrders = shopOrders;
 	}
 
 }
