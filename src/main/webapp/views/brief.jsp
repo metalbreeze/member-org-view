@@ -40,8 +40,8 @@ setInterval(function() {
 --%>
 
 
-<div>
-<img alt="" src="${pageContext.request.contextPath}/img/background.jpg">
+<div style="width:100%;" >
+<img alt="" width="100%" src="${pageContext.request.contextPath}/img/background.jpg">
 </div>
 
 <div style="padding: 5px;">
@@ -128,7 +128,7 @@ setInterval(function() {
 </div>
 </td>
 <td>
-<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px;">
+<div style="border: 1px solid #ccc; padding: 5px; margin-bottom: 20px; width:100%">
 		<a href="http://mp.weixin.qq.com/s/-y2TueV6e4tGNEjMasu0jA">香港“健康卫视”报导归君堂"东革阿里”神奇功效</a>
 		&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
 		<a href="http://mp.weixin.qq.com/s/hS3SRK2W8jrY9BNw2LQdoA">女性圣品-力比滋卡琪花蒂玛宣传纪录片</a>
@@ -212,7 +212,7 @@ setInterval(function() {
     
     
 
-
+<%--
 <div style="border: 1px solid #ccc; padding: 8px; margin-bottom: 20px;margin-top: 20px;background-color: #e4b26a;color: #fff;width:230px;" >
 <span>中国-马来西亚钦州产业园区简介</span>
 </div>
@@ -230,9 +230,9 @@ setInterval(function() {
 &nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;依托临近东盟的优势区位，将中马钦州产业园区打造成服务中国—东盟自由贸易区的信息发布平台、贸易往来平台、项目展示及商务合作窗口。<br/>
 <br/>
 </div>
-
-<svg height="20" width="1000">
-  <line x1="0" y1="0" x2="1000" y2="0" style="stroke:rgb(0,0,0);stroke-width:2" />
+--%>
+<svg height="20" width="100%">
+  <line x1="0" y1="0" x2="100%" y2="0" style="stroke:rgb(0,0,0);stroke-width:2" />
 </svg>
 <div align="center">
 龙竹康科技有限公司
